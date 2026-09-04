@@ -1,0 +1,588 @@
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap"
+        rel="stylesheet">
+    <title>Promociones Bancarias Rouge Maison</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p {
+            color: #3f3f3f;
+            font-family: "Mulish", sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 18px;
+            color: #000;
+        }
+
+        h2 {
+            font-size: 48px;
+            font-weight: 600;
+        }
+
+        h3 {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        h4 {
+            font-size: 12px;
+            margin: 25px 0;
+            font-weight: 400;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        img {
+            width: 100%;
+        }
+
+        .tab-content {
+            margin: 40px auto;
+            width: 100%;
+        }
+
+        .grid {
+            width: 100%;
+            gap: 15px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .four {
+            width: 31%;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .col {
+            flex: none;
+        }
+
+        .box {
+            display: flex;
+            width: 100%;
+            padding: 0px;
+            overflow: hidden;
+            background-color: white;
+            text-align: center;
+            position: relative;
+            border-radius: 10px;
+            -webkit-box-shadow: 0px 0px 15px -5px rgb(0 0 0 / 29%);
+            box-shadow: 0px 0px 15px -5px rgb(0 0 0 / 29%);
+        }
+
+        .boton-legales {
+            margin-bottom: 20px;
+        }
+
+        button {
+            border: none;
+            background-color: #646464;
+            padding: 5px 15px;
+            color: white;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .original {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+        }
+
+        .dias {
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+        }
+
+        .dias-letra {
+            hyphens: auto;
+            display: flex;
+            padding: 0;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin: 0;
+            font-size: 10px;
+        }
+
+        .dias-burbujas-2 {
+            background: #e9e9e9;
+            border-radius: 20px;
+            padding: 0 10px;
+            height: 1em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 3px;
+        }
+
+        .promo {
+            flex-grow: 1;
+        }
+
+        .overlay {
+            text-align: left;
+            padding: 10px;
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            inset: 0;
+            overflow: hidden;
+            background-color: #464646f5;
+            color: #fff;
+            transform: translateY(100%);
+            -webkit-transition: transform 0.5s ease-out;
+            transition: transform 0.5s ease-out;
+        }
+
+        .four:hover .overlay {
+            transform: translateY(0);
+        }
+
+        .overlay h5 {
+            margin: 0;
+            font-size: 10px;
+            color: white;
+            font-weight: 600;
+        }
+
+        .overlay p {
+            margin: 0;
+            font-size: 9px;
+            color: white;
+            font-weight: 300;
+        }
+
+        .overlay-legales {
+            margin: 0;
+        }
+
+        @media (min-width: 701px) and (max-width: 1024px) {
+            .grid {
+                width: 100%;
+            }
+
+            .four {
+                width: 31%;
+            }
+        }
+
+        @media (max-width: 701px) {
+            .grid {
+                width: 100%;
+            }
+
+            .four {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="todos-tab-pane" role="tabpanel" tabindex="0">
+            <div class="grid"> <!--GALICIA-->
+                <div class="four col">
+                    <div class="box"><span class="original">
+                            <div class="logos"><img src="https://www.rougemaison.com.ar/arquivos/ids/159773" alt="" />
+                            </div>
+                            <div class="dias">
+                                <div class="dias-burbujas-2">
+                                    <p class="dias-letra">TODOS LOS DÍAS</p>
+                                </div>
+                            </div>
+                            <div class="promo">
+                                <h2>10%OFF</h2>
+                                <h3>+ 12 CUOTAS SIN INTERÉS</h3>
+                                <h4>Visa, Mastercard y American Express (15% Eminent)</h4>
+                            </div>
+                            <div class="boton-legales"><button>Ver Legales</button></div>
+                        </span>
+                        <div class="overlay">
+                            <div class="overlay-legales">
+                                <h5>TARJETAS</h5>
+                                <p>Visa, Mastercard y American Express Crédito</p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>VIGENCIA</h5>
+                                <p>04/08/2026 al 31/08/2026</p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>DÍAS</h5>
+                                <p>Todos los días</p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>PROMOCIÓN</h5>
+                                <p>10% de reintegro (15% clientes Eminent) solo los martes + 12 cuotas sin interés todos
+                                    los días. No aplica en pagos con Mercado Pago ni MODO.</p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>CANALES APTOS</h5>
+                                <p>Online y locales</p>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!--SANTANDER MIERCOLES-->
+                <div class="four col">
+                    <div class="box"><span class="original">
+                            <div class="logos"><img src="https://www.rougemaison.com.ar/arquivos/ids/157981" alt="" />
+                            </div>
+                            <div class="dias">
+                                <div class="dias-burbujas-2">
+                                    <p class="dias-letra">MIÉRCOLES</p>
+                                </div>
+                            </div>
+                            <div class="promo">
+                                <h2>10%OFF</h2>
+                                <h3>+ 6 CUOTAS SIN INTERÉS</h3>
+                                <h4>Sin tope de reintegro</h4>
+                            </div>
+                            <div class="boton-legales"><button>Ver Legales</button></div>
+                        </span>
+                        <div class="overlay">
+                            <div class="overlay-legales">
+                                <h5>TARJETAS</h5>
+                                <p>Débito, recargable y crédito VISA exclusivo pagando con QR desde App Santander y App
+                                    MODO</p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>VIGENCIA</h5>
+                                <p>25/03/2026 al 31/01/2027</p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>DÍAS</h5>
+                                <p>Miércoles</p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>PROMOCIÓN</h5>
+                                <p>10% de reintegro por resumen bancario + 6 cuotas sin interés, sin tope de reintegro,
+                                    pagando con QR desde App Santander y App MODO. No aplica en pagos con Mercado Pago.
+                                </p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>CANALES APTOS</h5>
+                                <p>Online y Locales</p>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!--COMAFI-->
+                <div class="four col">
+                    <div class="box"><span class="original">
+                            <div class="logos"><img
+                                    src="https://rougemaison.vtexassets.com/assets/vtex.file-manager-graphql/images/ba58206d-cc4b-4a88-b23d-8d30426634a6___3190e22e1e3621e0cc3aec1777d470fa.png"
+                                    alt="" /></div>
+                            <div class="dias">
+                                <div class="dias-burbujas-2">
+                                    <p class="dias-letra">TODOS LOS DÍAS</p>
+                                </div>
+                            </div>
+                            <div class="promo">
+                                <h2>20%OFF</h2>
+                                <h3>+ 6 CUOTAS SIN INTERÉS</h3>
+                                <h4>Cartera Platinum o Único Black</h4>
+                            </div>
+                            <div class="boton-legales"><button>Ver Legales</button></div>
+                        </span>
+                        <div class="overlay">
+                            <div class="overlay-legales">
+                                <h5>TARJETAS</h5>
+                                <p>Tarjetas de Crédito Visa y Mastercard Banco Comafi pertenecientes a clientes Premium
+                                    y/o Platinum y UNICO. (quedan excluidas las tarjetas corporativas. No se incluyen
+                                    Visa Comafi Chicas, Provencred, Proven, Diners Club Internacional, Visa Club Día,
+                                    Credial, business, corporativas y Programa Asignación Universal por Hijo – ANSES.
+                                </p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>VIGENCIA</h5>
+                                <p>01/05/2026 al 31/08/2026</p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>DÍAS</h5>
+                                <p>Todos los días</p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>PROMOCIÓN</h5>
+                                <p>20% de ahorro por resumen. Cartera Platinum o Único Black tope $30.000 por
+                                    transacción + 6 cuotas sin interés. Exclusivo MODO. No aplica en pagos con Mercado
+                                    Pago.</p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>CANALES APTOS</h5>
+                                <p>Online y locales</p>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!--BBVA-->
+                <div class="four col">
+                    <div class="box"><span class="original">
+                            <div class="logos"><img src="https://www.rougemaison.com.ar/arquivos/ids/157974" alt="" />
+                            </div>
+                            <div class="dias">
+                                <div class="dias-burbujas-2">
+                                    <p class="dias-letra">TODOS LOS DÍAS</p>
+                                </div>
+                            </div>
+                            <div class="promo">
+                                <h2>6</h2>
+                                <h3>CUOTAS SIN INTERÉS</h3>
+                                <h4>Exclusivo MODO</h4>
+                            </div>
+                            <div class="boton-legales"><button>Ver Legales</button></div>
+                        </span>
+                        <div class="overlay">
+                            <div class="overlay-legales">
+                                <h5>TARJETAS</h5>
+                                <p>Visa Crédito y Mastercard Crédito</p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>VIGENCIA</h5>
+                                <p>01/01/2026 al 30/09/2026</p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>DÍAS</h5>
+                                <p>Todos los días</p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>PROMOCIÓN</h5>
+                                <p>6 cuotas sin interés. Exclusivo mediante MODO. No aplica en pagos con Mercado Pago.
+                                </p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>CANALES APTOS</h5>
+                                <p>Online y locales</p>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!--NARANJA-->
+                <div class="four col">
+                    <div class="box"><span class="original">
+                            <div class="logos"><img
+                                    src="https://rougemaison.vtexassets.com/assets/vtex.file-manager-graphql/images/d2aac238-c223-4a87-93dc-26aab1256a0b___6f3485955f881f78abee136df57ef120.png"
+                                    alt="" /></div>
+                            <div class="dias">
+                                <div class="dias-burbujas-2">
+                                    <p class="dias-letra">TODOS LOS DÍAS</p>
+                                </div>
+                            </div>
+                            <div class="promo">
+                                <h2>6</h2>
+                                <h3>CUOTAS SIN INTERÉS</h3>
+                                <h4>Tarjetas emitidas por Naranja (Excluidas VISA y Naranja Master)</h4>
+                            </div>
+                            <div class="boton-legales"><button>Ver Legales</button></div>
+                        </span>
+                        <div class="overlay">
+                            <div class="overlay-legales">
+                                <h5>TARJETAS</h5>
+                                <p>Tarjeta Naranja</p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>VIGENCIA</h5>
+                                <p>01/04/2025 al 30/09/2026</p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>DÍAS</h5>
+                                <p>Todos los días</p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>PROMOCIÓN</h5>
+                                <p>PLAN Z - 6 Cuotas sin interés. Seleccionar en el checkout la opción 3 cuotas sin
+                                    interés si quiere Plan Z. No aplica en pagos con Mercado Pago ni MODO.</p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>CANALES APTOS</h5>
+                                <p>Online y locales</p>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!--MERCADO PAGO-->
+                <div class="four col">
+                    <div class="box"><span class="original">
+                            <div class="logos"><img
+                                    src="https://rougemaison.vtexassets.com/assets/vtex.file-manager-graphql/images/e90f582e-9420-4d43-8912-5b16287faf94___b6b91876ccad92112765effc7b4bd9d8.png"
+                                    alt="" /></div>
+                            <div class="dias">
+                                <div class="dias-burbujas-2">
+                                    <p class="dias-letra">TODOS LOS DÍAS</p>
+                                </div>
+                            </div>
+                            <div class="promo">
+                                <h2>3 y 6</h2>
+                                <h3>CUOTAS SIN INTERÉS</h3>
+                                <h4>Tarjetas de Crédito bancarias, dinero en cuenta MP y tarjetas de débito</h4>
+                            </div>
+                            <div class="boton-legales"><button>Ver Legales</button></div>
+                        </span>
+                        <div class="overlay">
+                            <div class="overlay-legales">
+                                <h5>TARJETAS</h5>
+                                <p>Tarjetas de Crédito bancarias Visa y Mastercard</p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>DÍAS</h5>
+                                <p>Todos los días</p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>PROMOCIÓN</h5>
+                                <p>3 y 6 cuotas sin interés en pagos con Mercado Pago.</p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>CANALES APTOS</h5>
+                                <p>Online y locales</p>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!--AMERICAN EXPRESS-->
+                <div class="four col">
+                    <div class="box"><span class="original">
+                            <div class="logos"><img src="https://www.rougemaison.com.ar/arquivos/ids/159176" alt="" />
+                            </div>
+                            <div class="dias">
+                                <div class="dias-burbujas-2">
+                                    <p class="dias-letra">TODOS LOS DÍAS</p>
+                                </div>
+                            </div>
+                            <div class="promo">
+                                <h2>3 Y 6</h2>
+                                <h3>CUOTAS SIN INTERÉS</h3>
+                                <h4>Tarjetas American Express emitidas por AMEX</h4>
+                            </div>
+                            <div class="boton-legales"><button>Ver Legales</button></div>
+                        </span>
+                        <div class="overlay">
+                            <div class="overlay-legales">
+                                <h5>TARJETAS</h5>
+                                <p>Tarjetas American Express emitidas por AMEX</p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>DÍAS</h5>
+                                <p>Todos los días</p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>PROMOCIÓN</h5>
+                                <p>3 y 6 cuotas sin interés. No aplica en pagos con Mercado Pago ni MODO.</p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>CANALES APTOS</h5>
+                                <p>Online y locales</p>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!--VISA-->
+                <div class="four col">
+                    <div class="box"><span class="original">
+                            <div class="logos"><img
+                                    src="https://rougemaison.vtexassets.com/assets/vtex.file-manager-graphql/images/af7bbe60-76c9-4816-8a47-34f3f2bfb4ba___755d1743491676af30aee23c2f2bbf25.png"
+                                    alt="" /></div>
+                            <div class="dias">
+                                <div class="dias-burbujas-2">
+                                    <p class="dias-letra">TODOS LOS DÍAS</p>
+                                </div>
+                            </div>
+                            <div class="promo">
+                                <h3>HASTA</h3>
+                                <h2>6</h2>
+                                <h3>CUOTAS SIN INTERÉS</h3>
+                                <h4>En productos seleccionados</h4>
+                            </div>
+                            <div class="boton-legales"><button>Ver Legales</button></div>
+                        </span>
+                        <div class="overlay">
+                            <div class="overlay-legales">
+                                <h5>TARJETAS</h5>
+                                <p>Tarjetas de Crédito Visa</p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>DÍAS</h5>
+                                <p>Todos los días</p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>PROMOCIÓN</h5>
+                                <p>Hasta 6 cuotas sin interés en productos seleccionados. No acumulable con promociones
+                                    bancarias. No aplica en pagos con Mercado Pago ni MODO.</p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>CANALES APTOS</h5>
+                                <p>Online y locales</p>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!--MASTERCARD-->
+                <div class="four col">
+                    <div class="box"><span class="original">
+                            <div class="logos"><img
+                                    src="https://rougemaison.vtexassets.com/assets/vtex.file-manager-graphql/images/03451327-eb29-4bd6-8a00-46c131bfc5d0___2ffc485ddc8af65640588b201f7c814b.png"
+                                    alt="" /></div>
+                            <div class="dias">
+                                <div class="dias-burbujas-2">
+                                    <p class="dias-letra">TODOS LOS DÍAS</p>
+                                </div>
+                            </div>
+                            <div class="promo">
+                                <h3>HASTA</h3>
+                                <h2>6</h2>
+                                <h3>CUOTAS SIN INTERÉS</h3>
+                                <h4>En productos seleccionados</h4>
+                            </div>
+                            <div class="boton-legales"><button>Ver Legales</button></div>
+                        </span>
+                        <div class="overlay">
+                            <div class="overlay-legales">
+                                <h5>TARJETAS</h5>
+                                <p>Tarjetas de Crédito Mastercard</p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>DÍAS</h5>
+                                <p>Todos los días</p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>PROMOCIÓN</h5>
+                                <p>Hasta 6 cuotas sin interés en productos seleccionados. No acumulable con promociones
+                                    bancarias. No aplica en pagos con Mercado Pago ni MODO.</p>
+                            </div>
+                            <div class="overlay-legales">
+                                <h5>CANALES APTOS</h5>
+                                <p>Online, locales y venta telefónica</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="height: 50px"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+        crossorigin="anonymous"></script>
+</body>

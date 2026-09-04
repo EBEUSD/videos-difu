@@ -1,0 +1,104 @@
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <title>Beauty24 | Beauty Days - Intro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            display: none;
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin: 0;
+            color: #141414;
+            text-transform: uppercase;
+        }
+
+        p {
+            font-size: 16px;
+        }
+
+        #landing-body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+            font-weight: 300;
+            line-height: 1.5;
+            max-width: 100%;
+            margin: 0 auto;
+            font-size: 112%;
+        }
+
+        #texto-ppal {
+            padding: 60px 15%;
+            color: black;
+            text-align: center;
+        }
+
+        #texto-ppal h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #texto-ppal p {
+            color: #141414;
+            font-weight: 400;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        /*MOBILE*/
+        @media (max-width: 701px) {
+            h2 {
+                font-size: 18px;
+            }
+
+            #texto-ppal {
+                padding: 40px 5%;
+                margin: 0 auto;
+                text-align: left;
+                width: 95%;
+            }
+
+            #texto-ppal h2,
+            #texto-ppal p {
+                text-align: left;
+            }
+        }
+
+        /*TABLET*/
+        @media (min-width: 701px) and (max-width: 1024px) {
+            #texto-ppal {
+                padding: 50px 10%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="landing-body">
+        <section id="texto-ppal">
+            <h1>BEAUTY DAYS X BEAUTY24</h1>
+            <h2>BEAUTY DAYS X BEAUTY24</h2>
+            <p>¡Descubrí los Beauty Days en tu Beauty24 más cercano!</p>
+            <p>Te esperamos en nuestras tiendas para vivir una experiencia exclusiva para vos: asesoramiento
+                personalizado, juegos, regalos por compra y descuentos exclusivos junto a las marcas que más te
+                gustan.</p>
+            <p><strong>¡Vení a celebrar la belleza con nosotros!</strong></p>
+        </section>
+    </div>
+</body>
