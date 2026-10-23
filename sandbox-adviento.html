@@ -1,0 +1,127 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Calendario de Adviento ROUGE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #730101;
+            background: #fff;
+        }
+
+        .adv {
+            display: flex;
+            align-items: stretch;
+            width: 100%;
+        }
+
+        .adv-texto {
+            flex: 0 0 50%;
+            padding: 48px 56px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .adv-kicker {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+        }
+
+        .adv-texto h2 {
+            font-size: 32px;
+            line-height: 1.2;
+            font-weight: 700;
+        }
+
+        .adv-sub {
+            font-size: 18px;
+            line-height: 1.4;
+            font-weight: 600;
+        }
+
+        .adv-texto p {
+            font-size: 15px;
+            line-height: 1.7;
+            font-weight: 500;
+        }
+
+        .adv-imagen {
+            flex: 1;
+            position: relative;
+            min-height: 320px;
+        }
+
+        .adv-imagen img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        @media (max-width: 701px) {
+            .adv {
+                flex-direction: column;
+            }
+
+            .adv-imagen {
+                order: -1;
+                flex: none;
+                min-height: 0;
+                aspect-ratio: 4 / 3;
+            }
+
+            .adv-texto {
+                flex: none;
+                padding: 28px 20px 32px;
+                gap: 14px;
+            }
+
+            .adv-texto h2 {
+                font-size: 24px;
+            }
+
+            .adv-sub {
+                font-size: 16px;
+            }
+
+            .adv-texto p {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="adv">
+        <div class="adv-texto"> <span class="adv-kicker">GET READY WITH ROUGE · GRWR</span>
+            <h2>Calendario de Adviento ROUGE</h2> <span class="adv-sub">12 productos. 7 días. Tu momento de
+                brillar.</span>
+            <p>ROUGE te invita a transformar el momento de prepararte en una celebración. Descubrí GET
+                READY WITH ROUGE, un calendario de Adviento que reúne 12 productos de belleza en 7 boxes sorpresa,
+                pensados para despertar la emoción de descubrir algo especial cada día.</p>
+            <p>Abrí cada box y dejate sorprender por una selección de fragancias, maquillaje y cuidado de la piel. Un
+                recorrido entre aromas, texturas y toques de luz que te invita a explorar nuevos favoritos, crear tu
+                look y disfrutar de un ritual de belleza a tu manera.</p>
+           
+        </div>
+        <div class="adv-imagen"> <img
+                src="https://rougeb2car.vtexassets.com/assets/vtex.file-manager-graphql/images/15f5ddd2-9eb1-415c-948f-07097d93da92___c3f5cfdbc3c0e72ea5f7724a6634ab2a.png"
+                alt="Calendario de Adviento ROUGE"> </div>
+    </div>
+</body>

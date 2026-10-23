@@ -1,0 +1,589 @@
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,500;0,600;1,500&family=Jost:wght@400;500;600&display=swap">
+    <style>
+        :root {
+            --rouge: #730101;
+            --rouge-deep: #4D0000;
+            --blush: #F7ECEC;
+            --black: #000000;
+            --white: #FFFFFF;
+            --line: #E5D8D8;
+            --muted: #6B5B5B;
+            --serif: "Bodoni Moda", Didot, "Times New Roman", serif;
+            --sans: "Jost", "Helvetica Neue", Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0 !important
+        }
+
+        [hidden] {
+            display: none !important
+        }
+
+        body {
+            background: var(--white);
+            color: var(--black);
+            font-family: var(--sans);
+            font-size: 16px;
+            line-height: 1.55
+        }
+
+        .pc-wrap {
+            width: 100%;
+            padding: 0 0 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px
+        }
+
+        /* Hero */
+        .pc-hero {
+            background: var(--rouge);
+            color: var(--white);
+            padding: clamp(32px, 5vw, 64px) clamp(20px, 6vw, 96px);
+            display: grid;
+            gap: 20px
+        }
+
+        .pc-date {
+            font: 500 15px/1.2 var(--sans);
+            letter-spacing: .04em;
+            opacity: .85
+        }
+
+        .pc-hero h1 {
+            font: 500 clamp(40px, 7.5vw, 84px)/.98 var(--serif);
+            font-style: italic;
+            text-wrap: balance;
+            max-width: 14ch
+        }
+
+        .pc-lede {
+            max-width: 52ch;
+            font-size: clamp(16px, 1.8vw, 19px);
+            opacity: .92
+        }
+
+        .pc-lede strong {
+            font-weight: 600
+        }
+
+        .pc-count {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-top: 1px solid rgba(255, 255, 255, .35);
+            padding-top: 16px
+        }
+
+        .pc-cell {
+            text-align: center;
+            border-right: 1px solid rgba(255, 255, 255, .25)
+        }
+
+        .pc-cell:last-child {
+            border-right: 0
+        }
+
+        .pc-cell b {
+            display: block;
+            font: 500 clamp(30px, 5vw, 48px)/1 var(--serif);
+            font-variant-numeric: tabular-nums lining-nums
+        }
+
+        .pc-cell small {
+            font: 400 13px/1.6 var(--sans);
+            opacity: .8
+        }
+
+        /* Card */
+        .pc-card {
+            border-bottom: 1px solid var(--line);
+            padding: clamp(20px, 4vw, 44px) clamp(20px, 6vw, 96px)
+        }
+
+        .pc-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 12px;
+            flex-wrap: wrap
+        }
+
+        .pc-card h2 {
+            font: 500 clamp(26px, 4vw, 40px)/1.05 var(--serif);
+            font-style: italic;
+            color: var(--rouge)
+        }
+
+        .pc-stepnum {
+            font: 500 14px/1 var(--sans);
+            color: var(--muted)
+        }
+
+        .pc-dots {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px !important
+        }
+
+        .pc-dots i {
+            height: 3px;
+            flex: 1;
+            background: var(--line);
+            transition: background .3s
+        }
+
+        .pc-dots i.on {
+            background: var(--rouge)
+        }
+
+        .pc-stage {
+            min-height: 340px
+        }
+
+        .pc-step {
+            padding-top: 28px
+        }
+
+        .pc-q {
+            font: 600 14px/1.3 var(--sans);
+            color: var(--rouge);
+            margin-bottom: 6px !important
+        }
+
+        .pc-qt {
+            font: 500 clamp(22px, 3vw, 30px)/1.15 var(--serif);
+            margin-bottom: 18px !important
+        }
+
+        .pc-qt.mt {
+            margin-top: 26px !important
+        }
+
+        .pc-grid {
+            display: grid;
+            gap: 12px;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))
+        }
+
+        .pc-grid.sm {
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr))
+        }
+
+        .pc-opt {
+            appearance: none;
+            cursor: pointer;
+            text-align: left;
+            background: var(--white);
+            color: var(--black);
+            border: 1px solid var(--line);
+            padding: 18px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font: 500 16px/1.25 var(--sans);
+            transition: border-color .15s, background .15s
+        }
+
+        .pc-opt:hover {
+            border-color: var(--muted)
+        }
+
+        .pc-opt[aria-pressed="true"] {
+            border-color: var(--rouge);
+            background: var(--blush)
+        }
+
+        .pc-opt .n {
+            font: 500 italic 22px/1 var(--serif);
+            color: var(--rouge)
+        }
+
+        .pc-opt small {
+            font-weight: 400;
+            font-size: 13px;
+            color: var(--muted)
+        }
+
+        .pc-chip {
+            text-align: center;
+            align-items: center;
+            font: 500 16px/1.2 var(--serif);
+            padding: 16px 10px
+        }
+
+        .pc-opt:focus-visible,
+        .pc-btn:focus-visible,
+        .pc-form input:focus-visible {
+            outline: 2px solid var(--rouge);
+            outline-offset: 3px
+        }
+
+        /* Botones */
+        .pc-row {
+            display: flex;
+            gap: 12px;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 26px !important;
+            flex-wrap: wrap
+        }
+
+        .pc-btn {
+            appearance: none;
+            cursor: pointer;
+            border: 0;
+            background: var(--rouge);
+            color: var(--white);
+            font: 500 16px/1 var(--sans);
+            letter-spacing: .03em;
+            padding: 17px 30px;
+            transition: background .15s
+        }
+
+        .pc-btn:hover:not(:disabled) {
+            background: var(--rouge-deep)
+        }
+
+        .pc-btn:disabled {
+            opacity: .35;
+            cursor: not-allowed
+        }
+
+        .pc-btn.ghost {
+            background: transparent;
+            color: var(--muted);
+            padding-inline: 2px
+        }
+
+        .pc-btn.ghost:hover {
+            background: transparent;
+            color: var(--black)
+        }
+
+        .pc-err {
+            color: var(--rouge);
+            font-size: 14px;
+            min-height: 1.2em;
+            flex: 1;
+            text-align: center
+        }
+
+        /* Formulario */
+        .pc-form {
+            display: grid;
+            gap: 18px;
+            grid-template-columns: 1fr 1fr;
+            max-width: 640px
+        }
+
+        .pc-full {
+            grid-column: 1/-1
+        }
+
+        .pc-form label {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font: 500 14px/1 var(--sans);
+            color: var(--muted)
+        }
+
+        .pc-form input[type=text],
+        .pc-form input[type=email],
+        .pc-form input[type=tel] {
+            font: 400 17px/1.2 var(--sans);
+            padding: 12px 0;
+            border: 0;
+            border-bottom: 1px solid var(--muted);
+            background: transparent;
+            color: var(--black);
+            border-radius: 0
+        }
+
+        .pc-form input::placeholder {
+            color: #B3A6A6
+        }
+
+        .pc-form .pc-check {
+            flex-direction: row;
+            gap: 10px;
+            align-items: flex-start;
+            font: 400 14px/1.4 var(--sans);
+            color: var(--black)
+        }
+
+        .pc-check input {
+            width: 18px;
+            height: 18px;
+            margin-top: 1px !important;
+            accent-color: var(--rouge);
+            flex: none
+        }
+
+        .pc-hp {
+            position: absolute;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+            overflow: hidden
+        }
+
+        /* Invitación */
+        .pc-invite {
+            max-width: 460px;
+            margin: 0 auto !important;
+            border: 2px solid var(--rouge);
+            padding: 32px 24px;
+            position: relative;
+            text-align: center;
+            display: grid;
+            gap: 12px
+        }
+
+        .pc-invite::before {
+            content: "";
+            position: absolute;
+            inset: 8px;
+            border: 1px solid rgba(115, 1, 1, .3);
+            pointer-events: none
+        }
+
+        .pc-invite .tit {
+            font: 500 14px/1.3 var(--sans);
+            color: var(--rouge)
+        }
+
+        .pc-invite .who {
+            font: 500 italic 26px/1.2 var(--serif)
+        }
+
+        .pc-invite .num {
+            font: 600 clamp(48px, 8vw, 72px)/1 var(--serif);
+            color: var(--rouge);
+            font-variant-numeric: lining-nums
+        }
+
+        .pc-invite .meta {
+            color: var(--muted);
+            font-size: 14px
+        }
+
+        .pc-sig {
+            border-top: 1px solid var(--line);
+            padding-top: 12px;
+            display: grid;
+            gap: 4px
+        }
+
+        .pc-sig small {
+            color: var(--muted);
+            font-size: 13px
+        }
+
+        .pc-sig b {
+            font: 500 italic 26px/1 var(--serif);
+            color: var(--rouge)
+        }
+
+        .pc-code {
+            font: 600 20px/1 var(--sans);
+            letter-spacing: .12em;
+            border: 1px dashed var(--rouge);
+            color: var(--rouge);
+            padding: 12px 16px;
+            justify-self: center
+        }
+
+        .pc-legal {
+            font-size: 12px;
+            color: var(--muted);
+            text-align: center;
+            padding: 0 20px
+        }
+
+        .pc-link {
+            appearance: none;
+            background: none;
+            border: 0;
+            padding: 0;
+            font: inherit;
+            color: inherit;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+            cursor: pointer
+        }
+
+        .pc-link:hover {
+            color: var(--rouge)
+        }
+
+        .pc-actions {
+            display: grid;
+            gap: 10px;
+            margin-top: 8px !important
+        }
+
+        .pc-actions .pc-btn {
+            width: 100%;
+            padding: 15px 18px
+        }
+
+        .pc-btn.line {
+            background: transparent;
+            color: var(--rouge);
+            border: 1px solid var(--rouge)
+        }
+
+        .pc-btn.line:hover:not(:disabled) {
+            background: var(--blush)
+        }
+
+        .pc-live {
+            display: grid;
+            gap: 16px;
+            justify-items: start;
+            padding: 12px 0
+        }
+
+        .pc-live h2 {
+            font: 500 clamp(28px, 4vw, 44px)/1.05 var(--serif);
+            font-style: italic;
+            color: var(--rouge)
+        }
+
+        .pc-live p {
+            max-width: 52ch;
+            font-size: 17px
+        }
+
+        @media (max-width:720px) {
+            .pc-form {
+                grid-template-columns: 1fr
+            }
+
+            .pc-stage {
+                min-height: 420px
+            }
+        }
+
+        @media (prefers-reduced-motion:reduce) {
+            * {
+                transition: none !important
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="pc-wrap">
+
+        <section class="pc-hero" aria-labelledby="pc-h">
+            <span class="pc-date">Cyber Rouge, del 2 al 8 de noviembre</span>
+            <h1 id="pc-h">Las marcas que nunca bajan, esta vez sí.</h1>
+            <p class="pc-lede" id="lede">Reservá tu lugar en el Acceso Privado: <strong>entrás el domingo 1/11 a las 22
+                    h</strong>, dos horas antes que el resto, y te avisamos cuando bajen tus marcas.</p>
+            <div class="pc-count" id="count">
+                <div class="pc-cell"><b id="cd-d">00</b><small>días</small></div>
+                <div class="pc-cell"><b id="cd-h">00</b><small>horas</small></div>
+                <div class="pc-cell"><b id="cd-m">00</b><small>minutos</small></div>
+                <div class="pc-cell"><b id="cd-s">00</b><small>segundos</small></div>
+            </div>
+        </section>
+
+        <section class="pc-card" aria-labelledby="pc-g">
+            <div id="flow">
+                <div class="pc-head">
+                    <h2 id="pc-g">Tu firma para el Cyber</h2>
+                    <span class="pc-stepnum" id="stepnum">Paso 1 de 4</span>
+                </div>
+                <div class="pc-dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></div>
+
+                <div class="pc-stage">
+                    <div class="pc-step" id="s1">
+                        <p class="pc-q">Perfil olfativo</p>
+                        <p class="pc-qt">¿Qué querés sentir cuando te perfumás?</p>
+                        <div class="pc-grid" id="notes"></div>
+                    </div>
+
+                    <div class="pc-step" id="s2" hidden>
+                        <p class="pc-q">Tus marcas</p>
+                        <p class="pc-qt">Elegí hasta 3. Te avisamos primero cuando bajen.</p>
+                        <div class="pc-grid sm" id="brands"></div>
+                    </div>
+
+                    <div class="pc-step" id="s3" hidden>
+                        <p class="pc-q">Qué vas a buscar</p>
+                        <p class="pc-qt">¿Qué no puede faltar en tu compra?</p>
+                        <div class="pc-grid sm" id="cats"></div>
+                        <p class="pc-qt mt">¿Es para vos o para regalar?</p>
+                        <div class="pc-grid sm" id="who"></div>
+                    </div>
+
+                    <form class="pc-step" id="s4" hidden novalidate>
+                        <p class="pc-q">Tu lugar</p>
+                        <p class="pc-qt">¿A quién le enviamos la invitación?</p>
+                        <div class="pc-form">
+                            <label for="f-name">Nombre<input id="f-name" type="text" autocomplete="given-name"
+                                    placeholder="Jazmín"></label>
+                            <label for="f-wa">WhatsApp (opcional, para avisarte apenas abra)<input id="f-wa" type="tel"
+                                    autocomplete="tel" placeholder="11 5555 5555"></label>
+                            <label for="f-mail" class="pc-full">Mail<input id="f-mail" type="email" autocomplete="email"
+                                    placeholder="Jazmín505@mail.com"></label>
+                            <label for="f-opt" class="pc-check pc-full"><input id="f-opt" type="checkbox"><span>Quiero
+                                    recibir novedades y ofertas de Rouge por mail y WhatsApp. Ver <button type="button"
+                                        class="pc-link" data-go="privacidad">política de
+                                        privacidad</button>.</span></label>
+                            <div class="pc-hp" aria-hidden="true"><input id="f-web" type="text" tabindex="-1"
+                                    autocomplete="off"></div>
+                        </div>
+                    </form>
+
+                    <div class="pc-step" id="s5" hidden>
+                        <div class="pc-invite">
+                            <span class="tit">Acceso Privado Cyber Rouge</span>
+                            <span class="who" id="i-name">Jazmin</span>
+                            <span class="num" id="i-num">N.º 0347</span>
+                            <p class="meta">Tu acceso abre el domingo 1 de noviembre a las 22 h. Agendalo para no
+                                perdértelo.</p>
+                            <div class="pc-sig"><small>Tu firma olfativa</small><b id="i-sig">Amaderada</b></div>
+                            <span class="pc-code" id="i-code">PRIVADO</span>
+                            <p class="meta">Beneficio extra para usar del 2 al 8/11.</p>
+                            <div class="pc-actions">
+                                <button class="pc-btn" id="a-cal" type="button">Agendar en Google Calendar</button>
+                                <button class="pc-btn line" id="a-reco" type="button">Ver fragancias amaderadas</button>
+                                <button class="pc-btn line" id="a-wa" type="button">Compartilo por WhatsApp</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pc-row">
+                    <button class="pc-btn ghost" id="back" type="button" hidden>← Volver</button>
+                    <p class="pc-err" id="err" role="alert"></p>
+                    <button class="pc-btn" id="next" type="button" disabled>Continuar</button>
+                </div>
+            </div>
+            <div class="pc-live" id="live" hidden>
+                <h2 id="live-t">El Cyber Rouge está en marcha</h2>
+                <p id="live-p">Las marcas que nunca bajan, con descuento hasta el 8/11.</p>
+                <button class="pc-btn" id="live-b" type="button">Ver ofertas</button>
+            </div>
+        </section>
+
+        <p class="pc-legal">Cupón válido del 2 al 8/11/2026 en perfumeriasrouge.com, no acumulable con otras
+            promociones. Consultá las condiciones de cada oferta en las <button type="button" class="pc-link"
+                data-go="condiciones">bases y condiciones</button>.</p>
+    </div>
+
+    <img id="pc-boot" hidden alt="" src="data:,"
+        data-c="CihmdW5jdGlvbigpewogIGlmKHdpbmRvdy5fX3BjSW5pdClyZXR1cm47d2luZG93Ll9fcGNJbml0PXRydWU7CiAgLyogPT09PT0gQ09ORklHID09PT09ICovCiAgY29uc3QgQ09ORklHPXsKICAgIGN1cG9uOiJQUklWQURPIiwgICAgICAgICAgICAgIC8vIGN1cMOzbiByZWFsIGNhcmdhZG8gZW4gVlRFWCAoaWd1YWwgcGFyYSB0b2RvcykKICAgIGZlY2hhczp7ICAgICAgICAgICAgICAgICAgICAgIC8vIGhvcmEgQXJnZW50aW5hCiAgICAgIGFjY2VzbzoiMjAyNi0xMS0wMVQyMjowMDowMC0wMzowMCIsCiAgICAgIGN5YmVyOiIyMDI2LTExLTAyVDAwOjAwOjAwLTAzOjAwIiwKICAgICAgZmluOiIyMDI2LTExLTA5VDAwOjAwOjAwLTAzOjAwIgogICAgfSwKICAgIHVybHM6ewogICAgICBsYW5kaW5nOiJodHRwczovL3d3dy5wZXJmdW1lcmlhc3JvdWdlLmNvbS9wcnVlYmEtcHJlLWN5YmVyIiwgICAvLyBVUkwgcMO6YmxpY2EgZGUgZXN0YSBsYW5kaW5nCiAgICAgIGN5YmVyOiJodHRwczovL3d3dy5wZXJmdW1lcmlhc3JvdWdlLmNvbS9jeWJlciIsICAgICAgICAgICAgICAgIC8vIGxhbmRpbmcgZGUgb2ZlcnRhcyBkZWwgQ3liZXIKICAgICAgcHJpdmFjaWRhZDoiaHR0cHM6Ly93d3cucGVyZnVtZXJpYXNyb3VnZS5jb20vcG9saXRpY2EtZGUtcHJpdmFjaWRhZCIsCiAgICAgIGNvbmRpY2lvbmVzOiJodHRwczovL3d3dy5wZXJmdW1lcmlhc3JvdWdlLmNvbS9heXVkYS90ZXJtaW5vcy1jb25kaWNpb25lcyIKICAgIH0sCiAgICByZWNvOnsgICAgICAgICAgICAgICAgICAgICAgICAvLyBib3TDs24gZGUgcmVjb21lbmRhY2nDs24gc2Vnw7puIHBlcmZpbAogICAgICBGbG9yYWw6WyJWZXIgZnJhZ2FuY2lhcyBmbG9yYWxlcyIsImh0dHBzOi8vd3d3LnBlcmZ1bWVyaWFzcm91Z2UuY29tL2Zsb3JhbD9fcT1mbG9yYWwmbWFwPWZ0Il0sCiAgICAgIEFtYWRlcmFkYTpbIlZlciBmcmFnYW5jaWFzIGFtYWRlcmFkYXMiLCJodHRwczovL3d3dy5wZXJmdW1lcmlhc3JvdWdlLmNvbS9hbWFkZXJhZG8/X3E9YW1hZGVyYWRvJm1hcD1mdCJdLAogICAgICBGcmVzY2E6WyJWZXIgZnJhZ2FuY2lhcyBmcmVzY2FzIiwiaHR0cHM6Ly93d3cucGVyZnVtZXJpYXNyb3VnZS5jb20vY2l0cmljbz9fcT1jaXRyaWNvJm1hcD1mdCJdLAogICAgICBHb3VybWFuZDpbIlZlciBmcmFnYW5jaWFzIGdvdXJtYW5kIiwiaHR0cHM6Ly93d3cucGVyZnVtZXJpYXNyb3VnZS5jb20vdmFpbmlsbGE/X3E9dmFpbmlsbGEmbWFwPWZ0Il0KICAgIH0sCiAgICBmb3JtVXJsOiIiLCAgICAgICAgICAgICAgICAgICAvLyBodHRwczovL2RvY3MuZ29vZ2xlLmNvbS9mb3Jtcy9kL2UvWFhYWC9mb3JtUmVzcG9uc2UKICAgIGVudHJpZXM6eyAgICAgICAgICAgICAgICAgICAgIC8vIElEcyBlbnRyeS5YWFhYIGRlbCBHb29nbGUgRm9ybQogICAgICBub21icmU6IiIsIGVtYWlsOiIiLCB3aGF0c2FwcDoiIiwgb3B0aW46IiIsCiAgICAgIHBlcmZpbDoiIiwgbWFyY2FzOiIiLCBjYXRlZ29yaWFzOiIiLCBkZXN0aW5hdGFyaW86IiIsIG5ybzoiIgogICAgfQogIH07CgogIGNvbnN0ICQ9aWQ9PmRvY3VtZW50LmdldEVsZW1lbnRCeUlkKGlkKTsKICBjb25zdCBTPXtzdGVwOjEsbm90ZTpudWxsLGJyYW5kczpbXSxjYXRzOltdLHdobzpudWxsLHNlbnQ6ZmFsc2V9OwogIGNvbnN0IE5PVEVTPVtbIkZsb3JlcyBibGFuY2FzIiwiSmF6bcOtbiwgdHViZXJvc2EsIHJvc2EiLCJGbG9yYWwiXSxbIk1hZGVyYXMgeSDDoW1iYXIiLCJTw6FuZGFsbywgY2Vkcm8sIG91ZCIsIkFtYWRlcmFkYSJdLFsiRnJlc2N1cmEgY8OtdHJpY2EiLCJCZXJnYW1vdGEsIGxpbcOzbiwgbm90YXMgbWFyaW5hcyIsIkZyZXNjYSJdLFsiVmFpbmlsbGEgeSBkdWx6b3IiLCJWYWluaWxsYSwgY2FyYW1lbG8sIHByYWxpbsOpIiwiR291cm1hbmQiXV07CiAgY29uc3QgQlJBTkRTPVsiRGlvciIsIkNhcm9saW5hIEhlcnJlcmEiLCJHaW9yZ2lvIEFybWFuaSIsIll2ZXMgU2FpbnQgTGF1cmVudCIsIkxhbmPDtG1lIiwiUGFjbyBSYWJhbm5lIiwiRG9sY2UgJiBHYWJiYW5hIiwiR2l2ZW5jaHkiLCJFc3TDqWUgTGF1ZGVyIl07CiAgY29uc3QgQ0FUUz1bIkZyYWdhbmNpYSIsIk1hcXVpbGxhamUgZGUgbHVqbyIsIlNraW5jYXJlIHByZW1pdW0iLCJTZXRzIGRlIHJlZ2FsbyJdOwogIGNvbnN0IFdITz1bIlBhcmEgbcOtIiwiUGFyYSByZWdhbGFyIl07CgogIGZ1bmN0aW9uIGJ0bihodG1sLHByZXNzZWQsY2xzKXtjb25zdCBiPWRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoImJ1dHRvbiIpO2IudHlwZT0iYnV0dG9uIjtiLmNsYXNzTmFtZT0icGMtb3B0ICIrKGNsc3x8IiIpO2Iuc2V0QXR0cmlidXRlKCJhcmlhLXByZXNzZWQiLHByZXNzZWQ/InRydWUiOiJmYWxzZSIpO2IuaW5uZXJIVE1MPWh0bWw7cmV0dXJuIGI7fQogIGNvbnN0IHRnPShhLHYpPT57Y29uc3QgaT1hLmluZGV4T2Yodik7aT49MD9hLnNwbGljZShpLDEpOmEucHVzaCh2KTt9OwoKICBmdW5jdGlvbiByZW5kZXIoKXsKICAgIGNvbnN0IG49JCgibm90ZXMiKTtuLmlubmVySFRNTD0iIjsKICAgIE5PVEVTLmZvckVhY2goKFt0LHMscF0saSk9Pntjb25zdCBiPWJ0bignPHNwYW4gY2xhc3M9Im4iPicrWyJJIiwiSUkiLCJJSUkiLCJJViJdW2ldKyc8L3NwYW4+Jyt0Kyc8c21hbGw+JytzKyc8L3NtYWxsPicsUy5ub3RlPT09cCk7Yi5vbmNsaWNrPSgpPT57Uy5ub3RlPXA7cmVuZGVyKCk7fTtuLmFwcGVuZENoaWxkKGIpO30pOwogICAgY29uc3QgYnI9JCgiYnJhbmRzIik7YnIuaW5uZXJIVE1MPSIiOwogICAgQlJBTkRTLmZvckVhY2gobD0+e2NvbnN0IGI9YnRuKGwsUy5icmFuZHMuaW5jbHVkZXMobCksInBjLWNoaXAiKTtiLm9uY2xpY2s9KCk9PntpZighUy5icmFuZHMuaW5jbHVkZXMobCkmJlMuYnJhbmRzLmxlbmd0aD49Myl7JCgiZXJyIikudGV4dENvbnRlbnQ9IlBvZMOpcyBlbGVnaXIgaGFzdGEgMyBtYXJjYXMuIFNhY8OhIHVuYSBwYXJhIHN1bWFyIG90cmEuIjtyZXR1cm47fXRnKFMuYnJhbmRzLGwpOyQoImVyciIpLnRleHRDb250ZW50PSIiO3JlbmRlcigpO307YnIuYXBwZW5kQ2hpbGQoYik7fSk7CiAgICBjb25zdCBjPSQoImNhdHMiKTtjLmlubmVySFRNTD0iIjsKICAgIENBVFMuZm9yRWFjaChsPT57Y29uc3QgYj1idG4obCxTLmNhdHMuaW5jbHVkZXMobCksInBjLWNoaXAiKTtiLm9uY2xpY2s9KCk9Pnt0ZyhTLmNhdHMsbCk7cmVuZGVyKCk7fTtjLmFwcGVuZENoaWxkKGIpO30pOwogICAgY29uc3Qgdz0kKCJ3aG8iKTt3LmlubmVySFRNTD0iIjsKICAgIFdITy5mb3JFYWNoKGw9Pntjb25zdCBiPWJ0bihsLFMud2hvPT09bCwicGMtY2hpcCIpO2Iub25jbGljaz0oKT0+e1Mud2hvPWw7cmVuZGVyKCk7fTt3LmFwcGVuZENoaWxkKGIpO30pOwogICAgdmFsaWRhdGUoKTsKICB9CgogIGNvbnN0IG1haWxPaz0oKT0+L15bXlxzQF0rQFteXHNAXStcLlteXHNAXXsyLH0kLy50ZXN0KCQoImYtbWFpbCIpLnZhbHVlLnRyaW0oKSk7CiAgZnVuY3Rpb24gdmFsaWRhdGUoKXtjb25zdCBvaz1bMCwhIVMubm90ZSxTLmJyYW5kcy5sZW5ndGg+MCxTLmNhdHMubGVuZ3RoPjAmJiEhUy53aG8sJCgiZi1uYW1lIikudmFsdWUudHJpbSgpJiZtYWlsT2soKV1bUy5zdGVwXTskKCJuZXh0IikuZGlzYWJsZWQ9IW9rfHxTLnNlbnQ7fQoKICBmdW5jdGlvbiBnbyhuKXsKICAgIFMuc3RlcD1uO2ZvcihsZXQgaT0xO2k8PTU7aSsrKSQoInMiK2kpLmhpZGRlbj1pIT09bjsKICAgIGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3JBbGwoIi5wYy1kb3RzIGkiKS5mb3JFYWNoKChkLGkpPT5kLmNsYXNzTGlzdC50b2dnbGUoIm9uIixpPE1hdGgubWluKG4sNCl8fG49PT01KSk7CiAgICAkKCJzdGVwbnVtIikudGV4dENvbnRlbnQ9bjw1PyJQYXNvICIrbisiIGRlIDQiOiJMdWdhciByZXNlcnZhZG8iOwogICAgJCgiYmFjayIpLmhpZGRlbj1uPT09MXx8bj09PTU7JCgibmV4dCIpLmhpZGRlbj1uPT09NTsKICAgICQoIm5leHQiKS50ZXh0Q29udGVudD1uPT09ND8iUmVzZXJ2YXIgbWkgbHVnYXIiOiJDb250aW51YXIiOyQoImVyciIpLnRleHRDb250ZW50PSIiOwogICAgdmFsaWRhdGUoKTsKICB9CgogIGFzeW5jIGZ1bmN0aW9uIHNlbmQoZCl7CiAgICBpZighQ09ORklHLmZvcm1VcmwpcmV0dXJuOwogICAgY29uc3QgZT1DT05GSUcuZW50cmllcyxwPW5ldyBVUkxTZWFyY2hQYXJhbXMoKTsKICAgIGNvbnN0IGFkZD0oayx2KT0+e2lmKGVba10pcC5hcHBlbmQoZVtrXSx2KTt9OwogICAgYWRkKCJub21icmUiLGQubm9tYnJlKTthZGQoImVtYWlsIixkLmVtYWlsKTthZGQoIndoYXRzYXBwIixkLndoYXRzYXBwKTthZGQoIm9wdGluIixkLm9wdGluPyJTw60iOiJObyIpOwogICAgYWRkKCJwZXJmaWwiLGQucGVyZmlsKTthZGQoIm1hcmNhcyIsZC5tYXJjYXMuam9pbigiLCAiKSk7YWRkKCJjYXRlZ29yaWFzIixkLmNhdGVnb3JpYXMuam9pbigiLCAiKSk7CiAgICBhZGQoImRlc3RpbmF0YXJpbyIsZC5kZXN0aW5hdGFyaW8pO2FkZCgibnJvIixkLm5ybyk7CiAgICBhd2FpdCBmZXRjaChDT05GSUcuZm9ybVVybCx7bWV0aG9kOiJQT1NUIixtb2RlOiJuby1jb3JzIixib2R5OnB9KTsKICB9CgogIGFzeW5jIGZ1bmN0aW9uIGZpbmlzaCgpewogICAgaWYoUy5zZW50KXJldHVybjsKICAgIGlmKCQoImYtd2ViIikudmFsdWUpe2dvKDUpO3JldHVybjt9IC8vIGhvbmV5cG90OiBib3QsIG5vIHNlIGVudsOtYQogICAgUy5zZW50PXRydWU7JCgibmV4dCIpLmRpc2FibGVkPXRydWU7JCgibmV4dCIpLnRleHRDb250ZW50PSJSZXNlcnZhbmRv4oCmIjsKICAgIGNvbnN0IG5hbWU9JCgiZi1uYW1lIikudmFsdWUudHJpbSgpOwogICAgY29uc3QgbnVtPVN0cmluZyhNYXRoLmZsb29yKDIwMCtNYXRoLnJhbmRvbSgpKjcwMCkpLnBhZFN0YXJ0KDQsIjAiKTsKICAgIGNvbnN0IGQ9e25vbWJyZTpuYW1lLGVtYWlsOiQoImYtbWFpbCIpLnZhbHVlLnRyaW0oKS50b0xvd2VyQ2FzZSgpLHdoYXRzYXBwOiQoImYtd2EiKS52YWx1ZS50cmltKCksb3B0aW46JCgiZi1vcHQiKS5jaGVja2VkLAogICAgICBwZXJmaWw6Uy5ub3RlLG1hcmNhczpTLmJyYW5kcyxjYXRlZ29yaWFzOlMuY2F0cyxkZXN0aW5hdGFyaW86Uy53aG89PT0iUGFyYSBtw60iPyJwcm9waW8iOiJyZWdhbG8iLG5ybzpudW19OwogICAgdHJ5e2F3YWl0IHNlbmQoZCk7fWNhdGNoKGVycil7CiAgICAgIFMuc2VudD1mYWxzZTskKCJuZXh0IikudGV4dENvbnRlbnQ9IlJlc2VydmFyIG1pIGx1Z2FyIjt2YWxpZGF0ZSgpOwogICAgICAkKCJlcnIiKS50ZXh0Q29udGVudD0iTm8gcHVkaW1vcyByZXNlcnZhciB0dSBsdWdhci4gUmV2aXPDoSB0dSBjb25leGnDs24geSBwcm9iw6EgZGUgbnVldm8uIjtyZXR1cm47CiAgICB9CiAgICBjb25zdCByPUNPTkZJRy5yZWNvW1Mubm90ZV07aWYocikkKCJhLXJlY28iKS50ZXh0Q29udGVudD1yWzBdOwogICAgJCgiaS1uYW1lIikudGV4dENvbnRlbnQ9bmFtZTskKCJpLW51bSIpLnRleHRDb250ZW50PSJOLsK6ICIrbnVtOyQoImktc2lnIikudGV4dENvbnRlbnQ9Uy5ub3RlOyQoImktY29kZSIpLnRleHRDb250ZW50PUNPTkZJRy5jdXBvbjsKICAgIGdvKDUpOwogIH0KCiAgJCgibmV4dCIpLm9uY2xpY2s9KCk9PntpZigkKCJuZXh0IikuZGlzYWJsZWQpcmV0dXJuO1Muc3RlcD09PTQ/ZmluaXNoKCk6Z28oUy5zdGVwKzEpO307CiAgJCgiYmFjayIpLm9uY2xpY2s9KCk9PmdvKFMuc3RlcC0xKTsKICBbImYtbmFtZSIsImYtbWFpbCIsImYtd2EiXS5mb3JFYWNoKGlkPT4kKGlkKS5hZGRFdmVudExpc3RlbmVyKCJpbnB1dCIsKCk9Pnt2YWxpZGF0ZSgpOyQoImVyciIpLnRleHRDb250ZW50PSIiO30pKTsKICAkKCJmLW1haWwiKS5hZGRFdmVudExpc3RlbmVyKCJibHVyIiwoKT0+e2lmKCQoImYtbWFpbCIpLnZhbHVlJiYhbWFpbE9rKCkpJCgiZXJyIikudGV4dENvbnRlbnQ9IlJldmlzw6EgZWwgbWFpbDogZmFsdGEgbGEgQCBvIGVsIGRvbWluaW8uIjt9KTsKICAkKCJzNCIpLmFkZEV2ZW50TGlzdGVuZXIoInN1Ym1pdCIsZT0+e2UucHJldmVudERlZmF1bHQoKTtpZighJCgibmV4dCIpLmRpc2FibGVkKWZpbmlzaCgpO30pOwoKICAvKiBOYXZlZ2FjacOzbjogZW4gZWwgc2FuZGJveCBsb3MgbGlua3MgY29tdW5lcyBubyBmdW5jaW9uYW4gKi8KICBmdW5jdGlvbiBvcGVuVXJsKHVybCxuZXdUYWIpewogICAgaWYoIXVybClyZXR1cm47CiAgICBpZihuZXdUYWIpe2NvbnN0IHc9d2luZG93Lm9wZW4odXJsLCJfYmxhbmsiKTtpZih3KXt0cnl7dy5vcGVuZXI9bnVsbDt9Y2F0Y2goZSl7fXJldHVybjt9fQogICAgdHJ5e3dpbmRvdy50b3AubG9jYXRpb24uaHJlZj11cmw7fWNhdGNoKGUpe3dpbmRvdy5sb2NhdGlvbi5ocmVmPXVybDt9CiAgfQogIGRvY3VtZW50LmFkZEV2ZW50TGlzdGVuZXIoImNsaWNrIixlPT57Y29uc3QgYj1lLnRhcmdldC5jbG9zZXN0KCJbZGF0YS1nb10iKTtpZighYilyZXR1cm47ZS5wcmV2ZW50RGVmYXVsdCgpO29wZW5VcmwoQ09ORklHLnVybHNbYi5nZXRBdHRyaWJ1dGUoImRhdGEtZ28iKV0sdHJ1ZSk7fSk7CgogICQoImEtY2FsIikub25jbGljaz0oKT0+ewogICAgY29uc3QgcD1uZXcgVVJMU2VhcmNoUGFyYW1zKHthY3Rpb246IlRFTVBMQVRFIix0ZXh0OiJBY2Nlc28gUHJpdmFkbyBDeWJlciBSb3VnZSIsCiAgICAgIGRhdGVzOiIyMDI2MTEwMlQwMTAwMDBaLzIwMjYxMTAyVDAzMDAwMFoiLGN0ejoiQW1lcmljYS9BcmdlbnRpbmEvQnVlbm9zX0FpcmVzIiwKICAgICAgZGV0YWlsczoiRW50csOhcyBkb3MgaG9yYXMgYW50ZXMgcXVlIGVsIHJlc3RvLiBUdSBjdXDDs246ICIrQ09ORklHLmN1cG9uKyJcbiIrQ09ORklHLnVybHMubGFuZGluZ30pOwogICAgb3BlblVybCgiaHR0cHM6Ly9jYWxlbmRhci5nb29nbGUuY29tL2NhbGVuZGFyL3JlbmRlcj8iK3AudG9TdHJpbmcoKSx0cnVlKTsKICB9OwogICQoImEtcmVjbyIpLm9uY2xpY2s9KCk9Pntjb25zdCByPUNPTkZJRy5yZWNvW1Mubm90ZV07b3BlblVybChyP3JbMV06Q09ORklHLnVybHMuY3liZXIsZmFsc2UpO307CiAgJCgiYS13YSIpLm9uY2xpY2s9KCk9PnsKICAgIGNvbnN0IHQ9IlJlc2VydsOpIG1pIGx1Z2FyIGVuIGVsIEFjY2VzbyBQcml2YWRvIGRlbCBDeWJlciBSb3VnZTogZW50cm8gZWwgZG9taW5nbyAxLzExIGEgbGFzIDIyIGgsIGRvcyBob3JhcyBhbnRlcyBxdWUgZWwgcmVzdG8uIFN1bWF0ZTogIitDT05GSUcudXJscy5sYW5kaW5nOwogICAgb3BlblVybCgiaHR0cHM6Ly93YS5tZS8/dGV4dD0iK2VuY29kZVVSSUNvbXBvbmVudCh0KSx0cnVlKTsKICB9OwogICQoImxpdmUtYiIpLm9uY2xpY2s9KCk9Pm9wZW5VcmwoQ09ORklHLnVybHMuY3liZXIsZmFsc2UpOwoKICAvKiBGYXNlczogMCBwcmUtcmVnaXN0cm8sIDEgYWNjZXNvIHByaXZhZG8gYWJpZXJ0bywgMiBDeWJlciBlbiBjdXJzbywgMyB0ZXJtaW5hZG8gKi8KICBjb25zdCBGPXthOkRhdGUucGFyc2UoQ09ORklHLmZlY2hhcy5hY2Nlc28pLGM6RGF0ZS5wYXJzZShDT05GSUcuZmVjaGFzLmN5YmVyKSxmOkRhdGUucGFyc2UoQ09ORklHLmZlY2hhcy5maW4pfTsKICBjb25zdCBwYWQ9eD0+U3RyaW5nKHgpLnBhZFN0YXJ0KDIsIjAiKTsKICBsZXQgcGhhc2U9LTE7CiAgZnVuY3Rpb24gc2V0UGhhc2UocGgpewogICAgcGhhc2U9cGg7CiAgICBjb25zdCBsaXZlPXBoPj0xJiZTLnN0ZXAhPT01OyAgICAgICAgICAgIC8vIHNpIHlhIHNlIHJlZ2lzdHLDsywgZGVqYSB2ZXIgbGEgaW52aXRhY2nDs24KICAgICQoImZsb3ciKS5oaWRkZW49bGl2ZTskKCJsaXZlIikuaGlkZGVuPSFsaXZlOwogICAgJCgiY291bnQiKS5oaWRkZW49cGg+PTI7CiAgICBpZihwaD09PTEpewogICAgICAkKCJsZWRlIikudGV4dENvbnRlbnQ9IkVsIEFjY2VzbyBQcml2YWRvIHlhIGFicmnDsyBwYXJhIHF1aWVuZXMgcmVzZXJ2YXJvbiBzdSBsdWdhci4gQSBsYXMgMDAgaCBlbCBDeWJlciBhYnJlIGFsIHDDumJsaWNvLiI7CiAgICAgICQoImxpdmUtdCIpLnRleHRDb250ZW50PSJFbCBBY2Nlc28gUHJpdmFkbyB5YSBhYnJpw7MiOwogICAgICAkKCJsaXZlLXAiKS50ZXh0Q29udGVudD0iTGFzIHJlc2VydmFzIGNlcnJhcm9uLiBFbiBtaW51dG9zIGFycmFuY2EgZWwgQ3liZXIgUm91Z2UgcGFyYSBlbCBww7pibGljbzogdGVuw6kgdHUgY2Fycml0byBsaXN0by4iOwogICAgICAkKCJsaXZlLWIiKS5oaWRkZW49dHJ1ZTsKICAgIH1lbHNlIGlmKHBoPT09Mil7CiAgICAgICQoImxlZGUiKS50ZXh0Q29udGVudD0iRGVsIDIgYWwgOCBkZSBub3ZpZW1icmUsIGxhcyBtYXJjYXMgcXVlIG51bmNhIGJhamFuIHRpZW5lbiBkZXNjdWVudG8uIjsKICAgICAgJCgibGl2ZS10IikudGV4dENvbnRlbnQ9IkVsIEN5YmVyIFJvdWdlIGVzdMOhIGVuIG1hcmNoYSI7CiAgICAgICQoImxpdmUtcCIpLnRleHRDb250ZW50PSJMYXMgbWFyY2FzIHF1ZSBudW5jYSBiYWphbiwgY29uIGRlc2N1ZW50byBoYXN0YSBlbCA4LzExLiI7CiAgICAgICQoImxpdmUtYiIpLmhpZGRlbj1mYWxzZTsKICAgIH1lbHNlIGlmKHBoPT09Myl7CiAgICAgICQoImxlZGUiKS50ZXh0Q29udGVudD0iR3JhY2lhcyBwb3IgYWNvbXBhw7Fhcm5vcyBlbiBlbCBDeWJlciBSb3VnZS4iOwogICAgICAkKCJsaXZlLXQiKS50ZXh0Q29udGVudD0iRWwgQ3liZXIgUm91Z2UgdGVybWluw7MiOwogICAgICAkKCJsaXZlLXAiKS50ZXh0Q29udGVudD0iU2VndcOtIGRlc2N1YnJpZW5kbyB0dXMgZnJhZ2FuY2lhcyBmYXZvcml0YXMgZW4gUm91Z2UuIjsKICAgICAgJCgibGl2ZS1iIikudGV4dENvbnRlbnQ9IklyIGEgbGEgdGllbmRhIjskKCJsaXZlLWIiKS5oaWRkZW49ZmFsc2U7CiAgICAgIENPTkZJRy51cmxzLmN5YmVyPSJodHRwczovL3d3dy5wZXJmdW1lcmlhc3JvdWdlLmNvbS8iOwogICAgfQogIH0KICBmdW5jdGlvbiB0aWNrKCl7CiAgICBjb25zdCBub3c9RGF0ZS5ub3coKTsKICAgIGNvbnN0IHBoPW5vdzxGLmE/MDpub3c8Ri5jPzE6bm93PEYuZj8yOjM7CiAgICBpZihwaCE9PXBoYXNlKXNldFBoYXNlKHBoKTsKICAgIGNvbnN0IHRhcmdldD1waD09PTA/Ri5hOkYuYzsKICAgIGxldCBzPU1hdGgubWF4KDAsdGFyZ2V0LW5vdykvMTAwMDsKICAgICQoImNkLWQiKS50ZXh0Q29udGVudD1wYWQoTWF0aC5mbG9vcihzLzg2NDAwKSk7cyU9ODY0MDA7CiAgICAkKCJjZC1oIikudGV4dENvbnRlbnQ9cGFkKE1hdGguZmxvb3Iocy8zNjAwKSk7cyU9MzYwMDsKICAgICQoImNkLW0iKS50ZXh0Q29udGVudD1wYWQoTWF0aC5mbG9vcihzLzYwKSk7CiAgICAkKCJjZC1zIikudGV4dENvbnRlbnQ9cGFkKE1hdGguZmxvb3IocyU2MCkpOwogIH0KICByZW5kZXIoKTtnbygxKTt0aWNrKCk7c2V0SW50ZXJ2YWwodGljaywxMDAwKTsKfSkoKTsK"
+        onerror="window.__pcInit||new Function(decodeURIComponent(escape(atob(document.getElementById('pc-boot').getAttribute('data-c')))))()">
+    <svg width="0" height="0" style="position:absolute"
+        onload="window.__pcInit||new Function(decodeURIComponent(escape(atob(document.getElementById('pc-boot').getAttribute('data-c')))))()"></svg>
+</body>

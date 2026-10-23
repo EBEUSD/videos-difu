@@ -1,0 +1,449 @@
+<head>
+    <style>
+        @font-face {
+            font-family: "RgxInter";
+            src: url("https://raw.githubusercontent.com/google/fonts/main/ofl/inter/Inter%5Bopsz%2Cwght%5D.ttf") format("truetype");
+            font-weight: 100 900;
+            font-display: swap;
+        }
+
+        .rgx {
+            margin: 0 auto !important;
+            max-width: 1240px;
+            font-family: "RgxInter", Arial, sans-serif;
+            color: #111;
+            background: #f1f1f1;
+            border-radius: 12px;
+            box-sizing: border-box;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .rgx * {
+            box-sizing: border-box;
+            margin: 0 !important;
+        }
+
+        /* Carrusel (fade, ambos slides en la misma celda para que no salte el alto) */
+        .rgxTrack {
+            display: grid;
+        }
+
+        .rgxSlide {
+            grid-area: 1 / 1;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity .6s ease, visibility .6s ease;
+        }
+
+        .rgxSlide.rgxOn {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .rgxDots {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            padding: 0 0 10px;
+        }
+
+        .rgxDot {
+            width: 7px;
+            height: 7px;
+            border-radius: 7px;
+            background: #c9c9c9;
+            border: 0;
+            padding: 0;
+            cursor: pointer;
+            transition: all .3s ease;
+        }
+
+        .rgxDot.rgxOn {
+            width: 20px;
+            background: #8B0000;
+        }
+
+        /* Layout de cada banner */
+        .rgxInner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+            padding: 16px 32px 8px;
+            min-height: 84px;
+        }
+
+        .rgxBrand {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .rgxTruck {
+            width: 110px;
+            height: 51px;
+            flex: 0 0 auto;
+        }
+
+        .rgxLogo {
+            height: 58px;
+            width: auto;
+            display: block;
+            flex: 0 0 auto;
+            filter: brightness(0);
+        }
+
+        .rgxTitle {
+            font-size: 40px;
+            font-weight: 800;
+            letter-spacing: -1.2px;
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        .rgxTitle em {
+            font-style: normal;
+            color: #8B0000;
+        }
+
+        .rgxDiv {
+            width: 2px;
+            height: 52px;
+            background: #111;
+            flex: 0 0 auto;
+        }
+
+        .rgxZone {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .rgxPin {
+            width: 30px;
+            height: 40px;
+            flex: 0 0 auto;
+        }
+
+        .rgxZone strong {
+            display: block;
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -.5px;
+            line-height: 1.05;
+            white-space: nowrap;
+        }
+
+        .rgxZone span {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            margin-top: 6px !important;
+            white-space: nowrap;
+        }
+
+        .rgxZone b {
+            font-weight: 800;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .rgxNote {
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 1.5;
+            white-space: nowrap;
+        }
+
+        .rgxNote span {
+            display: block;
+        }
+
+        @media (max-width:1200px) {
+            .rgxInner {
+                gap: 22px;
+                padding: 14px 20px 8px;
+            }
+
+            .rgxBrand {
+                gap: 20px;
+            }
+
+            .rgxTruck {
+                width: 90px;
+                height: 42px;
+            }
+
+            .rgxLogo {
+                height: 48px;
+            }
+
+            .rgxTitle {
+                font-size: 32px;
+            }
+
+            .rgxZone strong {
+                font-size: 21px;
+            }
+        }
+
+        /* Mobile / tablet */
+        @media (max-width:820px) {
+            .rgxInner {
+                flex-direction: column;
+                gap: 12px;
+                padding: 16px 16px 10px;
+                min-height: 0;
+            }
+
+            .rgxDiv {
+                display: none;
+            }
+
+            .rgxBrand {
+                gap: 12px;
+                justify-content: center;
+            }
+
+            .rgxTruck {
+                width: 64px;
+                height: 30px;
+            }
+
+            .rgxLogo {
+                height: 36px;
+            }
+
+            .rgxTitle {
+                font-size: 26px;
+                letter-spacing: -.8px;
+            }
+
+            .rgxZone {
+                width: 100%;
+                justify-content: center;
+                gap: 12px;
+                background: #fff;
+                border-radius: 10px;
+                padding: 12px 14px;
+            }
+
+            .rgxPin {
+                width: 24px;
+                height: 31px;
+            }
+
+            .rgxZone strong {
+                font-size: 20px;
+            }
+
+            .rgxZone span {
+                font-size: 13px;
+                margin-top: 3px !important;
+            }
+
+            .rgxNote {
+                font-size: 11px;
+                color: #555;
+                text-align: center;
+                white-space: normal;
+                line-height: 1.4;
+            }
+
+            .rgxNote span {
+                display: inline;
+            }
+        }
+
+        @media (max-width:380px) {
+            .rgxTitle {
+                font-size: 22px;
+            }
+
+            .rgxTruck {
+                width: 54px;
+                height: 26px;
+            }
+
+            .rgxLogo {
+                height: 30px;
+            }
+
+            .rgxZone strong {
+                font-size: 18px;
+            }
+
+            .rgxZone span {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="rgx" id="rgx">
+        <div class="rgxTrack">
+
+            <!-- SLIDE 1: AMBA GRATIS — lun a vie corte 12:00 · sábado corte 9:00 (sábado zona: "CABA Y ALREDEDORES") -->
+            <div class="rgxSlide rgxOn" data-days="1,2,3,4,5,6" data-start="0" data-cutoff="12" data-cutoff-sat="9">
+                <div class="rgxInner">
+                    <div class="rgxBrand">
+                        <svg class="rgxTruck" viewBox="0 0 120 56" fill="none" stroke="#111" stroke-width="2.5"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 18h18M8 25h14M12 32h10" />
+                            <rect x="28" y="4" width="54" height="36" rx="3" />
+                            <path d="M82 16h16l12 14v10H82z" />
+                            <path d="M28 40h82" />
+                            <circle cx="44" cy="47" r="6" fill="#f1f1f1" />
+                            <circle cx="96" cy="47" r="6" fill="#f1f1f1" />
+                            <text x="55" y="31" text-anchor="middle" font-family="Arial,sans-serif" font-size="24"
+                                font-weight="400" fill="#8B0000" stroke="none">R</text>
+                        </svg>
+                        <div class="rgxTitle"><span class="rgxWhen">LLEGA HOY</span> <em>GRATIS</em></div>
+                    </div>
+                    <div class="rgxDiv"></div>
+                    <div class="rgxZone">
+                        <svg class="rgxPin" viewBox="0 0 34 44" fill="none" stroke="#111" stroke-width="2.5">
+                            <path d="M17 42S3 25 3 15.5a14 14 0 0 1 28 0C31 25 17 42 17 42z" />
+                            <circle cx="17" cy="15.5" r="5" />
+                        </svg>
+                        <div>
+                            <strong class="rgxZoneName" data-def="AMBA" data-sat="CABA Y ALREDEDORES">AMBA</strong>
+                            <span class="rgxSub">Comprando en las próximas <b>--:--:--</b> hs</span>
+                        </div>
+                    </div>
+                    <div class="rgxDiv"></div>
+                    <div class="rgxNote"><span>En artículos seleccionados.</span> <span>No aplica a retiro en
+                            tienda.</span></div>
+                </div>
+            </div>
+
+            <!-- SLIDE 2: CABIFY — todos los días, corte 18:00 (excepciones por fecha: data-ext) -->
+            <div class="rgxSlide" data-days="0,1,2,3,4,5,6" data-start="0" data-cutoff="18" data-cutoff-sat="18"
+                data-ext='{"2026-10-16":20.5}'>
+                <div class="rgxInner">
+                    <div class="rgxBrand">
+                        <img class="rgxLogo"
+                            src="https://rougeb2car.vtexassets.com/assets/vtex.file-manager-graphql/images/a5c79ab4-de2a-4c90-bae8-072f7a83aa0c___9bb7d40c5ed20e5ed2a571163458478b.png"
+                            alt="Cabify">
+                        <div class="rgxTitle"><span class="rgxWhen">LLEGA HOY</span></div>
+                    </div>
+                    <div class="rgxDiv"></div>
+                    <div class="rgxZone">
+                        <svg class="rgxPin" viewBox="0 0 34 44" fill="none" stroke="#111" stroke-width="2.5">
+                            <path d="M17 42S3 25 3 15.5a14 14 0 0 1 28 0C31 25 17 42 17 42z" />
+                            <circle cx="17" cy="15.5" r="5" />
+                        </svg>
+                        <div>
+                            <strong>CABA Y ZONA NORTE</strong>
+                            <span class="rgxSub">Comprando en las próximas <b>--:--:--</b> hs</span>
+                        </div>
+                    </div>
+                    <div class="rgxDiv"></div>
+                    <div class="rgxNote"><span>En artículos seleccionados.</span> <span>No aplica a retiro en
+                            tienda.</span></div>
+                </div>
+            </div>
+
+        </div>
+        <div class="rgxDots" id="rgxDots"></div>
+    </div>
+
+    <script>
+        (function () {
+            var OFFSET = -3 * 3600000, DAY = 86400000, ROTATE_MS = 5000;
+            var DIAS = ["DOMINGO", "LUNES", "MARTES", "MIÉRCOLES", "JUEVES", "VIERNES", "SÁBADO"];
+
+            /* Feriados (lista fija, sin API). Agregar/quitar fechas acá. */
+            var HOL = {};
+            ["2026-01-01", "2026-02-16", "2026-02-17", "2026-03-23", "2026-03-24", "2026-04-02", "2026-04-03",
+                "2026-05-01", "2026-05-25", "2026-06-15", "2026-06-20", "2026-07-09", "2026-07-10", "2026-08-17",
+                "2026-10-12", "2026-11-23", "2026-12-07", "2026-12-08", "2026-12-25",
+                "2027-01-01", "2027-02-08", "2027-02-09", "2027-03-24", "2027-03-26", "2027-04-02",
+                "2027-05-01", "2027-05-25", "2027-06-20", "2027-07-09", "2027-12-08", "2027-12-25"
+            ].forEach(function (f) { HOL[f] = 1; });
+
+            function pad(n) { return (n < 10 ? "0" : "") + n; }
+            function key(d) { return d.getUTCFullYear() + "-" + pad(d.getUTCMonth() + 1) + "-" + pad(d.getUTCDate()); }
+            function fmt(sec) {
+                sec = Math.max(0, Math.floor(sec));
+                return pad(Math.floor(sec / 3600)) + ":" + pad(Math.floor(sec % 3600 / 60)) + ":" + pad(sec % 60);
+            }
+
+            /* Días de entrega por slide (0=dom ... 6=sáb) */
+            function daysOf(el) { return (el.getAttribute("data-days") || "1,2,3,4,5").split(",").map(Number); }
+            function isDel(el, d) { return daysOf(el).indexOf(d.getUTCDay()) !== -1 && !HOL[key(d)]; }
+            function nextDel(el, d) { do { d = new Date(d.getTime() + DAY); } while (!isDel(el, d)); return d; }
+
+            function cutoffFor(el, d) {
+                try {
+                    var ext = JSON.parse(el.getAttribute("data-ext") || "{}");
+                    if (ext[key(d)] != null) return +ext[key(d)];
+                } catch (e) { }
+                var sat = el.getAttribute("data-cutoff-sat");
+                if (d.getUTCDay() === 6 && sat) return +sat;
+                return +el.getAttribute("data-cutoff");
+            }
+
+            var slides = document.querySelectorAll("#rgx .rgxSlide");
+
+            function renderSlide(el, now) {
+                var start = +el.getAttribute("data-start");
+                var today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+                var hNow = now.getUTCHours() + now.getUTCMinutes() / 60 + now.getUTCSeconds() / 3600;
+                var hoy = isDel(el, today) && hNow >= start && hNow < cutoffFor(el, today);
+                var d = hoy ? today : nextDel(el, today);
+                var diff = Math.round((d.getTime() - today.getTime()) / DAY);
+
+                el.querySelector(".rgxWhen").textContent =
+                    diff === 0 ? "LLEGA HOY" : diff === 1 ? "LLEGA MAÑANA" : "LLEGA EL " + DIAS[d.getUTCDay()];
+
+                var zone = el.querySelector(".rgxZoneName");
+                if (zone) {
+                    var satName = zone.getAttribute("data-sat");
+                    zone.textContent = (now.getUTCDay() === 6 && satName) ? satName : zone.getAttribute("data-def");
+                }
+
+                var left = (d.getTime() + cutoffFor(el, d) * 3600000 - now.getTime()) / 1000;
+                el.querySelector(".rgxSub").innerHTML = "Comprando en las próximas <b>" + fmt(left) + "</b> hs";
+            }
+
+            function render() {
+                try {
+                    var now = new Date(Date.now() + OFFSET);
+                    for (var i = 0; i < slides.length; i++) renderSlide(slides[i], now);
+                } catch (e) { console.error("rgx contador:", e); }
+            }
+
+            /* Carrusel */
+            var current = 0, paused = false, dotsWrap = document.getElementById("rgxDots"), dots = [];
+            function show(i) {
+                current = (i + slides.length) % slides.length;
+                for (var k = 0; k < slides.length; k++) {
+                    slides[k].classList.toggle("rgxOn", k === current);
+                    dots[k].classList.toggle("rgxOn", k === current);
+                }
+            }
+            for (var i = 0; i < slides.length; i++) {
+                (function (idx) {
+                    var b = document.createElement("button");
+                    b.className = "rgxDot" + (idx === 0 ? " rgxOn" : "");
+                    b.setAttribute("aria-label", "Banner " + (idx + 1));
+                    b.onclick = function () { show(idx); };
+                    dotsWrap.appendChild(b); dots.push(b);
+                })(i);
+            }
+            var box = document.getElementById("rgx");
+            box.addEventListener("mouseenter", function () { paused = true; });
+            box.addEventListener("mouseleave", function () { paused = false; });
+
+            function start() {
+                render();
+                setInterval(render, 1000);
+                setInterval(function () { if (!paused) show(current + 1); }, ROTATE_MS);
+            }
+            if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
+            else start();
+        })();
+    </script>
+</body>
