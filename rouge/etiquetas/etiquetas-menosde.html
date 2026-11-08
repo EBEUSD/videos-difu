@@ -1,0 +1,530 @@
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Archivo variable: ancho expandido (wdth 125) para títulos y rótulos, normal para los precios -->
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
+    <style>
+        html,
+        body {
+            margin: 0 !important;
+            padding: 0 !important;
+            background: transparent
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        /* Estética KV Cyber Week: rojo pleno con rayado diagonal, blanco y negro */
+        .rgt {
+            --red: #E30613;
+            --ink: #111;
+            background:
+                repeating-linear-gradient(135deg, rgba(0, 0, 0, .06) 0 2px, rgba(0, 0, 0, 0) 2px 22px),
+                var(--red);
+            color: #fff;
+            font-family: 'Archivo', Arial, sans-serif;
+            padding: 30px 0 34px;
+            overflow: hidden
+        }
+
+        /* Rótulos anchos (título, N°, HASTA, botón) */
+        .rgt-wide {
+            font-stretch: 125%;
+            font-variation-settings: "wdth" 125
+        }
+
+        .rgt-in {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 72px
+        }
+
+        .rgt-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 4px
+        }
+
+        .rgt-title {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px 16px;
+            margin: 0;
+            font-size: 28px;
+            font-weight: 900;
+            line-height: 1;
+            text-transform: uppercase;
+            color: #fff
+        }
+
+        /* Corte de línea solo en mobile */
+        .rgt-mbr {
+            display: none
+        }
+
+        .rgt-title mark {
+            padding: 6px 14px 5px;
+            background: var(--ink);
+            color: #fff
+        }
+
+        /* Sello "CYBER WEEK" inclinado */
+        .rgt-stamp {
+            flex-shrink: 0;
+            padding: 8px 16px 7px;
+            background: var(--ink);
+            transform: rotate(-4deg);
+            font-size: 18px;
+            font-weight: 900;
+            line-height: 1;
+            text-transform: uppercase;
+            white-space: nowrap
+        }
+
+        .rgt-stamp b {
+            color: var(--red)
+        }
+
+        /* Cartel: CYBER y WEEK intercambian blanco/rojo y el sello tambalea en cada cambio */
+        .rgt-stamp {
+            animation: rgtWobble 2.4s ease-in-out infinite
+        }
+
+        .rgt-stamp span {
+            animation: rgtSwapA 2.4s steps(1, end) infinite
+        }
+
+        .rgt-stamp b {
+            animation: rgtSwapB 2.4s steps(1, end) infinite
+        }
+
+        @keyframes rgtSwapA {
+            0% {
+                color: #fff
+            }
+
+            50% {
+                color: var(--red)
+            }
+        }
+
+        @keyframes rgtSwapB {
+            0% {
+                color: var(--red)
+            }
+
+            50% {
+                color: #fff
+            }
+        }
+
+        /* rotate (no transform) para sumarse a la inclinación del sello: tambalea después de cada cambio */
+        @keyframes rgtWobble {
+
+            0%,
+            15%,
+            50%,
+            65%,
+            100% {
+                rotate: 0deg
+            }
+
+            3%,
+            53% {
+                rotate: 2deg
+            }
+
+            7%,
+            57% {
+                rotate: -1.5deg
+            }
+
+            11%,
+            61% {
+                rotate: .8deg
+            }
+        }
+
+        .rgt-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 36px
+        }
+
+        .rgt-tag {
+            --r: 0deg;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+            transform-origin: 50% 0;
+            transform: rotate(var(--r));
+            transition: transform .6s cubic-bezier(.34, 1.56, .64, 1);
+            /* Sombra en el contenedor: el clip-path de la etiqueta recortaría un box-shadow */
+            filter: drop-shadow(0 14px 18px rgba(80, 0, 0, .35));
+            -webkit-tap-highlight-color: transparent
+        }
+
+        .rgt-tag:nth-child(1) {
+            --r: -2deg
+        }
+
+        .rgt-tag:nth-child(2) {
+            --r: 1.5deg
+        }
+
+        .rgt-tag:nth-child(3) {
+            --r: -1deg
+        }
+
+        .rgt-tag:nth-child(4) {
+            --r: 2deg
+        }
+
+        .rgt-tag:focus-visible {
+            outline: 3px solid #fff;
+            outline-offset: 6px
+        }
+
+        /* Hilo recto */
+        .rgt-string {
+            display: block;
+            width: 1.5px;
+            height: 40px;
+            background: rgba(255, 255, 255, .75)
+        }
+
+        .rgt-paper {
+            width: 100%;
+            height: 226px;
+            padding: 16px 18px 18px;
+            background: #fff;
+            color: var(--ink);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 9px;
+            text-align: center;
+            clip-path: polygon(20px 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 0 100%, 0 20px)
+        }
+
+        .rgt-hole {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--red);
+            border: 3px solid var(--ink);
+            flex-shrink: 0
+        }
+
+        .rgt-num,
+        .rgt-hasta {
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .22em;
+            line-height: 1;
+            text-transform: uppercase
+        }
+
+        .rgt-line {
+            width: 100%;
+            border-top: 2px dashed #CFCFCF
+        }
+
+        .rgt-hasta {
+            margin-top: 2px;
+            font-size: 14px;
+            letter-spacing: .3em
+        }
+
+        .rgt-price {
+            font-size: 46px;
+            font-weight: 900;
+            line-height: .95;
+            letter-spacing: -.02em;
+            white-space: nowrap
+        }
+
+        .rgt-cta {
+            width: 100%;
+            margin-top: auto;
+            padding: 12px 10px 11px;
+            background: var(--ink);
+            color: #fff;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: .24em;
+            line-height: 1;
+            text-transform: uppercase;
+            transition: background .3s ease, color .3s ease
+        }
+
+        /* N° 04 – edición lujo: etiqueta negra, rótulo rojo, botón rojo */
+        .rgt-tag.is-lux .rgt-paper {
+            background: var(--ink);
+            color: #fff
+        }
+
+        .rgt-tag.is-lux .rgt-hole {
+            background: transparent;
+            border-color: var(--red)
+        }
+
+        .rgt-tag.is-lux .rgt-num {
+            color: var(--red)
+        }
+
+        .rgt-tag.is-lux .rgt-line {
+            border-top-color: #555
+        }
+
+        .rgt-tag.is-lux .rgt-cta {
+            background: var(--red)
+        }
+
+        @media (hover:hover) {
+            .rgt-tag:hover {
+                transform: rotate(0deg) translateY(6px)
+            }
+
+            .rgt-tag:hover .rgt-cta {
+                background: var(--red)
+            }
+
+            .rgt-tag.is-lux:hover .rgt-cta {
+                background: #fff;
+                color: var(--ink)
+            }
+        }
+
+        /* Tablet */
+        @media (max-width:1100px) {
+            .rgt-in {
+                padding: 0 40px
+            }
+
+            .rgt-title {
+                font-size: 22px
+            }
+
+            .rgt-price {
+                font-size: 38px
+            }
+        }
+
+        @media (max-width:1024px) {
+            .rgt-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 24px 40px
+            }
+
+            .rgt-price {
+                font-size: 46px
+            }
+        }
+
+        /* Mobile: grilla 2x2, título grande en dos bloques y etiquetas más altas */
+        @media (max-width:640px) {
+            .rgt {
+                padding: 20px 0 30px
+            }
+
+            .rgt-in {
+                padding: 0 16px
+            }
+
+            /* El sello pasa arriba del título */
+            .rgt-head {
+                flex-direction: column-reverse;
+                align-items: stretch;
+                gap: 18px;
+                margin-bottom: 14px
+            }
+
+            .rgt-title {
+                display: block;
+                font-size: clamp(24px, 7.4vw, 32px);
+                line-height: 1.05
+            }
+
+            .rgt-title span {
+                display: block
+            }
+
+            .rgt-mbr {
+                display: inline
+            }
+
+            .rgt-title mark {
+                display: block;
+                margin-top: 16px;
+                padding: 12px 22px 11px
+            }
+
+            .rgt-stamp {
+                align-self: flex-start;
+                padding: 8px 12px 7px;
+                font-size: 16px;
+                transform: rotate(-3deg)
+            }
+
+            .rgt-grid {
+                gap: 22px 12px
+            }
+
+            /* Menos inclinación: en columnas angostas las esquinas giradas se enciman */
+            .rgt-tag:nth-child(1) {
+                --r: -2deg
+            }
+
+            .rgt-tag:nth-child(2) {
+                --r: 1.5deg
+            }
+
+            .rgt-tag:nth-child(3) {
+                --r: -1deg
+            }
+
+            .rgt-tag:nth-child(4) {
+                --r: 1.5deg
+            }
+
+            .rgt-string {
+                height: 44px
+            }
+
+            .rgt-paper {
+                height: 260px;
+                padding: 18px 12px 14px;
+                gap: 9px;
+                clip-path: polygon(16px 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%, 0 16px)
+            }
+
+            .rgt-hole {
+                width: 14px;
+                height: 14px
+            }
+
+            .rgt-num {
+                font-size: 10px;
+                letter-spacing: .18em
+            }
+
+            /* En mobile la 04 dice "N° 04 · LUJO" */
+            .rgt-luxlong {
+                display: none
+            }
+
+            .rgt-hasta {
+                font-size: 12px;
+                letter-spacing: .3em
+            }
+
+            .rgt-price {
+                font-size: clamp(22px, 7.4vw, 32px)
+            }
+
+            /* El botón va pegado al precio; la etiqueta deja aire abajo, como cartón colgado */
+            .rgt-cta {
+                margin-top: 6px;
+                padding: 13px 4px 12px;
+                font-size: 11px;
+                letter-spacing: .14em
+            }
+        }
+
+        @media (prefers-reduced-motion:reduce) {
+
+            .rgt-tag {
+                transition: none
+            }
+
+            .rgt-stamp,
+            .rgt-stamp span,
+            .rgt-stamp b {
+                animation: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section class="rgt" aria-label="Fragancias por presupuesto">
+        <div class="rgt-in">
+            <div class="rgt-head">
+                <h2 class="rgt-title rgt-wide"><span>Elegí tu<br class="rgt-mbr"> fragancia</span> <mark>según tu<br class="rgt-mbr"> bolsillo</mark></h2>
+                <span class="rgt-stamp rgt-wide" aria-hidden="true"><span>Cyber</span> <b>Week</b></span>
+            </div>
+
+            <div class="rgt-grid" id="rgtGrid">
+
+                <a class="rgt-tag" href="https://www.perfumeriasrouge.com/perfumes-y-fragancias?order=OrderByTopSaleDESC&amp;priceRange=0%20TO%2050000" aria-label="Fragancias hasta $50.000">
+                    <span class="rgt-string" aria-hidden="true"></span>
+                    <div class="rgt-paper">
+                        <span class="rgt-hole"></span>
+                        <span class="rgt-num rgt-wide">N° 01</span>
+                        <span class="rgt-line"></span>
+                        <span class="rgt-hasta rgt-wide">hasta</span>
+                        <span class="rgt-price">$50.000</span>
+                        <span class="rgt-line"></span>
+                        <span class="rgt-cta rgt-wide">Descubrir</span>
+                    </div>
+                </a>
+
+                <a class="rgt-tag" href="https://www.perfumeriasrouge.com/perfumes-y-fragancias?order=OrderByTopSaleDESC&amp;priceRange=0%20TO%20100000" aria-label="Fragancias hasta $100.000">
+                    <span class="rgt-string" aria-hidden="true"></span>
+                    <div class="rgt-paper">
+                        <span class="rgt-hole"></span>
+                        <span class="rgt-num rgt-wide">N° 02</span>
+                        <span class="rgt-line"></span>
+                        <span class="rgt-hasta rgt-wide">hasta</span>
+                        <span class="rgt-price">$100.000</span>
+                        <span class="rgt-line"></span>
+                        <span class="rgt-cta rgt-wide">Descubrir</span>
+                    </div>
+                </a>
+
+                <a class="rgt-tag" href="https://www.perfumeriasrouge.com/perfumes-y-fragancias?order=OrderByTopSaleDESC&amp;priceRange=0%20TO%20180000" aria-label="Fragancias hasta $180.000">
+                    <span class="rgt-string" aria-hidden="true"></span>
+                    <div class="rgt-paper">
+                        <span class="rgt-hole"></span>
+                        <span class="rgt-num rgt-wide">N° 03</span>
+                        <span class="rgt-line"></span>
+                        <span class="rgt-hasta rgt-wide">hasta</span>
+                        <span class="rgt-price">$180.000</span>
+                        <span class="rgt-line"></span>
+                        <span class="rgt-cta rgt-wide">Descubrir</span>
+                    </div>
+                </a>
+
+                <a class="rgt-tag is-lux" href="https://www.perfumeriasrouge.com/perfumes-y-fragancias?order=OrderByTopSaleDESC&amp;priceRange=0%20TO%20250000" aria-label="Fragancias hasta $250.000, edición lujo">
+                    <span class="rgt-string" aria-hidden="true"></span>
+                    <div class="rgt-paper">
+                        <span class="rgt-hole"></span>
+                        <span class="rgt-num rgt-wide">N° 04<span class="rgt-luxtxt"> · <span class="rgt-luxlong">Edición </span>lujo</span></span>
+                        <span class="rgt-line"></span>
+                        <span class="rgt-hasta rgt-wide">hasta</span>
+                        <span class="rgt-price">$250.000</span>
+                        <span class="rgt-line"></span>
+                        <span class="rgt-cta rgt-wide">Descubrir</span>
+                    </div>
+                </a>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- JS en base64: el CMS borra las etiquetas script; lo arranca el onerror de la imagen (fuente legible: rgt.js) -->
+    <img id="rgt-boot" src="x" alt="" style="display:none"
+        data-c="ICAgICAgICAoZnVuY3Rpb24gKCkgewogICAgICAgICAgICB2YXIgZ3JpZCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdyZ3RHcmlkJyk7CiAgICAgICAgICAgIHZhciB0YWdzID0gZ3JpZC5xdWVyeVNlbGVjdG9yQWxsKCcucmd0LXRhZycpOwoKICAgICAgICAgICAgLy8gTmF2ZWdhY2nDs24gZnVlcmEgZGVsIHNhbmRib3gKICAgICAgICAgICAgdGFncy5mb3JFYWNoKGZ1bmN0aW9uIChhKSB7CiAgICAgICAgICAgICAgICBhLmFkZEV2ZW50TGlzdGVuZXIoJ2NsaWNrJywgZnVuY3Rpb24gKGUpIHsKICAgICAgICAgICAgICAgICAgICBlLnByZXZlbnREZWZhdWx0KCk7CiAgICAgICAgICAgICAgICAgICAgdHJ5IHsgd2luZG93LnRvcC5sb2NhdGlvbi5ocmVmID0gYS5ocmVmOyB9IGNhdGNoIChlcnIpIHsgd2luZG93LmxvY2F0aW9uLmhyZWYgPSBhLmhyZWY7IH0KICAgICAgICAgICAgICAgIH0pOwogICAgICAgICAgICB9KTsKCiAgICAgICAgICAgIC8vIENhw61kYSBjb24gZsOtc2ljYSBjYWRhIHZleiBxdWUgZWwgY29tcG9uZW50ZSBlbnRyYSBlbiBwYW50YWxsYToKICAgICAgICAgICAgLy8gZ3JhdmVkYWQsIGVsIGhpbG8gZnJlbmEgY29uIHVuIHJlYm90ZSB5IGxhIGV0aXF1ZXRhIHNlIGJhbGFuY2VhIChww6luZHVsbyBhbW9ydGlndWFkbykgaGFzdGEgc3UgaW5jbGluYWNpw7NuCiAgICAgICAgICAgIHZhciByZWR1Y2UgPSBmYWxzZTsKICAgICAgICAgICAgdHJ5IHsgcmVkdWNlID0gd2luZG93Lm1hdGNoTWVkaWEoJyhwcmVmZXJzLXJlZHVjZWQtbW90aW9uOiByZWR1Y2UpJykubWF0Y2hlczsgfSBjYXRjaCAoZSkgeyB9CiAgICAgICAgICAgIGlmIChyZWR1Y2UgfHwgISgnSW50ZXJzZWN0aW9uT2JzZXJ2ZXInIGluIHdpbmRvdykpIHJldHVybjsKCiAgICAgICAgICAgIHZhciBzZWMgPSBncmlkLmNsb3Nlc3QoJy5yZ3QnKTsKICAgICAgICAgICAgdmFyIEcgPSA1MjAwLCBCT1VOQ0UgPSAuMywgSyA9IDU1LCBEQU1QID0gNC41LCBTVEFHR0VSID0gMTEwOwogICAgICAgICAgICB2YXIgc3QgPSBbXSwgcmFmID0gbnVsbCwgdDAgPSAwLCBsYXN0ID0gMDsKCiAgICAgICAgICAgIGZ1bmN0aW9uIGFib3ZlKHQpIHsgcmV0dXJuIC0odC5vZmZzZXRUb3AgLSBzZWMub2Zmc2V0VG9wICsgdC5vZmZzZXRIZWlnaHQgKyAzMCk7IH0KICAgICAgICAgICAgZnVuY3Rpb24gcHV0KHQsIHksIGEpIHsgdC5zdHlsZS50cmFuc2Zvcm0gPSAndHJhbnNsYXRlWSgnICsgeS50b0ZpeGVkKDEpICsgJ3B4KSByb3RhdGUoJyArIGEudG9GaXhlZCgyKSArICdkZWcpJzsgfQogICAgICAgICAgICBmdW5jdGlvbiBoaWRlKCkgewogICAgICAgICAgICAgICAgY2FuY2VsQW5pbWF0aW9uRnJhbWUocmFmKTsgcmFmID0gbnVsbDsKICAgICAgICAgICAgICAgIHRhZ3MuZm9yRWFjaChmdW5jdGlvbiAodCkgeyB0LnN0eWxlLnRyYW5zaXRpb24gPSAnbm9uZSc7IHB1dCh0LCBhYm92ZSh0KSwgMCk7IH0pOwogICAgICAgICAgICB9CiAgICAgICAgICAgIGZ1bmN0aW9uIGRyb3AoKSB7CiAgICAgICAgICAgICAgICBzdCA9IFtdLm1hcC5jYWxsKHRhZ3MsIGZ1bmN0aW9uICh0LCBpKSB7CiAgICAgICAgICAgICAgICAgICAgdmFyIHIgPSBwYXJzZUZsb2F0KGdldENvbXB1dGVkU3R5bGUodCkuZ2V0UHJvcGVydHlWYWx1ZSgnLS1yJykpIHx8IDAsIGRpciA9IGkgJSAyID8gMSA6IC0xOwogICAgICAgICAgICAgICAgICAgIHJldHVybiB7IHQ6IHQsIHI6IHIsIHk6IGFib3ZlKHQpLCB2OiAwLCBhOiByICsgZGlyICogMTAsIHc6IDAsIGF0OiBpICogU1RBR0dFUiwgaGl0OiBmYWxzZSwgbGFuZGVkOiBmYWxzZSwgZG9uZTogZmFsc2UgfTsKICAgICAgICAgICAgICAgIH0pOwogICAgICAgICAgICAgICAgdDAgPSAwOyBjYW5jZWxBbmltYXRpb25GcmFtZShyYWYpOyByYWYgPSByZXF1ZXN0QW5pbWF0aW9uRnJhbWUoc3RlcCk7CiAgICAgICAgICAgIH0KICAgICAgICAgICAgZnVuY3Rpb24gc3RlcChub3cpIHsKICAgICAgICAgICAgICAgIC8vIFJlbG9qIGRlbCBwcmltZXIgZnJhbWU6IHRpZW1wb3MgcmVsYXRpdm9zLCBkdCBudW5jYSBuZWdhdGl2byBuaSBtYXlvciBhIDMyIG1zCiAgICAgICAgICAgICAgICBpZiAoIXQwKSB0MCA9IGxhc3QgPSBub3c7CiAgICAgICAgICAgICAgICB2YXIgZHQgPSBNYXRoLm1heCgwLCBNYXRoLm1pbiguMDMyLCAobm93IC0gbGFzdCkgLyAxMDAwKSksIGxpdmUgPSBmYWxzZTsgbGFzdCA9IG5vdzsKICAgICAgICAgICAgICAgIHN0LmZvckVhY2goZnVuY3Rpb24gKG8pIHsKICAgICAgICAgICAgICAgICAgICBpZiAoby5kb25lKSByZXR1cm47CiAgICAgICAgICAgICAgICAgICAgbGl2ZSA9IHRydWU7CiAgICAgICAgICAgICAgICAgICAgaWYgKG5vdyAtIHQwIDwgby5hdCkgcmV0dXJuOwogICAgICAgICAgICAgICAgICAgIGlmICghby5sYW5kZWQpIHsKICAgICAgICAgICAgICAgICAgICAgICAgby52ICs9IEcgKiBkdDsgby55ICs9IG8udiAqIGR0OwogICAgICAgICAgICAgICAgICAgICAgICBpZiAoby55ID49IDApIHsKICAgICAgICAgICAgICAgICAgICAgICAgICAgIG8ueSA9IDA7CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAvLyBQcmltZXIgdGlyw7NuIGRlbCBoaWxvOiBwYXRhZGEgYW5ndWxhciBoYWNpYSBlbCBsYWRvIGNvbnRyYXJpbyBhIGxhIGluY2xpbmFjacOzbgogICAgICAgICAgICAgICAgICAgICAgICAgICAgaWYgKCFvLmhpdCkgeyBvLmhpdCA9IHRydWU7IG8udyArPSAoby5yIC0gby5hKSAqIDY7IH0KICAgICAgICAgICAgICAgICAgICAgICAgICAgIGlmIChvLnYgPiAxNDApIG8udiA9IC1vLnYgKiBCT1VOQ0U7IGVsc2UgeyBvLnYgPSAwOyBvLmxhbmRlZCA9IHRydWU7IH0KICAgICAgICAgICAgICAgICAgICAgICAgfQogICAgICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgICAgICBpZiAoby5oaXQpIHsgby53ICs9ICgtSyAqIChvLmEgLSBvLnIpIC0gREFNUCAqIG8udykgKiBkdDsgby5hICs9IG8udyAqIGR0OyB9CiAgICAgICAgICAgICAgICAgICAgaWYgKG8ubGFuZGVkICYmIE1hdGguYWJzKG8uYSAtIG8ucikgPCAuMDUgJiYgTWF0aC5hYnMoby53KSA8IC4zKSB7CiAgICAgICAgICAgICAgICAgICAgICAgIC8vIFF1aWV0YTogc2UgZGV2dWVsdmUgZWwgY29udHJvbCBhbCBDU1MgKGluY2xpbmFjacOzbiB5IGhvdmVyKQogICAgICAgICAgICAgICAgICAgICAgICBvLmRvbmUgPSB0cnVlOyBvLnQuc3R5bGUudHJhbnNmb3JtID0gJyc7IG8udC5zdHlsZS50cmFuc2l0aW9uID0gJyc7CiAgICAgICAgICAgICAgICAgICAgICAgIHJldHVybjsKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgICAgcHV0KG8udCwgby55LCBvLmEpOwogICAgICAgICAgICAgICAgfSk7CiAgICAgICAgICAgICAgICByYWYgPSBsaXZlID8gcmVxdWVzdEFuaW1hdGlvbkZyYW1lKHN0ZXApIDogbnVsbDsKICAgICAgICAgICAgfQoKICAgICAgICAgICAgaGlkZSgpOwogICAgICAgICAgICB2YXIgaW8gPSBuZXcgSW50ZXJzZWN0aW9uT2JzZXJ2ZXIoZnVuY3Rpb24gKGVudHJpZXMpIHsKICAgICAgICAgICAgICAgIHZhciBlID0gZW50cmllc1swXTsKICAgICAgICAgICAgICAgIGlmIChlLmludGVyc2VjdGlvblJhdGlvID49IC4yNSAmJiAhcmFmICYmICFzdC5sZW5ndGgpIGRyb3AoKTsKICAgICAgICAgICAgICAgIGVsc2UgaWYgKCFlLmlzSW50ZXJzZWN0aW5nKSB7IHN0ID0gW107IGhpZGUoKTsgfQogICAgICAgICAgICB9LCB7IHRocmVzaG9sZDogWzAsIC4yNV0gfSk7CiAgICAgICAgICAgIGlvLm9ic2VydmUoZ3JpZCk7CiAgICAgICAgfSkoKTsKICAgIA=="
+        onerror="if(!window.rgtRun){window.rgtRun=1;try{new Function(decodeURIComponent(escape(atob(this.getAttribute('data-c')))))()}catch(e){console.error('etiquetas:',e)}}">
+    <svg width="0" height="0" style="position:absolute"
+        onload="var i=document.getElementById('rgt-boot');if(i)if(i.onerror)i.onerror.call(i)"></svg>
+</body>

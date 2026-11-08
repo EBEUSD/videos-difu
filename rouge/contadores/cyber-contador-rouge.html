@@ -283,167 +283,60 @@
 <body>
     <div class="rgx" id="rgx">
         <div class="rgxTrack">
-
             <!-- SLIDE 1: AMBA GRATIS — lun a vie corte 12:00 · sábado corte 9:00 (sábado zona: "CABA Y ALREDEDORES") -->
             <div class="rgxSlide rgxOn" data-days="1,2,3,4,5,6" data-start="0" data-cutoff="12" data-cutoff-sat="9">
                 <div class="rgxInner">
-                    <div class="rgxBrand">
-                        <svg class="rgxTruck" viewBox="0 0 120 56" fill="none" stroke="#111" stroke-width="2.5"
-                            stroke-linecap="round" stroke-linejoin="round">
+                    <div class="rgxBrand"> <svg class="rgxTruck" viewBox="0 0 120 56" fill="none" stroke="#111"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M4 18h18M8 25h14M12 32h10" />
                             <rect x="28" y="4" width="54" height="36" rx="3" />
                             <path d="M82 16h16l12 14v10H82z" />
                             <path d="M28 40h82" />
                             <circle cx="44" cy="47" r="6" fill="#f1f1f1" />
-                            <circle cx="96" cy="47" r="6" fill="#f1f1f1" />
-                            <text x="55" y="31" text-anchor="middle" font-family="Arial,sans-serif" font-size="24"
-                                font-weight="400" fill="#8B0000" stroke="none">R</text>
+                            <circle cx="96" cy="47" r="6" fill="#f1f1f1" /> <text x="55" y="31" text-anchor="middle"
+                                font-family="Arial,sans-serif" font-size="24" font-weight="400" fill="#8B0000"
+                                stroke="none">R</text>
                         </svg>
                         <div class="rgxTitle"><span class="rgxWhen">LLEGA HOY</span> <em>GRATIS</em></div>
                     </div>
                     <div class="rgxDiv"></div>
-                    <div class="rgxZone">
-                        <svg class="rgxPin" viewBox="0 0 34 44" fill="none" stroke="#111" stroke-width="2.5">
+                    <div class="rgxZone"> <svg class="rgxPin" viewBox="0 0 34 44" fill="none" stroke="#111"
+                            stroke-width="2.5">
                             <path d="M17 42S3 25 3 15.5a14 14 0 0 1 28 0C31 25 17 42 17 42z" />
                             <circle cx="17" cy="15.5" r="5" />
                         </svg>
-                        <div>
-                            <strong class="rgxZoneName" data-def="AMBA" data-sat="CABA Y ALREDEDORES">AMBA</strong>
-                            <span class="rgxSub">Comprando en las próximas <b>--:--:--</b> hs</span>
-                        </div>
+                        <div> <strong class="rgxZoneName" data-def="AMBA" data-sat="CABA Y ALREDEDORES">AMBA</strong>
+                            <span class="rgxSub">Comprando en las próximas <b>--:--:--</b> hs</span> </div>
                     </div>
                     <div class="rgxDiv"></div>
                     <div class="rgxNote"><span>En artículos seleccionados.</span> <span>No aplica a retiro en
                             tienda.</span></div>
                 </div>
-            </div>
-
-            <!-- SLIDE 2: CABIFY — todos los días, corte 18:00 (excepciones por fecha: data-ext) -->
+            </div> <!-- SLIDE 2: CABIFY — todos los días, corte 18:00 (excepciones por fecha: data-ext) -->
             <div class="rgxSlide" data-days="0,1,2,3,4,5,6" data-start="0" data-cutoff="18" data-cutoff-sat="18"
                 data-ext='{"2026-10-16":20.5}'>
                 <div class="rgxInner">
-                    <div class="rgxBrand">
-                        <img class="rgxLogo"
+                    <div class="rgxBrand"> <img class="rgxLogo"
                             src="https://rougeb2car.vtexassets.com/assets/vtex.file-manager-graphql/images/a5c79ab4-de2a-4c90-bae8-072f7a83aa0c___9bb7d40c5ed20e5ed2a571163458478b.png"
                             alt="Cabify">
                         <div class="rgxTitle"><span class="rgxWhen">LLEGA HOY</span></div>
                     </div>
                     <div class="rgxDiv"></div>
-                    <div class="rgxZone">
-                        <svg class="rgxPin" viewBox="0 0 34 44" fill="none" stroke="#111" stroke-width="2.5">
+                    <div class="rgxZone"> <svg class="rgxPin" viewBox="0 0 34 44" fill="none" stroke="#111"
+                            stroke-width="2.5">
                             <path d="M17 42S3 25 3 15.5a14 14 0 0 1 28 0C31 25 17 42 17 42z" />
                             <circle cx="17" cy="15.5" r="5" />
                         </svg>
-                        <div>
-                            <strong>CABA Y ZONA NORTE</strong>
-                            <span class="rgxSub">Comprando en las próximas <b>--:--:--</b> hs</span>
-                        </div>
+                        <div> <strong>CABA Y ZONA NORTE</strong> <span class="rgxSub">Comprando en las próximas
+                                <b>--:--:--</b> hs</span> </div>
                     </div>
                     <div class="rgxDiv"></div>
                     <div class="rgxNote"><span>En artículos seleccionados.</span> <span>No aplica a retiro en
                             tienda.</span></div>
                 </div>
             </div>
-
         </div>
         <div class="rgxDots" id="rgxDots"></div>
     </div>
-
-    <script>
-        (function () {
-            var OFFSET = -3 * 3600000, DAY = 86400000, ROTATE_MS = 5000;
-            var DIAS = ["DOMINGO", "LUNES", "MARTES", "MIÉRCOLES", "JUEVES", "VIERNES", "SÁBADO"];
-
-            /* Feriados (lista fija, sin API). Agregar/quitar fechas acá. */
-            var HOL = {};
-            ["2026-01-01", "2026-02-16", "2026-02-17", "2026-03-23", "2026-03-24", "2026-04-02", "2026-04-03",
-                "2026-05-01", "2026-05-25", "2026-06-15", "2026-06-20", "2026-07-09", "2026-07-10", "2026-08-17",
-                "2026-10-12", "2026-11-23", "2026-12-07", "2026-12-08", "2026-12-25",
-                "2027-01-01", "2027-02-08", "2027-02-09", "2027-03-24", "2027-03-26", "2027-04-02",
-                "2027-05-01", "2027-05-25", "2027-06-20", "2027-07-09", "2027-12-08", "2027-12-25"
-            ].forEach(function (f) { HOL[f] = 1; });
-
-            function pad(n) { return (n < 10 ? "0" : "") + n; }
-            function key(d) { return d.getUTCFullYear() + "-" + pad(d.getUTCMonth() + 1) + "-" + pad(d.getUTCDate()); }
-            function fmt(sec) {
-                sec = Math.max(0, Math.floor(sec));
-                return pad(Math.floor(sec / 3600)) + ":" + pad(Math.floor(sec % 3600 / 60)) + ":" + pad(sec % 60);
-            }
-
-            /* Días de entrega por slide (0=dom ... 6=sáb) */
-            function daysOf(el) { return (el.getAttribute("data-days") || "1,2,3,4,5").split(",").map(Number); }
-            function isDel(el, d) { return daysOf(el).indexOf(d.getUTCDay()) !== -1 && !HOL[key(d)]; }
-            function nextDel(el, d) { do { d = new Date(d.getTime() + DAY); } while (!isDel(el, d)); return d; }
-
-            function cutoffFor(el, d) {
-                try {
-                    var ext = JSON.parse(el.getAttribute("data-ext") || "{}");
-                    if (ext[key(d)] != null) return +ext[key(d)];
-                } catch (e) { }
-                var sat = el.getAttribute("data-cutoff-sat");
-                if (d.getUTCDay() === 6 && sat) return +sat;
-                return +el.getAttribute("data-cutoff");
-            }
-
-            var slides = document.querySelectorAll("#rgx .rgxSlide");
-
-            function renderSlide(el, now) {
-                var start = +el.getAttribute("data-start");
-                var today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
-                var hNow = now.getUTCHours() + now.getUTCMinutes() / 60 + now.getUTCSeconds() / 3600;
-                var hoy = isDel(el, today) && hNow >= start && hNow < cutoffFor(el, today);
-                var d = hoy ? today : nextDel(el, today);
-                var diff = Math.round((d.getTime() - today.getTime()) / DAY);
-
-                el.querySelector(".rgxWhen").textContent =
-                    diff === 0 ? "LLEGA HOY" : diff === 1 ? "LLEGA MAÑANA" : "LLEGA EL " + DIAS[d.getUTCDay()];
-
-                var zone = el.querySelector(".rgxZoneName");
-                if (zone) {
-                    var satName = zone.getAttribute("data-sat");
-                    zone.textContent = (now.getUTCDay() === 6 && satName) ? satName : zone.getAttribute("data-def");
-                }
-
-                var left = (d.getTime() + cutoffFor(el, d) * 3600000 - now.getTime()) / 1000;
-                el.querySelector(".rgxSub").innerHTML = "Comprando en las próximas <b>" + fmt(left) + "</b> hs";
-            }
-
-            function render() {
-                try {
-                    var now = new Date(Date.now() + OFFSET);
-                    for (var i = 0; i < slides.length; i++) renderSlide(slides[i], now);
-                } catch (e) { console.error("rgx contador:", e); }
-            }
-
-            /* Carrusel */
-            var current = 0, paused = false, dotsWrap = document.getElementById("rgxDots"), dots = [];
-            function show(i) {
-                current = (i + slides.length) % slides.length;
-                for (var k = 0; k < slides.length; k++) {
-                    slides[k].classList.toggle("rgxOn", k === current);
-                    dots[k].classList.toggle("rgxOn", k === current);
-                }
-            }
-            for (var i = 0; i < slides.length; i++) {
-                (function (idx) {
-                    var b = document.createElement("button");
-                    b.className = "rgxDot" + (idx === 0 ? " rgxOn" : "");
-                    b.setAttribute("aria-label", "Banner " + (idx + 1));
-                    b.onclick = function () { show(idx); };
-                    dotsWrap.appendChild(b); dots.push(b);
-                })(i);
-            }
-            var box = document.getElementById("rgx");
-            box.addEventListener("mouseenter", function () { paused = true; });
-            box.addEventListener("mouseleave", function () { paused = false; });
-
-            function start() {
-                render();
-                setInterval(render, 1000);
-                setInterval(function () { if (!paused) show(current + 1); }, ROTATE_MS);
-            }
-            if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start);
-            else start();
-        })();
-    </script>
+    <script> (function () { var OFFSET = -3 * 3600000, DAY = 86400000, ROTATE_MS = 5000; var DIAS = ["DOMINGO", "LUNES", "MARTES", "MIÉRCOLES", "JUEVES", "VIERNES", "SÁBADO"];    /* Feriados (lista fija, sin API). Agregar/quitar fechas acá. */   var HOL = {};["2026-01-01", "2026-02-16", "2026-02-17", "2026-03-23", "2026-03-24", "2026-04-02", "2026-04-03", "2026-05-01", "2026-05-25", "2026-06-15", "2026-06-20", "2026-07-09", "2026-07-10", "2026-08-17", "2026-10-12", "2026-11-23", "2026-12-07", "2026-12-08", "2026-12-25", "2027-01-01", "2027-02-08", "2027-02-09", "2027-03-24", "2027-03-26", "2027-04-02", "2027-05-01", "2027-05-25", "2027-06-20", "2027-07-09", "2027-12-08", "2027-12-25"].forEach(function (f) { HOL[f] = 1; }); function pad(n) { return (n < 10 ? "0" : "") + n; } function key(d) { return d.getUTCFullYear() + "-" + pad(d.getUTCMonth() + 1) + "-" + pad(d.getUTCDate()); } function fmt(sec) { sec = Math.max(0, Math.floor(sec)); return pad(Math.floor(sec / 3600)) + ":" + pad(Math.floor(sec % 3600 / 60)) + ":" + pad(sec % 60); }    /* Días de entrega por slide (0=dom ... 6=sáb) */   function daysOf(el) { return (el.getAttribute("data-days") || "1,2,3,4,5").split(",").map(Number); } function isDel(el, d) { return daysOf(el).indexOf(d.getUTCDay()) !== -1 && !HOL[key(d)]; } function nextDel(el, d) { do { d = new Date(d.getTime() + DAY); } while (!isDel(el, d)); return d; } function cutoffFor(el, d) { try { var ext = JSON.parse(el.getAttribute("data-ext") || "{}"); if (ext[key(d)] != null) return +ext[key(d)]; } catch (e) { } var sat = el.getAttribute("data-cutoff-sat"); if (d.getUTCDay() === 6 && sat) return +sat; return +el.getAttribute("data-cutoff"); } var slides = document.querySelectorAll("#rgx .rgxSlide"); function renderSlide(el, now) { var start = +el.getAttribute("data-start"); var today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())); var hNow = now.getUTCHours() + now.getUTCMinutes() / 60 + now.getUTCSeconds() / 3600; var hoy = isDel(el, today) && hNow >= start && hNow < cutoffFor(el, today); var d = hoy ? today : nextDel(el, today); var diff = Math.round((d.getTime() - today.getTime()) / DAY); el.querySelector(".rgxWhen").textContent = diff === 0 ? "LLEGA HOY" : diff === 1 ? "LLEGA MAÑANA" : "LLEGA EL " + DIAS[d.getUTCDay()]; var zone = el.querySelector(".rgxZoneName"); if (zone) { var satName = zone.getAttribute("data-sat"); zone.textContent = (now.getUTCDay() === 6 && satName) ? satName : zone.getAttribute("data-def"); } var left = (d.getTime() + cutoffFor(el, d) * 3600000 - now.getTime()) / 1000; el.querySelector(".rgxSub").innerHTML = "Comprando en las próximas <b>" + fmt(left) + "</b> hs"; } function render() { try { var now = new Date(Date.now() + OFFSET); for (var i = 0; i < slides.length; i++) renderSlide(slides[i], now); } catch (e) { console.error("rgx contador:", e); } }    /* Carrusel */   var current = 0, paused = false, dotsWrap = document.getElementById("rgxDots"), dots = []; function show(i) { current = (i + slides.length) % slides.length; for (var k = 0; k < slides.length; k++) { slides[k].classList.toggle("rgxOn", k === current); dots[k].classList.toggle("rgxOn", k === current); } } for (var i = 0; i < slides.length; i++) { (function (idx) { var b = document.createElement("button"); b.className = "rgxDot" + (idx === 0 ? " rgxOn" : ""); b.setAttribute("aria-label", "Banner " + (idx + 1)); b.onclick = function () { show(idx); }; dotsWrap.appendChild(b); dots.push(b); })(i); } var box = document.getElementById("rgx"); box.addEventListener("mouseenter", function () { paused = true; }); box.addEventListener("mouseleave", function () { paused = false; }); function start() { render(); setInterval(render, 1000); setInterval(function () { if (!paused) show(current + 1); }, ROTATE_MS); } if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start); else start(); })(); </script>
 </body>

@@ -1,0 +1,658 @@
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Archivo variable: ancho expandido (wdth 125) para títulos y rótulos, normal para números -->
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'HW Pano';
+            src: url('https://raw.githubusercontent.com/EBEUSD/videos-difu/main/servicios-difu/fonts/HW%20Pano%20Regular.ttf') format('truetype');
+            font-weight: 400;
+            font-display: swap
+        }
+
+
+
+
+        html,
+        body {
+            margin: 0 !important;
+            padding: 0 !important;
+            background: #060606
+        }
+
+        #bk,
+        #bk * {
+            box-sizing: border-box
+        }
+
+        #bk {
+            --accent: #FF0000;
+            position: relative;
+            display: block;
+            width: 100%;
+            height: 280px;
+            background: #060606;
+            color: #fff;
+            font-family: 'Archivo', Arial, sans-serif;
+            text-decoration: none;
+            overflow: hidden;
+            cursor: pointer
+        }
+
+        /* Fondo KV */
+        .bk-glow {
+            position: absolute;
+            inset: -12%;
+            pointer-events: none
+        }
+
+        .bk-glow-l {
+            background: radial-gradient(ellipse 30% 70% at 4% 30%, var(--accent) 0%, rgba(255, 0, 0, .42) 38%, rgba(0, 0, 0, 0) 72%);
+            animation: bkGlowL 10s ease-in-out infinite alternate
+        }
+
+        .bk-glow-r {
+            background: radial-gradient(ellipse 30% 70% at 96% 80%, var(--accent) 0%, rgba(255, 0, 0, .38) 38%, rgba(0, 0, 0, 0) 72%);
+            animation: bkGlowR 12s ease-in-out infinite alternate
+        }
+
+        .bk-flutes {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: repeating-linear-gradient(90deg, rgba(0, 0, 0, .34) 0 3px, rgba(255, 255, 255, .06) 3px 5px, rgba(0, 0, 0, 0) 5px 16px)
+        }
+
+        /* Cintas */
+        .bk-ribbon {
+            position: absolute;
+            left: -80px;
+            width: calc(100% + 160px);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            color: #000;
+            background: var(--accent);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, .55);
+            pointer-events: none
+        }
+
+        .bk-ribbon-a {
+            bottom: -8px;
+            height: 26px;
+            transform: rotate(1.2deg);
+            filter: brightness(.6)
+        }
+
+        .bk-ribbon-b {
+            bottom: 8px;
+            height: 30px;
+            transform: rotate(-1.4deg)
+        }
+
+        .bk-rtrack {
+            display: flex;
+            width: max-content
+        }
+
+        .bk-ribbon-a .bk-rtrack {
+            animation: bkMarquee 160s linear infinite reverse
+        }
+
+        .bk-ribbon-b .bk-rtrack {
+            animation: bkMarquee 130s linear infinite
+        }
+
+        .bk-rgroup {
+            display: flex;
+            gap: 28px;
+            padding-right: 28px;
+            font-family: 'HW Pano', sans-serif;
+            font-weight: 400;
+            font-size: 10px;
+            letter-spacing: 3px;
+            white-space: nowrap
+        }
+
+        .bk-ribbon-b .bk-rgroup {
+            font-size: 11px
+        }
+
+        /* Contenido */
+        .bk-inner {
+            position: relative;
+            height: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            padding: 16px 64px 56px
+        }
+
+        .bk-left {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+            min-width: 0
+        }
+
+        .bk-tag {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 3px
+        }
+
+        .bk-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--accent);
+            animation: bkPulse 1.2s ease-in-out infinite
+        }
+
+        .bk-logo {
+            font-weight: 900;
+            font-stretch: 125%;
+            font-variation-settings: "wdth" 125;
+            letter-spacing: 6px;
+            padding-right: 12px;
+            border-right: 1px solid rgba(255, 255, 255, .25)
+        }
+
+        .bk-headline {
+            display: flex;
+            align-items: center;
+            gap: 20px
+        }
+
+        .bk-bomb {
+            width: 70px;
+            height: 77px;
+            flex: 0 0 auto;
+            overflow: visible
+        }
+
+        .bk-spark {
+            transform-origin: 66px 12px;
+            animation: bkSpark .45s ease-in-out infinite alternate
+        }
+
+        .bk-title {
+            margin: 0;
+            font-weight: 900;
+            font-stretch: 125%;
+            font-variation-settings: "wdth" 125;
+            font-size: 54px;
+            line-height: .95;
+            letter-spacing: 0;
+            white-space: nowrap;
+            text-shadow: 4px 4px 0 var(--accent)
+        }
+
+        /* Precio: bloque rojo | HASTA vertical | numero Black | % sobre OFF */
+        .bk-price {
+            display: flex;
+            align-items: stretch;
+            gap: 8px;
+            padding: 10px 14px 10px 9px;
+            line-height: 1;
+            background: var(--accent);
+            box-shadow: 0 16px 40px rgba(255, 0, 0, .35);
+            transform: rotate(-2deg)
+        }
+
+        .bk-hasta {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            text-align: center;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: #000
+        }
+
+        .bk-pct {
+            font-weight: 900;
+            font-size: 62px;
+            line-height: .75;
+            letter-spacing: -.04em
+        }
+
+        .bk-pside {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start
+        }
+
+        .bk-psign {
+            font-weight: 900;
+            font-size: 28px;
+            line-height: .75
+        }
+
+        .bk-offtag {
+            padding: 3px 7px;
+            background: #000;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px
+        }
+
+        /* Contador */
+        .bk-card {
+            flex: 0 0 auto;
+            width: 440px;
+            padding: 16px 22px 14px;
+            border: 1px solid rgba(255, 255, 255, .16);
+            background: linear-gradient(180deg, rgba(20, 20, 20, .92), rgba(10, 10, 10, .92))
+        }
+
+        .bk-card::before {
+            content: "";
+            display: block;
+            width: 36px;
+            height: 2px;
+            margin-bottom: 10px;
+            background: var(--accent)
+        }
+
+        .bk-lbl {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            color: #BDB8AC
+        }
+
+        .bk-boxes {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px
+        }
+
+        .bk-box {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 11px 0 8px;
+            background: var(--accent);
+            box-shadow: 0 6px 0 #7a0000, 0 14px 30px rgba(255, 0, 0, .3)
+        }
+
+        .bk-box b {
+            font-weight: 900;
+            font-size: 46px;
+            line-height: .8;
+            letter-spacing: -.03em;
+            font-variant-numeric: tabular-nums
+        }
+
+        .bk-box small {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #000
+        }
+
+        .bk-box.tick b {
+            animation: bkTick .35s cubic-bezier(.2, .8, .2, 1)
+        }
+
+        /* Mecha: se consume a lo largo del día */
+        .bk-fuse {
+            position: relative;
+            height: 14px;
+            margin-top: 16px
+        }
+
+        .bk-fuse::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 6px;
+            border-top: 2px dashed rgba(255, 255, 255, .28)
+        }
+
+        .bk-burnt {
+            position: absolute;
+            right: 0;
+            top: 6px;
+            height: 2px;
+            background: #060606
+        }
+
+        .bk-fspark {
+            position: absolute;
+            top: 7px;
+            width: 22px;
+            height: 22px;
+            margin: -11px 0 0 -11px;
+            animation: bkSpark .3s ease-in-out infinite alternate
+        }
+
+        .bk-note {
+            margin: 8px 0 0;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: .5px;
+            color: #E6E2D9
+        }
+
+        .bk-note b {
+            color: #fff;
+            font-weight: 700
+        }
+
+        @keyframes bkMarquee {
+            from {
+                transform: translateX(0)
+            }
+
+            to {
+                transform: translateX(-50%)
+            }
+        }
+
+        @keyframes bkGlowL {
+            from {
+                transform: translate(-4%, 0) scale(1)
+            }
+
+            to {
+                transform: translate(6%, -4%) scale(1.12)
+            }
+        }
+
+        @keyframes bkGlowR {
+            from {
+                transform: translate(4%, 0) scale(1.08)
+            }
+
+            to {
+                transform: translate(-6%, 5%) scale(.95)
+            }
+        }
+
+        @keyframes bkPulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1)
+            }
+
+            50% {
+                opacity: .35;
+                transform: scale(.7)
+            }
+        }
+
+        @keyframes bkSpark {
+            from {
+                transform: scale(.8) rotate(0deg);
+                opacity: .8
+            }
+
+            to {
+                transform: scale(1.15) rotate(20deg);
+                opacity: 1
+            }
+        }
+
+        @keyframes bkTick {
+            from {
+                transform: translateY(-6px);
+                opacity: .4
+            }
+
+            to {
+                transform: none;
+                opacity: 1
+            }
+        }
+
+        /* Tablet */
+        @media (max-width:1100px) {
+            .bk-inner {
+                padding: 16px 28px 56px;
+                gap: 24px
+            }
+
+            .bk-title {
+                font-size: 42px
+            }
+
+            .bk-bomb {
+                width: 64px;
+                height: 70px
+            }
+
+            .bk-card {
+                width: 380px
+            }
+
+            .bk-box b {
+                font-size: 40px
+            }
+        }
+
+        /* Mobile: todo apilado */
+        @media (max-width:768px) {
+            #bk {
+                height: auto
+            }
+
+            .bk-inner {
+                height: auto;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: stretch;
+                gap: 16px;
+                padding: 16px 16px 58px
+            }
+
+            .bk-left {
+                align-items: center;
+                gap: 14px
+            }
+
+            .bk-tag {
+                font-size: 10px;
+                letter-spacing: 2px
+            }
+
+            .bk-logo {
+                letter-spacing: 6px
+            }
+
+            .bk-headline {
+                gap: 10px
+            }
+
+            .bk-bomb {
+                width: 46px;
+                height: 52px
+            }
+
+            .bk-title {
+                font-size: clamp(30px, 10vw, 44px);
+                text-shadow: 3px 3px 0 var(--accent)
+            }
+
+            .bk-pct {
+                font-size: 62px
+            }
+
+            .bk-psign {
+                font-size: 28px
+            }
+
+            .bk-card {
+                width: 100%;
+                padding: 16px 16px 14px
+            }
+
+            .bk-lbl {
+                font-size: 10px;
+                letter-spacing: 2px
+            }
+
+            .bk-boxes {
+                gap: 8px;
+                margin-top: 12px
+            }
+
+            .bk-box b {
+                font-size: 40px
+            }
+
+            .bk-note {
+                font-size: 11px
+            }
+
+            .bk-ribbon-a {
+                transform: rotate(3deg)
+            }
+
+            .bk-ribbon-b {
+                transform: rotate(-3deg)
+            }
+        }
+
+        @media (prefers-reduced-motion:reduce) {
+
+            .bk-glow,
+            .bk-dot,
+            .bk-spark,
+            .bk-fspark,
+            .bk-rtrack,
+            .bk-box.tick b {
+                animation: none !important
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a id="bk" href="https://www.perfumeriasrouge.com/3425?map=productClusterIds&amp;order=OrderByTopSaleDESC" target="_top"
+        aria-label="Ofertas bomba Rouge: hasta 65% off, terminan hoy a las 00 hs">
+        <div class="bk-glow bk-glow-l" aria-hidden="true"></div>
+        <div class="bk-glow bk-glow-r" aria-hidden="true"></div>
+        <div class="bk-flutes" aria-hidden="true"></div>
+        <div class="bk-ribbon bk-ribbon-a" aria-hidden="true">
+            <div class="bk-rtrack" id="bk-ra"></div>
+        </div>
+        <div class="bk-ribbon bk-ribbon-b" aria-hidden="true">
+            <div class="bk-rtrack" id="bk-rb"></div>
+        </div>
+
+        <div class="bk-inner">
+            <div class="bk-left">
+                <div class="bk-tag"><span class="bk-logo">ROUGE</span><span class="bk-dot" aria-hidden="true"></span>SOLO POR HOY</div>
+                <div class="bk-headline">
+                    <svg class="bk-bomb" viewBox="0 0 84 92" aria-hidden="true">
+                        <defs>
+                            <radialGradient id="bkShell" cx="35%" cy="32%" r="70%">
+                                <stop offset="0" stop-color="#3a3a3a" />
+                                <stop offset=".55" stop-color="#111" />
+                                <stop offset="1" stop-color="#000" />
+                            </radialGradient>
+                        </defs>
+                        <path d="M50 26c4-8 8-12 16-14" fill="none" stroke="#BDB8AC" stroke-width="3" stroke-linecap="round" />
+                        <rect x="40" y="22" width="16" height="12" rx="2" transform="rotate(30 48 28)" fill="#222" stroke="#FF0000" stroke-width="2" />
+                        <circle cx="36" cy="58" r="30" fill="url(#bkShell)" stroke="#FF0000" stroke-width="3" />
+                        <path d="M20 48a18 18 0 0 1 12-12" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="4" stroke-linecap="round" />
+                        <g class="bk-spark">
+                            <path d="M66 0l3 9 9 3-9 3-3 9-3-9-9-3 9-3z" fill="#FF0000" />
+                            <circle cx="66" cy="12" r="3" fill="#fff" />
+                        </g>
+                    </svg>
+                    <h2 class="bk-title">OFERTAS<br>BOMBA</h2>
+                </div>
+                <div class="bk-price" aria-hidden="true">
+                    <span class="bk-hasta">HASTA</span>
+                    <span class="bk-pct">65</span>
+                    <span class="bk-pside"><span class="bk-psign">%</span><span class="bk-offtag">OFF</span></span>
+                </div>
+            </div>
+
+            <div class="bk-card">
+                <div class="bk-lbl">LAS OFERTAS TERMINAN EN:</div>
+                <div class="bk-boxes" role="timer" aria-label="Tiempo restante hasta las 00 hs">
+                    <span class="bk-box" id="bk-bh"><b id="bk-h">--</b><small>HORAS</small></span>
+                    <span class="bk-box" id="bk-bm"><b id="bk-m">--</b><small>MIN</small></span>
+                    <span class="bk-box" id="bk-bs"><b id="bk-s">--</b><small>SEG</small></span>
+                </div>
+                <div class="bk-fuse" aria-hidden="true">
+                    <span class="bk-burnt" id="bk-burnt"></span>
+                    <svg class="bk-fspark" id="bk-fspark" viewBox="0 0 24 24">
+                        <path d="M12 0l3 9 9 3-9 3-3 9-3-9-9-3 9-3z" fill="#FF0000" />
+                        <circle cx="12" cy="12" r="3" fill="#fff" />
+                    </svg>
+                </div>
+                <p class="bk-note">Explota a las <b>00 h</b>. Mañana, nuevas bombas.</p>
+            </div>
+        </div>
+    </a>
+    <script>
+        (function () {
+            /* Cintas */
+            function group(words) {
+                var a = "";
+                for (var k = 0; k < 4; k++) words.forEach(function (w) { a += "<span>" + w + "</span><span>✕</span>" });
+                return '<div class="bk-rgroup">' + a + "</div>";
+            }
+            var ga = group(["OFERTAS BOMBA", "ROUGE", "SOLO POR HOY"]), gb = group(["OFERTAS BOMBA", "HASTA 65% OFF", "ROUGE"]);
+            document.getElementById("bk-ra").innerHTML = ga + ga;
+            document.getElementById("bk-rb").innerHTML = gb + gb;
+
+            /* Contador hasta las 00 hs de Argentina (UTC-3); a medianoche vuelve a arrancar desde 24 hs */
+            var OFFSET = -3 * 3600000, DAY = 86400000;
+            var el = {
+                h: document.getElementById("bk-h"), m: document.getElementById("bk-m"), s: document.getElementById("bk-s"),
+                bh: document.getElementById("bk-bh"), bm: document.getElementById("bk-bm"), bs: document.getElementById("bk-bs"),
+                burnt: document.getElementById("bk-burnt"), spark: document.getElementById("bk-fspark")
+            };
+            var last = {};
+            function pad(n) { return (n < 10 ? "0" : "") + n }
+            function set(k, box, v) {
+                if (last[k] === v) return;
+                last[k] = v;
+                el[k].textContent = v;
+                el[box].classList.remove("tick");
+                void el[box].offsetWidth;
+                el[box].classList.add("tick");
+            }
+            function tick() {
+                var now = Date.now(), left = Math.ceil((DAY - (now + OFFSET) % DAY) / 1000) % 86400;
+                set("h", "bh", pad(Math.floor(left / 3600)));
+                set("m", "bm", pad(Math.floor(left % 3600 / 60)));
+                set("s", "bs", pad(left % 60));
+                /* La chispa avanza de derecha a izquierda: lo que queda de mecha = lo que queda del día */
+                var pct = (left / 86400) * 100;
+                el.spark.style.left = pct + "%";
+                el.burnt.style.width = (100 - pct) + "%";
+                setTimeout(tick, 1000 - now % 1000 + 5);
+            }
+            tick();
+
+            /* El banner vive en un iframe: se navega la página de arriba */
+            var a = document.getElementById("bk");
+            a.addEventListener("click", function (e) {
+                e.preventDefault();
+                try { window.top.location.href = a.href } catch (err) { window.location.href = a.href }
+            });
+        })();
+    </script>
+</body>

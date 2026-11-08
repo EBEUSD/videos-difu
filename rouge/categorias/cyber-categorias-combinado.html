@@ -1,0 +1,1443 @@
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @font-face {
+            font-family: 'HW Pano';
+            src: url('https://raw.githubusercontent.com/EBEUSD/videos-difu/main/servicios-difu/fonts/HW%20Pano%20Regular.ttf') format('truetype');
+            font-weight: 400;
+            font-display: swap
+        }
+
+        @font-face {
+            font-family: 'Basis Grotesque';
+            src: url('https://raw.githubusercontent.com/EBEUSD/videos-difu/main/servicios-difu/fonts/BasisGrotesqueArabicPro-Regular.woff2') format('woff2');
+            font-weight: 400;
+            font-display: swap
+        }
+
+        @font-face {
+            font-family: 'Basis Grotesque';
+            src: url('https://raw.githubusercontent.com/EBEUSD/videos-difu/main/servicios-difu/fonts/BasisGrotesqueArabicPro-Medium.woff2') format('woff2');
+            font-weight: 500;
+            font-display: swap
+        }
+
+        @font-face {
+            font-family: 'Basis Grotesque';
+            src: url('https://raw.githubusercontent.com/EBEUSD/videos-difu/main/servicios-difu/fonts/BasisGrotesqueArabicPro-Bold.woff2') format('woff2');
+            font-weight: 600 700;
+            font-display: swap
+        }
+
+        @font-face {
+            font-family: 'Basis Grotesque';
+            src: url('https://raw.githubusercontent.com/EBEUSD/videos-difu/main/servicios-difu/fonts/BasisGrotesqueArabicPro-Black.woff2') format('woff2');
+            font-weight: 800 900;
+            font-display: swap
+        }
+    </style>
+    <style>
+        html,
+        body {
+            margin: 0 !important;
+            padding: 0 !important;
+            background: transparent
+        }
+
+        /* Separacion con el bloque anterior: padding (no margin) para que cuente en el alto del iframe */
+        body {
+            padding-top: 40px !important
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        #cc {
+            --accent: #FF0000;
+            /* Altura del estante dentro de la zona de productos */
+            --floor: 272px;
+            position: relative;
+            width: 100%;
+            height: 640px;
+            background: #060606;
+            color: #fff;
+            font-family: 'Basis Grotesque', Arial, sans-serif;
+            overflow: hidden
+        }
+
+        #cc button {
+            font: inherit;
+            color: inherit
+        }
+
+        /* Fondo */
+        .cc-glow {
+            position: absolute;
+            inset: -12%;
+            pointer-events: none
+        }
+
+        .cc-glow-l {
+            background: radial-gradient(ellipse 34% 60% at 6% 30%, var(--accent) 0%, rgba(255, 0, 0, .45) 38%, rgba(0, 0, 0, 0) 72%);
+            animation: ccGlowL 10s ease-in-out infinite alternate
+        }
+
+        .cc-glow-r {
+            background: radial-gradient(ellipse 34% 60% at 94% 78%, var(--accent) 0%, rgba(255, 0, 0, .4) 38%, rgba(0, 0, 0, 0) 72%);
+            animation: ccGlowR 12s ease-in-out infinite alternate
+        }
+
+        .cc-band {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 130px;
+            height: 440px;
+            pointer-events: none;
+            background: linear-gradient(180deg, rgba(6, 6, 6, 0) 0%, rgba(6, 6, 6, .92) 18%, #060606 40%, #060606 76%, rgba(6, 6, 6, .9) 88%, rgba(6, 6, 6, 0) 100%)
+        }
+
+        .cc-flutes {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: repeating-linear-gradient(90deg, rgba(0, 0, 0, .34) 0 3px, rgba(255, 255, 255, .06) 3px 5px, rgba(0, 0, 0, 0) 5px 16px)
+        }
+
+        /* --tint es un color registrado para poder animarlo: la luz sigue a la imagen que se ve */
+        @property --tint {
+            syntax: "<color>";
+            inherits: true;
+            initial-value: rgba(0, 0, 0, 0)
+        }
+
+        .cc-tint,
+        .cc-cell {
+            --tint: var(--tint1)
+        }
+
+        .cc-tint {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1.1s ease
+        }
+
+        .cc-tint.on {
+            opacity: .55
+        }
+
+        .cc-follow {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 760px;
+            height: 760px;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+            background: radial-gradient(circle, rgba(255, 240, 230, .07) 0%, rgba(0, 0, 0, 0) 60%);
+            transition: transform .3s ease-out, opacity .5s
+        }
+
+        /* Marquesinas */
+        .cc-ghostwrap {
+            position: absolute;
+            left: 0;
+            top: 4px;
+            width: 100%;
+            overflow: hidden;
+            pointer-events: none
+        }
+
+        .cc-track {
+            display: flex;
+            width: max-content;
+            animation: ccMarquee 70s linear infinite
+        }
+
+        .cc-ghost {
+            display: flex;
+            gap: 80px;
+            padding-right: 80px;
+            font-family: 'HW Pano', sans-serif;
+            font-weight: 400;
+            font-size: 80px;
+            line-height: 1;
+            white-space: nowrap;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255, 255, 255, .2)
+        }
+
+        .cc-ribbon {
+            position: absolute;
+            left: -80px;
+            width: calc(100% + 160px);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            color: #000;
+            background: var(--accent);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, .55);
+            pointer-events: none
+        }
+
+        .cc-ribbon-a {
+            bottom: 6px;
+            height: 26px;
+            transform: rotate(1.4deg);
+            filter: brightness(.6)
+        }
+
+        .cc-ribbon-b {
+            bottom: 22px;
+            height: 30px;
+            transform: rotate(-1.6deg)
+        }
+
+        .cc-rtrack {
+            display: flex;
+            width: max-content
+        }
+
+        .cc-ribbon-a .cc-rtrack {
+            animation: ccMarquee 160s linear infinite reverse
+        }
+
+        .cc-ribbon-b .cc-rtrack {
+            animation: ccMarquee 130s linear infinite
+        }
+
+        .cc-rgroup {
+            display: flex;
+            gap: 28px;
+            padding-right: 28px;
+            font-family: 'HW Pano', sans-serif;
+            font-weight: 400;
+            font-size: 10px;
+            letter-spacing: 3px;
+            white-space: nowrap
+        }
+
+        .cc-ribbon-b .cc-rgroup {
+            font-size: 11px
+        }
+
+        /* Contenido */
+        .cc-inner {
+            position: relative;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 80px 74px
+        }
+
+        .cc-w {
+            width: 100%;
+            max-width: 1280px
+        }
+
+        .cc-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, .25);
+            padding-bottom: 14px
+        }
+
+        .cc-logo {
+            font-family: 'HW Pano', sans-serif;
+            font-weight: 400;
+            font-size: 18px;
+            letter-spacing: 9px
+        }
+
+        .cc-tag {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 3px
+        }
+
+        .cc-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: inline-block;
+            animation: ccPulse 1.2s ease-in-out infinite
+        }
+
+        .cc-cd {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            padding-left: 14px;
+            border-left: 1px solid rgba(255, 255, 255, .25)
+        }
+
+        .cc-cd-lbl {
+            margin-right: 2px;
+            color: #BDB8AC
+        }
+
+        .cc-cd-u {
+            font-size: 10px;
+            letter-spacing: 1px;
+            color: #BDB8AC
+        }
+
+        .cc-cd-u b {
+            display: inline-block;
+            min-width: 1.4em;
+            margin-right: 2px;
+            font-family: 'HW Pano', sans-serif;
+            font-weight: 400;
+            font-size: 18px;
+            letter-spacing: 0;
+            text-align: right;
+            color: #fff
+        }
+
+        .cc-title {
+            position: relative;
+            z-index: 5;
+            margin: 16px 0 0 !important;
+            font-family: 'HW Pano', sans-serif;
+            font-weight: 400;
+            font-size: 26px;
+            letter-spacing: 2px;
+            line-height: 1.2;
+            text-align: center
+        }
+
+        .cc-dots {
+            display: none
+        }
+
+        /* Estante */
+        .cc-shelf {
+            position: relative;
+            flex: 1;
+            min-height: 0;
+            margin-top: 18px;
+            display: flex;
+            gap: 10px
+        }
+
+        .cc-line {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: var(--floor);
+            height: 2px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, .22) 15%, rgba(255, 255, 255, .22) 85%, rgba(255, 255, 255, 0));
+            box-shadow: 0 10px 24px rgba(0, 0, 0, .6);
+            pointer-events: none
+        }
+
+        /* Reflector: se desliza hasta el producto de la card activa */
+        .cc-beam {
+            position: absolute;
+            left: 0;
+            top: -70px;
+            width: 0;
+            height: calc(var(--floor) + 70px);
+            z-index: 2;
+            pointer-events: none;
+            mix-blend-mode: screen;
+            transition: transform .7s cubic-bezier(.7, 0, .2, 1)
+        }
+
+        .cc-beam-sway {
+            position: absolute;
+            left: -150px;
+            top: 0;
+            width: 300px;
+            height: 100%;
+            transform-origin: 50% 0;
+            opacity: .6;
+            transition: opacity .6s ease;
+            animation: ccSway 7s ease-in-out infinite alternate
+        }
+
+        .cc-beam.hot .cc-beam-sway {
+            opacity: 1
+        }
+
+        .cc-beam-cone {
+            position: absolute;
+            inset: 0;
+            filter: blur(10px)
+        }
+
+        .cc-beam-cone::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            clip-path: polygon(44% 0, 56% 0, 96% 100%, 4% 100%);
+            background: linear-gradient(180deg, rgba(255, 246, 238, .36) 0%, rgba(255, 240, 228, .16) 45%, rgba(255, 236, 222, .05) 85%, rgba(255, 236, 222, 0) 100%);
+            -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 30%, #000 70%, transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0, #000 30%, #000 70%, transparent 100%)
+        }
+
+        .cc-beam-core {
+            position: absolute;
+            inset: 0;
+            filter: blur(18px);
+            animation: ccBreath 4.5s ease-in-out infinite
+        }
+
+        .cc-beam-core::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            clip-path: polygon(47% 0, 53% 0, 72% 100%, 28% 100%);
+            background: linear-gradient(180deg, rgba(255, 250, 244, .35), rgba(255, 244, 234, .06) 90%)
+        }
+
+        .cc-beam-src {
+            position: absolute;
+            left: 50%;
+            top: -14px;
+            width: 70px;
+            height: 28px;
+            margin-left: -35px;
+            border-radius: 50%;
+            background: radial-gradient(ellipse at center, rgba(255, 250, 245, .9) 0%, rgba(255, 240, 228, .25) 45%, rgba(255, 240, 228, 0) 75%);
+            filter: blur(3px)
+        }
+
+        .cc-beam-pool {
+            position: absolute;
+            left: 50%;
+            top: calc(100% - 23px);
+            width: 250px;
+            height: 46px;
+            margin-left: -125px;
+            border-radius: 50%;
+            background: radial-gradient(ellipse at center, rgba(255, 244, 234, .30) 0%, rgba(255, 236, 222, .10) 45%, rgba(255, 236, 222, 0) 72%);
+            filter: blur(4px);
+            animation: ccBreath 4.5s ease-in-out infinite
+        }
+
+        /* Celda: producto en el estante; la activa se despliega como card */
+        .cc-cell {
+            position: relative;
+            z-index: 1;
+            flex: 1 1 0;
+            min-width: 0;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            border: 0;
+            background: transparent;
+            text-align: left;
+            cursor: pointer;
+            /* La tipografia de la card escala con su ancho (cqi) */
+            container-type: inline-size;
+            /* Mantener en sincronia con GROW del script (posicion del reflector) */
+            transition: flex-grow .7s cubic-bezier(.7, 0, .2, 1)
+        }
+
+        .cc-cell.on {
+            flex-grow: 4.2
+        }
+
+        .cc-cell:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 4px
+        }
+
+        .cc-card {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, .3);
+            background: radial-gradient(ellipse 90% 60% at 75% 100%, var(--tint) 0%, rgba(6, 6, 6, 0) 70%), linear-gradient(180deg, #151515, #0a0a0a);
+            opacity: 0;
+            transform: scale(.97);
+            transition: opacity .45s, transform .6s cubic-bezier(.2, .8, .2, 1)
+        }
+
+        .cc-cell.on .cc-card {
+            opacity: 1;
+            transform: none
+        }
+
+        /* El estante continua dentro de la card */
+        .cc-card::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: var(--floor);
+            height: 1px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, .18) 40%, rgba(255, 255, 255, .18) 90%, rgba(255, 255, 255, 0))
+        }
+
+        .cc-ring {
+            position: absolute;
+            left: calc(77% - 9px);
+            top: calc(var(--floor) - 110px);
+            width: 46cqi;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, .12);
+            background: radial-gradient(circle, var(--tint) 0%, rgba(6, 6, 6, 0) 66%);
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(.85);
+            transition: opacity .6s, transform .8s cubic-bezier(.2, .8, .2, 1)
+        }
+
+        .cc-cell.on .cc-ring {
+            opacity: 1;
+            transform: translate(-50%, -50%);
+            transition-delay: .25s
+        }
+
+        .cc-bar {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            height: 2px
+        }
+
+        .cc-prog {
+            display: block;
+            height: 2px;
+            width: 0;
+            background: var(--accent);
+            animation: ccProg 3s linear both
+        }
+
+        /* Producto: misma base (el estante) en los dos estados */
+        .cc-img {
+            position: absolute;
+            left: 6px;
+            top: calc(var(--floor) - 186px);
+            width: calc(100% - 12px);
+            height: 180px;
+            max-width: none;
+            object-fit: contain;
+            object-position: 50% 100%;
+            /* Las fotos traen aire transparente alrededor: se escalan desde la base */
+            transform-origin: 50% 100%;
+            transform: scale(1.5);
+            opacity: .7;
+            pointer-events: none;
+            filter: saturate(.85) drop-shadow(0 12px 14px rgba(0, 0, 0, .55));
+            transition: left .7s cubic-bezier(.7, 0, .2, 1), top .7s cubic-bezier(.7, 0, .2, 1), width .7s cubic-bezier(.7, 0, .2, 1), height .7s cubic-bezier(.7, 0, .2, 1), transform .7s cubic-bezier(.7, 0, .2, 1), opacity .5s, filter .5s
+        }
+
+        .cc-cell:hover .cc-img {
+            opacity: 1
+        }
+
+        /* Segunda imagen (imgOn): reemplaza a la primera cuando la card se agranda */
+        .cc-cell.cc-two .cc-img.cc-img2 {
+            opacity: 0
+        }
+
+        .cc-cell.cc-two.on .cc-img.cc-img2 {
+            opacity: 1
+        }
+
+        .cc-cell.cc-two.on .cc-img:not(.cc-img2) {
+            opacity: 0
+        }
+
+        /* Abierta, las cards con dos imagenes giran y alternan cada 2s */
+        .cc-cell.cc-two.on .cc-img.cc-img2 {
+            animation: ccFlipA 4s linear infinite
+        }
+
+        .cc-cell.cc-two.on .cc-img:not(.cc-img2) {
+            animation: ccFlipB 4s linear infinite
+        }
+
+        /* Luz: arranca con el color de la imagen 2 y cambia junto con el giro */
+        .cc-cell.cc-two.on,
+        .cc-tint.cc-two.on {
+            animation: ccTint 4s linear infinite
+        }
+
+        @keyframes ccTint {
+            0%, 44% { --tint: var(--tint2) }
+            56%, 94% { --tint: var(--tint1) }
+            100% { --tint: var(--tint2) }
+        }
+
+        @keyframes ccFlipA {
+            0% { rotate: y -90deg; opacity: 1 }
+            8%, 42% { rotate: y 0deg; opacity: 1 }
+            50% { rotate: y 90deg; opacity: 1 }
+            50.01%, 100% { rotate: y 90deg; opacity: 0 }
+        }
+
+        @keyframes ccFlipB {
+            0%, 49.99% { rotate: y -90deg; opacity: 0 }
+            50% { rotate: y -90deg; opacity: 1 }
+            58%, 92% { rotate: y 0deg; opacity: 1 }
+            100% { rotate: y 90deg; opacity: 1 }
+        }
+
+        /* Sale y Sets: las fotos vienen recortadas al ras, se escalan menos que el resto */
+        .cc-cell.cc-sale .cc-img,
+        .cc-cell.cc-masc .cc-img,
+        .cc-cell.cc-sets .cc-img {
+            transform: scale(.95)
+        }
+
+        .cc-cell.cc-sets.on .cc-img {
+            transform: scale(.95)
+        }
+
+        .cc-cell.cc-sale .cc-img,
+        .cc-cell.cc-masc .cc-img {
+            transform: scale(.85)
+        }
+
+        /* Maquillaje: la imagen 1 (paleta D&G) es ancha y trae aire abajo (~23% del alto):
+           se baja hasta el estante; cqi = ancho de la celda, asi acompana el alto real de la foto */
+        .cc-cell.cc-maq .cc-img:not(.cc-img2) {
+            transform: scale(.95);
+            translate: 0 38cqi
+        }
+
+        .cc-cell.cc-maq.on .cc-img:not(.cc-img2) {
+            transform: scale(1.1);
+            translate: 0 calc(15.5cqi - 6px)
+        }
+
+        /* La paleta (imagen 2) tiene aire abajo: se sube para centrarla en el aro */
+        .cc-cell.cc-maq.on .cc-img.cc-img2 {
+            translate: 0 -38px
+        }
+
+        /* Sets: el Devotion (imagen 1) abierto queda grande */
+        .cc-cell.cc-sets.on .cc-img:not(.cc-img2) {
+            transform: scale(.75)
+        }
+
+        /* Lanzamientos: el Devotion (imagen 1) es un frasco alto al ras, igual que en Sets */
+        .cc-cell.cc-new .cc-img:not(.cc-img2) {
+            transform: scale(.95)
+        }
+
+        .cc-cell.cc-new.on .cc-img:not(.cc-img2) {
+            transform: scale(.75)
+        }
+
+        /* Lanzamientos: el Good Girl (hover) viene al ras */
+        .cc-cell.cc-new.on .cc-img.cc-img2 {
+            transform: scale(.88)
+        }
+
+        /* K-beauty: el aceite Centella (hover) viene al ras */
+        .cc-cell.cc-kb.on .cc-img.cc-img2 {
+            transform: scale(.85)
+        }
+
+        /* Femeninas: la mariposa (hover) viene al ras */
+        .cc-cell.cc-fem.on .cc-img.cc-img2 {
+            transform: scale(.78)
+        }
+
+        /* Capilares: el set Kerastase (hover) viene al ras */
+        .cc-cell.cc-cap.on .cc-img.cc-img2 {
+            transform: scale(1.05)
+        }
+
+        /* Tratamiento: neceseres anchos recortados al ras */
+        .cc-cell.cc-trat .cc-img {
+            transform: scale(.95)
+        }
+
+        .cc-cell.cc-trat.on .cc-img {
+            transform: scale(1.1)
+        }
+
+        /* Menos de $100K: las dos imagenes (par de frascos) traen aire a los costados */
+        .cc-cell.cc-m100 .cc-img {
+            transform: scale(1.7)
+        }
+
+        .cc-cell.cc-m100.on .cc-img {
+            transform: scale(1.6)
+        }
+
+        .cc-cell.cc-sale.on .cc-img,
+        .cc-cell.cc-masc.on .cc-img {
+            transform: scale(.8)
+        }
+
+        .cc-cell.on .cc-img {
+            left: 54%;
+            top: calc(var(--floor) - 236px);
+            width: calc(46% - 18px);
+            height: 230px;
+            transform: scale(1.3);
+            opacity: 1;
+            filter: drop-shadow(0 20px 26px rgba(0, 0, 0, .6))
+        }
+
+        /* Vista cerrada: nombre + chip debajo del estante */
+        .cc-meta {
+            position: absolute;
+            left: 4px;
+            right: 4px;
+            top: calc(var(--floor) + 16px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            transition: opacity .3s
+        }
+
+        .cc-cell.on .cc-meta {
+            opacity: 0
+        }
+
+        /* Alto fijo de 2 lineas para que los chips queden alineados */
+        .cc-label {
+            min-height: 2.5em;
+            font-weight: 500;
+            font-size: clamp(12px, 13.5cqi, 16px);
+            line-height: 1.25;
+            text-align: center;
+            text-wrap: balance;
+            color: #BDB8AC;
+            transition: color .3s
+        }
+
+        .cc-cell:hover .cc-label {
+            color: #fff
+        }
+
+        .cc-chip {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 5px 6px 6px;
+            line-height: 1;
+            white-space: nowrap;
+            background: var(--accent);
+            box-shadow: 0 6px 18px rgba(255, 0, 0, .35)
+        }
+
+        .cc-chip small {
+            margin-bottom: 3px;
+            /* Se achica en celdas angostas para no cortar "LO ÚLTIMO" / "MENOS DE" */
+            font-size: clamp(7px, 10cqi, 8px);
+            font-weight: 700;
+            letter-spacing: clamp(.5px, 2cqi, 2px);
+            color: #000
+        }
+
+        .cc-chip b {
+            font-weight: 900;
+            font-size: clamp(15px, 17cqi, 22px);
+            letter-spacing: -.02em;
+            color: #fff
+        }
+
+        /* Precio abierto con texto largo ($100 MIL, NEW IN): mas chico para igualar al resto */
+        .cc-m100 .cc-pct,
+        .cc-new .cc-pct {
+            font-size: clamp(40px, 12cqi, 66px)
+        }
+
+        .cc-m100 .cc-price,
+        .cc-new .cc-price {
+            padding: 12px 14px 12px 10px
+        }
+
+        /* "MENOS DE" / "LO ULTIMO" en vertical son mas largos que "HASTA": se compactan */
+        .cc-cell.cc-m100 .cc-hasta,
+        .cc-cell.cc-new .cc-hasta {
+            font-size: 8px;
+            letter-spacing: 1px
+        }
+
+        /* Estado cerrado mas grande: factor extra (scale) sobre el transform de cada producto */
+        .cc-img {
+            scale: 1.3;
+            transition: left .7s cubic-bezier(.7, 0, .2, 1), top .7s cubic-bezier(.7, 0, .2, 1), width .7s cubic-bezier(.7, 0, .2, 1), height .7s cubic-bezier(.7, 0, .2, 1), transform .7s cubic-bezier(.7, 0, .2, 1), scale .7s cubic-bezier(.7, 0, .2, 1), opacity .5s, filter .5s
+        }
+
+        .cc-cell.on .cc-img {
+            scale: 1
+        }
+
+        .cc-meta {
+            scale: 1.15;
+            transform-origin: 50% 0
+        }
+
+        /* En pantallas medianas las celdas son angostas: textos sin agrandar para que no se toquen */
+        @media (max-width:1200px) {
+            .cc-meta {
+                scale: 1.04
+            }
+        }
+
+        /* Vista abierta: cabecera arriba, precio + CTA abajo */
+        .cc-info {
+            position: absolute;
+            left: 26px;
+            top: 26px;
+            bottom: 24px;
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            opacity: 0;
+            pointer-events: none
+        }
+
+        .cc-cell.on .cc-info {
+            animation: ccIn .6s .35s cubic-bezier(.2, .8, .2, 1) both
+        }
+
+        .cc-head,
+        .cc-foot {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start
+        }
+
+        .cc-head {
+            gap: 12px
+        }
+
+        .cc-foot {
+            gap: 16px
+        }
+
+        .cc-head::before {
+            content: "";
+            width: 36px;
+            height: 2px;
+            margin-bottom: 4px;
+            background: var(--accent)
+        }
+
+        .cc-name {
+            font-family: 'HW Pano', sans-serif;
+            font-size: clamp(16px, 4.4cqi, 24px);
+            letter-spacing: 1px;
+            line-height: 1.15;
+            text-transform: uppercase
+        }
+
+        .cc-desc {
+            max-width: 24ch;
+            font-size: 14px;
+            line-height: 1.45;
+            color: #E6E2D9
+        }
+
+        .cc-price {
+            display: flex;
+            align-items: stretch;
+            gap: 8px;
+            padding: 14px 16px 14px 12px;
+            line-height: 1;
+            background: var(--accent);
+            box-shadow: 0 16px 40px rgba(255, 0, 0, .35)
+        }
+
+        .cc-hasta {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            text-align: center;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: #000
+        }
+
+        .cc-pct {
+            font-weight: 900;
+            font-size: clamp(56px, 18cqi, 100px);
+            line-height: .75;
+            letter-spacing: -.04em;
+            color: #fff
+        }
+
+        .cc-pside {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start
+        }
+
+        .cc-psign {
+            font-weight: 900;
+            font-size: clamp(26px, 7.5cqi, 44px);
+            line-height: .75;
+            color: #fff
+        }
+
+        .cc-offtag {
+            padding: 4px 8px;
+            background: #000;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px
+        }
+
+        .cc-go {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 44px;
+            padding: 0 20px;
+            background: #fff;
+            color: #000;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            transition: background .2s
+        }
+
+        .cc-go svg {
+            transition: transform .25s
+        }
+
+        .cc-cell.on:hover .cc-go {
+            background: #D6D2C4
+        }
+
+        .cc-cell.on:hover .cc-go svg {
+            transform: translateX(4px)
+        }
+
+        @keyframes ccIn {
+            from {
+                opacity: 0;
+                transform: translateY(14px)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        @keyframes ccProg {
+            from {
+                width: 0
+            }
+
+            to {
+                width: 100%
+            }
+        }
+
+        @keyframes ccSway {
+            from {
+                transform: rotate(-1.2deg)
+            }
+
+            to {
+                transform: rotate(1.2deg)
+            }
+        }
+
+        @keyframes ccBreath {
+
+            0%,
+            100% {
+                opacity: .85
+            }
+
+            50% {
+                opacity: 1
+            }
+        }
+
+        @keyframes ccGlowL {
+            from {
+                transform: translate(-4%, 0) scale(1)
+            }
+
+            to {
+                transform: translate(6%, -4%) scale(1.12)
+            }
+        }
+
+        @keyframes ccGlowR {
+            from {
+                transform: translate(4%, 0) scale(1.08)
+            }
+
+            to {
+                transform: translate(-6%, 5%) scale(.95)
+            }
+        }
+
+        @keyframes ccMarquee {
+            from {
+                transform: translateX(0)
+            }
+
+            to {
+                transform: translateX(-50%)
+            }
+        }
+
+        @keyframes ccPulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1)
+            }
+
+            50% {
+                opacity: .35;
+                transform: scale(.7)
+            }
+        }
+
+        /* Tablet */
+        @media (max-width:1100px) {
+            .cc-inner {
+                padding: 20px 24px 74px
+            }
+
+            .cc-ghost {
+                font-size: 64px
+            }
+
+            .cc-info {
+                left: 22px
+            }
+
+            .cc-desc {
+                font-size: 13px
+            }
+        }
+
+        /* Mobile: carrusel horizontal con swipe, todas las cards desplegadas */
+        @media (max-width:768px) {
+            #cc {
+                height: auto
+            }
+
+            .cc-inner {
+                height: auto;
+                align-items: stretch;
+                padding: 22px 0 78px
+            }
+
+            .cc-top {
+                width: auto;
+                margin: 0 16px
+            }
+
+            .cc-logo {
+                font-size: 14px;
+                letter-spacing: 6px
+            }
+
+            .cc-tag {
+                font-size: 10px;
+                letter-spacing: 2px;
+                gap: 8px
+            }
+
+            #cc-date,
+            .cc-cd-lbl {
+                display: none
+            }
+
+            .cc-cd {
+                gap: 5px;
+                padding-left: 0;
+                border-left: 0
+            }
+
+            .cc-cd-u {
+                font-size: 9px;
+                white-space: nowrap
+            }
+
+            .cc-cd-u b {
+                font-size: 14px
+            }
+
+            .cc-title {
+                margin: 20px 16px 14px !important;
+                font-size: 24px;
+                line-height: 1.15;
+                text-align: left
+            }
+
+            .cc-ghost {
+                font-size: 48px
+            }
+
+            .cc-band,
+            .cc-beam,
+            .cc-line,
+            .cc-follow,
+            .cc-card::after {
+                display: none
+            }
+
+            .cc-shelf {
+                flex: none;
+                width: auto;
+                max-width: none;
+                margin: 0;
+                gap: 10px;
+                padding: 0 16px 4px;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                scroll-padding-left: 16px;
+                scrollbar-width: none
+            }
+
+            .cc-shelf::-webkit-scrollbar {
+                display: none
+            }
+
+            .cc-cell,
+            .cc-cell.on {
+                flex: 0 0 78%;
+                height: 380px;
+                scroll-snap-align: start
+            }
+
+            .cc-card,
+            .cc-cell.on .cc-card {
+                opacity: 1;
+                transform: none;
+                border-color: rgba(255, 255, 255, .18);
+                background: radial-gradient(ellipse 90% 60% at 50% 100%, var(--tint) 0%, rgba(6, 6, 6, 0) 70%), linear-gradient(180deg, #151515, #0a0a0a)
+            }
+
+            .cc-ring,
+            .cc-cell.on .cc-ring {
+                left: 50%;
+                top: 36%;
+                width: 74cqi;
+                opacity: 1;
+                transform: translate(-50%, -50%)
+            }
+
+            .cc-img,
+            .cc-cell:hover .cc-img,
+            .cc-cell.on .cc-img {
+                left: 14%;
+                top: 30px;
+                width: 72%;
+                height: 52%;
+                transform: scale(1.45);
+                opacity: 1;
+                filter: drop-shadow(0 16px 20px rgba(0, 0, 0, .6));
+                transition: none
+            }
+
+            /* Ajustes individuales por producto (mobile): las fotos traen distinto aire,
+               se agrandan y suben las que quedaban chicas o abajo del aro */
+            .cc-maq .cc-img,
+            .cc-maq.on .cc-img {
+                top: 0;
+                transform: scale(2)
+            }
+
+            .cc-kb .cc-img,
+            .cc-kb.on .cc-img {
+                top: 18px;
+                transform: scale(1.65)
+            }
+
+            .cc-cell.cc-sets .cc-img,
+            .cc-cell.cc-sets.on .cc-img {
+                top: 24px;
+                transform: scale(.95)
+            }
+
+            .cc-cell.cc-sale .cc-img,
+            .cc-cell.cc-sale.on .cc-img,
+            .cc-cell.cc-masc .cc-img,
+            .cc-cell.cc-masc.on .cc-img {
+                top: 30px;
+                transform: scale(.8)
+            }
+
+            .cc-cell.cc-m100 .cc-img,
+            .cc-cell.cc-m100.on .cc-img {
+                top: 30px;
+                transform: scale(1.25)
+            }
+
+            .cc-cell.cc-trat .cc-img,
+            .cc-cell.cc-trat.on .cc-img {
+                top: 22px;
+                transform: scale(.95)
+            }
+
+            .cc-cell.cc-maq .cc-img.cc-img2,
+            .cc-cell.cc-maq.on .cc-img.cc-img2 {
+                translate: 0 22px
+            }
+
+            .cc-cell.cc-maq .cc-img:not(.cc-img2),
+            .cc-cell.cc-maq.on .cc-img:not(.cc-img2) {
+                top: 26px;
+                transform: scale(1.1);
+                translate: 0 40px
+            }
+
+            .cc-cell.cc-sets .cc-img:not(.cc-img2),
+            .cc-cell.cc-sets.on .cc-img:not(.cc-img2) {
+                top: 30px;
+                transform: scale(.78)
+            }
+
+            .cc-cell.cc-new .cc-img:not(.cc-img2),
+            .cc-cell.cc-new.on .cc-img:not(.cc-img2) {
+                top: 30px;
+                transform: scale(.78)
+            }
+
+            .cc-cell.cc-new .cc-img.cc-img2 {
+                top: 24px;
+                transform: scale(.76)
+            }
+
+            .cc-cell.cc-kb .cc-img.cc-img2 {
+                top: 26px;
+                transform: scale(.85)
+            }
+
+            .cc-cell.cc-fem .cc-img.cc-img2 {
+                top: 26px;
+                transform: scale(.8)
+            }
+
+            .cc-cell.cc-cap .cc-img.cc-img2 {
+                top: 26px;
+                transform: scale(1.1)
+            }
+
+            /* En mobile todas las cards se ven abiertas: las de dos imagenes giran siempre */
+            .cc-cell.cc-two {
+                animation: ccTint 4s linear infinite
+            }
+
+            .cc-cell.cc-two .cc-img.cc-img2 {
+                animation: ccFlipA 4s linear infinite
+            }
+
+            .cc-cell.cc-two .cc-img:not(.cc-img2) {
+                animation: ccFlipB 4s linear infinite
+            }
+
+            /* Sin animacion (reduce motion): va la imagen agrandada */
+            .cc-cell.cc-two .cc-img.cc-img2 {
+                opacity: 1
+            }
+
+            .cc-cell.cc-two .cc-img:not(.cc-img2) {
+                opacity: 0
+            }
+
+            .cc-sets .cc-name,
+            .cc-m100 .cc-name {
+                font-size: 14px
+            }
+
+            .cc-m100 .cc-pct,
+            .cc-new .cc-pct {
+                font-size: 50px
+            }
+
+            /* Chip arriba a la izquierda; el nombre va en la info */
+            .cc-meta,
+            .cc-cell.on .cc-meta {
+                top: 12px;
+                left: 12px;
+                right: auto;
+                opacity: 1
+            }
+
+            .cc-label {
+                display: none
+            }
+
+            .cc-img,
+            .cc-meta {
+                scale: 1
+            }
+
+            .cc-chip b {
+                font-size: 16px
+            }
+
+            .cc-info,
+            .cc-cell.on .cc-info {
+                top: auto;
+                left: 14px;
+                right: 14px;
+                bottom: 16px;
+                width: auto;
+                justify-content: flex-end;
+                gap: 10px;
+                opacity: 1;
+                animation: none
+            }
+
+            .cc-head::before,
+            .cc-desc,
+            .cc-go {
+                display: none
+            }
+
+            .cc-name {
+                font-size: 17px;
+                line-height: 1.1
+            }
+
+            .cc-price {
+                gap: 7px;
+                padding: 10px 14px 10px 10px;
+                box-shadow: 0 12px 30px rgba(255, 0, 0, .4)
+            }
+
+            .cc-hasta {
+                font-size: 10px;
+                letter-spacing: 2px
+            }
+
+            .cc-pct {
+                font-size: 72px
+            }
+
+            .cc-psign {
+                font-size: 32px
+            }
+
+            .cc-offtag {
+                padding: 3px 6px;
+                font-size: 11px;
+                letter-spacing: 1.5px
+            }
+
+            .cc-dots {
+                display: flex;
+                justify-content: center;
+                gap: 6px;
+                margin-top: 16px
+            }
+
+            .cc-dots span {
+                width: 10px;
+                height: 2px;
+                background: rgba(255, 255, 255, .3);
+                transition: width .3s, background .3s
+            }
+
+            .cc-dots span.on {
+                width: 26px;
+                background: #fff
+            }
+
+            .cc-ribbon-a {
+                transform: rotate(3deg)
+            }
+
+            .cc-ribbon-b {
+                transform: rotate(-3deg)
+            }
+        }
+
+        @media (prefers-reduced-motion:reduce) {
+
+            .cc-cell,
+            .cc-card,
+            .cc-ring,
+            .cc-img,
+            .cc-meta,
+            .cc-beam,
+            .cc-tint,
+            .cc-follow {
+                transition: none
+            }
+
+            .cc-cell.on .cc-info {
+                animation: none;
+                opacity: 1
+            }
+
+            .cc-cell.cc-two .cc-img,
+            .cc-cell.cc-two.on .cc-img,
+            .cc-cell.cc-two,
+            .cc-tint.cc-two {
+                animation: none !important
+            }
+
+            .cc-beam-sway,
+            .cc-beam-core,
+            .cc-beam-pool,
+            .cc-prog,
+            .cc-glow,
+            .cc-track,
+            .cc-rtrack,
+            .cc-dot {
+                animation: none
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section id="cc">
+        <div class="cc-glow cc-glow-l" aria-hidden="true"></div>
+        <div class="cc-glow cc-glow-r" aria-hidden="true"></div>
+        <div class="cc-band" aria-hidden="true"></div>
+        <div class="cc-flutes" aria-hidden="true"></div>
+        <div id="cc-tints" aria-hidden="true"></div>
+        <div class="cc-follow" id="cc-follow" aria-hidden="true"></div>
+
+        <div class="cc-ribbon cc-ribbon-a" aria-hidden="true">
+            <div class="cc-rtrack" id="cc-ra"></div>
+        </div>
+        <div class="cc-ribbon cc-ribbon-b" aria-hidden="true">
+            <div class="cc-rtrack" id="cc-rb"></div>
+        </div>
+
+        <div class="cc-inner">
+            <div class="cc-w cc-top">
+                <span class="cc-logo">ROUGE</span>
+                <div class="cc-tag"><span class="cc-dot" aria-hidden="true"></span><span id="cc-date">CYBER WEEK</span><span class="cc-cd" id="cc-cd" role="timer" aria-label="Tiempo restante hasta el domingo 8/11 inclusive"></span></div>
+            </div>
+            <h2 class="cc-title">ELEGÍ TU CATEGORÍA</h2>
+            <div class="cc-w cc-shelf" id="cc-shelf" role="group" aria-label="Categorías">
+                <div class="cc-beam" id="cc-beam" aria-hidden="true">
+                    <div class="cc-beam-sway"><span class="cc-beam-src"></span><span class="cc-beam-cone"></span><span class="cc-beam-core"></span><span class="cc-beam-pool"></span></div>
+                </div>
+                <div class="cc-line" aria-hidden="true"></div>
+            </div>
+            <div class="cc-dots" id="cc-dots" aria-hidden="true"></div>
+        </div>
+    </section>
+
+    <img id="cc-boot" src="x" alt="" style="display:none"
+        data-c="IWZ1bmN0aW9uKCl7CnZhciBGRUNIQT0iMDIuMTEiLElNRz0iaHR0cHM6Ly9yb3VnZWIyY2FyLnZ0ZXhhc3NldHMuY29tL2Fzc2V0cy92dGV4LmZpbGUtbWFuYWdlci1ncmFwaHFsL2ltYWdlcy8iLFVSTD0iaHR0cHM6Ly93d3cucGVyZnVtZXJpYXNyb3VnZS5jb20vIjsKdmFyIEVORD1uZXcgRGF0ZSgiMjAyNi0xMS0wOVQwMDowMDowMC0wMzowMCIpLmdldFRpbWUoKSxJTlRFUlZBTD0zMDAwLEdST1c9NC4yOwovKiBQb3IgZGVmZWN0bzogSEFTVEEgTk4lIE9GRi4gUGFyYSBvZmVydGFzIHNpbiBwb3JjZW50YWplOiBwcmUvc2lnbi90YWcvY2hpcC4gbGFiZWwgPSBub21icmUgY29ydG8gZW4gZWwgZXN0YW50ZSAqLwp2YXIgREFUQT1bCntrZXk6InNhbGUiLG5hbWU6IlNhbGUiLGRlc2M6IkxhcyBtZWpvcmVzIG9mZXJ0YXMgZGVsIEN5YmVyLCBlbiB1biBzb2xvIGx1Z2FyLiIsb2ZmOiI2NSIsdXJsOlVSTCsiMzQyNT9tYXA9cHJvZHVjdENsdXN0ZXJJZHMmb3JkZXI9T3JkZXJCeVRvcFNhbGVERVNDIix0aW50OiJyZ2JhKDExMCwxNjUsMjMwLC41NSkiLHRpbnQyOiJyZ2JhKDU1LDgwLDE3NSwuNikiLGltZzpJTUcrImYzMzA3MjcxLWFiODEtNGNlOS1hMjBiLWUzMjBmOTdhNDg2OV9fX2MxNDdkMWM2OTBkOGI4NTYwOGM1NDQxMzdjOTg5YWUwLnBuZyIsaW1nT246SU1HKyI4MTRiZmQ3YS03MmYwLTQ2ZjYtYjVjYy0xNjk5MTQxYjYxZWFfX18yMWQ0OTRkODk3YjA2MzQ3NmRhNzQ0N2M5ZTBhZGUzZS5wbmcifSwKe2tleToiZmVtIixuYW1lOiJGcmFnYW5jaWFzIGZlbWVuaW5hcyIsZGVzYzoiRW5jb250csOhIHR1IHByw7N4aW1hIGZyYWdhbmNpYS4iLG9mZjoiNjAiLHVybDpVUkwrInBlcmZ1bWVzLXktZnJhZ2FuY2lhcy9tdWplcj9pbml0aWFsTWFwPWMmaW5pdGlhbFF1ZXJ5PXBlcmZ1bWVzLXktZnJhZ2FuY2lhcyZtYXA9Y2F0ZWdvcnktMSxnZW5lcm8mb3JkZXI9T3JkZXJCeUJlc3REaXNjb3VudERFU0MiLHRpbnQ6InJnYmEoMjQwLDgwLDE0MCwuNTUpIix0aW50MjoicmdiYSgyMjUsMjUsODUsLjYpIixpbWc6SU1HKyI1YjgwY2E2Yi01OTVjLTQ5YmYtODA4OS02OGI2NDcwMmQ5OTdfX184MzExMDA2YjZkMDZiZjA2Njg3NzY4MjYyMDRlY2MyZC5wbmciLGltZ09uOklNRysiN2RmODg5OTUtODczNC00YmQ0LWExMDUtMzIzNTUxZWQ1ODlmX19fNjljMTdjNzQ5YWJlMGNjYTdjMTBhODcwYzZkMzYyYzkucG5nIn0sCntrZXk6Im1hc2MiLG5hbWU6IkZyYWdhbmNpYXMgbWFzY3VsaW5hcyIsZGVzYzoiQXJvbWFzIGNvbiBjYXLDoWN0ZXIgeSBwcmVzZW5jaWEuIixvZmY6IjYwIix1cmw6VVJMKyJwZXJmdW1lcy15LWZyYWdhbmNpYXMvaG9tYnJlP2luaXRpYWxNYXA9YyZpbml0aWFsUXVlcnk9cGVyZnVtZXMteS1mcmFnYW5jaWFzJm1hcD1jYXRlZ29yeS0xLGdlbmVybyZvcmRlcj1PcmRlckJ5QmVzdERpc2NvdW50REVTQyIsdGludDoicmdiYSgyMjUsMjUsMjUsLjYpIix0aW50MjoicmdiYSgxNSwxNjAsMTkwLC42KSIsaW1nOklNRysiMjJmYjcwNGYtMzdhNi00MWM2LWE0ZDQtMGIyZjdmOTk0NTU0X19fOGZlNzc0ZDZkN2ViZjhmZWM2ODIxNzhmZjE0ZTI5MGQucG5nIixpbWdPbjpJTUcrIjRiYzIzOTllLTQzZGMtNGQxMi1hY2UyLWYxNjAxYWM0OTdkNl9fXzE3YTVkZmY1YjU4OTVkYTFiYjA2YmUzYjRjOTIxNzNiLnBuZyJ9LAp7a2V5OiJtYXEiLG5hbWU6Ik1hcXVpbGxhamUiLGRlc2M6IkNvbG9yLCB0ZXh0dXJhIHkgYWNhYmFkbyBwcm9mZXNpb25hbC4iLG9mZjoiNjAiLHVybDpVUkwrIm1hcXVpbGxhamU/b3JkZXI9T3JkZXJCeUJlc3REaXNjb3VudERFU0MiLHRpbnQ6InJnYmEoMjMwLDE3NSwxNDAsLjUpIix0aW50MjoicmdiYSgyNDAsMTMwLDE0NSwuNTUpIixpbWc6SU1HKyI3MmZmYmM1Ny02ZDk1LTQ2OTEtYWU0Yy05NGIzMjFjNWQxNjFfX19iMjg1YWIyZGZiMjBiOWQzMDE5NmYwOWI1ZGNlOGI2Yy5wbmciLGltZ09uOklNRysiNWIxZGZhOWUtYzk1Mi00MjMxLTgwMzItZDAyYzM0YjIxNDc4X19fYmZiMjBiMWUxODY1MGE1NzIwOWEwMDFiMDdmMTMwZjEucG5nIn0sCntrZXk6InRyYXQiLG5hbWU6IlRyYXRhbWllbnRvIixkZXNjOiJSdXRpbmFzIHBhcmEgdW5hIHBpZWwgcXVlIHNlIG5vdGEgY3VpZGFkYS4iLG9mZjoiNjAiLHVybDpVUkwrInRyYXRhbWllbnRvcz9vcmRlcj1PcmRlckJ5QmVzdERpc2NvdW50REVTQyIsdGludDoicmdiYSgyNDUsMTI1LDE3MCwuNTUpIix0aW50MjoicmdiYSgyNDUsMTUwLDU1LC41NSkiLGltZzpJTUcrImVkOWZmZmYwLTY2ZGQtNGNlYi05OGNkLTk2N2I3MDIwYjRkMV9fX2Y1OTg2ZjViN2ZiMjA4MjY3YmVjNmE1N2Y0NDc0ZTRmLnBuZyIsaW1nT246SU1HKyIzNjZjNjk5MC04NDdlLTQwNjMtOTMzYy1jOGMyMTRmNWZjYzRfX19lMDFlNDNiYjI0Y2QyNmIyMzcwN2UyNjE0Y2E2NmI2Yi5wbmcifSwKe2tleToiY2FwIixuYW1lOiJDYXBpbGFyZXMiLGRlc2M6IkN1aWRhZG8gZXhwZXJ0bywgZGUgbGEgcmHDrXogYSBsYXMgcHVudGFzLiIsb2ZmOiI1MCIsdXJsOlVSTCsiY2FwaWxhcmVzP29yZGVyPU9yZGVyQnlCZXN0RGlzY291bnRERVNDIix0aW50OiJyZ2JhKDIzMCw0MCwxNzUsLjU1KSIsdGludDI6InJnYmEoMjM1LDE3MCw0MCwuNTUpIixpbWc6SU1HKyIwNzZmOWI3OS03NDc2LTRkMzktOTlmYi0wOWUxMWM2YzExMWFfX18wNjgzOTkyM2ZhYjI5NGQ3MDlhNTdhY2Y4NDFhYTE1Mi5wbmciLGltZ09uOklNRysiNGQzZmM1ZTgtYTVlYy00YzAxLWEyNGQtYmI0YWJiNGEzODEyX19fNDIxMmZlY2ZiNmMzOGI0NjE5NjgzMDAxYTM3OGFjNDIucG5nIn0sCntrZXk6InNldHMiLG5hbWU6IlNldHMgeSByZWdhbG9zIHBvciBjb21wcmEiLGxhYmVsOiJTZXRzIHkgcmVnYWxvcyIsZGVzYzoiU2V0cyBwYXJhIHJlZ2FsYXIgeSByZWdhbG9zIGNvbiB0dSBjb21wcmEuIixvZmY6IjUwIix1cmw6VVJMKyJwZXJmdW1lcy15LWZyYWdhbmNpYXMvcmVnYWxvLXBvci1jb21wcmEvc2V0cz9pbml0aWFsTWFwPWMmaW5pdGlhbFF1ZXJ5PXBlcmZ1bWVzLXktZnJhZ2FuY2lhcyZtYXA9Y2F0ZWdvcnktMSxmb3JtYXRvLGZvcm1hdG8mb3JkZXI9T3JkZXJCeUJlc3REaXNjb3VudERFU0MiLHRpbnQ6InJnYmEoMjUwLDEzNSw4NSwuNTUpIix0aW50MjoicmdiYSgyMzAsMTgwLDcwLC41NSkiLGltZzpJTUcrIjRmYTEyMGQ2LTRiYWUtNGY5ZS1hNjdkLTNmMzZiNDY4ZDBmOV9fX2M3MGY0YmQ1MGRjNGVlZDQ3MDUyOTg4NDdlYjkxZWZkLnBuZyIsaW1nT246SU1HKyIzMzI4MGQ2ZS02YTZiLTQ5NzMtOGM4Ny0zYzYxYzU2MDZlODVfX181ZGMwMWViMTM3Njk3N2Y5ZmEzNWZhZWUzY2Q0Mzc1ZC5wbmcifSwKe2tleToia2IiLG5hbWU6IkstYmVhdXR5IixkZXNjOiJMbyBtZWpvciBkZSBsYSBydXRpbmEgY29yZWFuYS4iLG9mZjoiMTUiLHVybDpVUkwrIjMzMjE/bWFwPXByb2R1Y3RDbHVzdGVySWRzJm9yZGVyPU9yZGVyQnlCZXN0RGlzY291bnRERVNDIix0aW50OiJyZ2JhKDI0NSwxNTAsMTc1LC41KSIsdGludDI6InJnYmEoMjQ1LDE3MCwzNSwuNTUpIixpbWc6SU1HKyJhZDI4ZDJlNi00MjQ1LTQyNWItOGIzOS1iNGZkNDUzZTQ2OWJfX19jMDNmYjQ0ZDA0ZDgzNmU2N2MxOTdlMjEwZmMyMzY5Yy5wbmciLGltZ09uOklNRysiNDNhNTNkMDgtOTI2Zi00MGQ0LWFiNGQtNDczMzRhZmQ0NDRlX19fNjA0NjE0MGI2MjI3NmMzOGI0ZDFjM2RiOTY0NTJmNzcucG5nIn0sCntrZXk6Im0xMDAiLG5hbWU6IkZyYWdhbmNpYXMgcG9yIG1lbm9zIGRlICQxMDAuMDAwIixsYWJlbDoiRnJhZ2FuY2lhcyIsZGVzYzoiVHUgcHLDs3hpbWEgZnJhZ2FuY2lhIGEgdW4gcHJlY2lvIHF1ZSBzdW1hLiIscHJlOiJNRU5PUyBERSIsb2ZmOiIkMTAwIixzaWduOiIiLHRhZzoiTUlMIixjaGlwOiIkMTAwSyIsdXJsOlVSTCsicGVyZnVtZXMteS1mcmFnYW5jaWFzP2luaXRpYWxNYXA9YyZpbml0aWFsUXVlcnk9cGVyZnVtZXMteS1mcmFnYW5jaWFzJm1hcD1jYXRlZ29yeS0xJm9yZGVyPU9yZGVyQnlCZXN0RGlzY291bnRERVNDJnByaWNlUmFuZ2U9MTgxNzYlMjBUTyUyMDEwMDUwMyIsdGludDoicmdiYSg0MCw3NSwxODAsLjYpIix0aW50MjoicmdiYSgyMjUsMzUsNTAsLjUpIixpbWc6SU1HKyI3NzYzMTg5ZS1lZDVhLTQxNzQtYjJiNi0wYjE1MGQ4M2Q5ZWVfX18yMWQ3NzI3NGIyOGNhNTFkMTkwNDNmZDI1MWYxN2YwOC5wbmciLGltZ09uOklNRysiNDNjN2MzOTUtZDVlOS00MDU5LTg0ZTUtNWM1MzBlNGZhZDk1X19fZjdkOTA5YjUyYTAwMjY4MjBmMDk5NjJmYThhNjZkODQucG5nIn0sCntrZXk6Im5ldyIsbmFtZToiTGFuemFtaWVudG9zIixkZXNjOiJMbyDDumx0aW1vIHF1ZSBsbGVnw7MgYSBSb3VnZS4iLHByZToiTE8gw5pMVElNTyIsb2ZmOiJORVciLHNpZ246IiIsdGFnOiJJTiIsY2hpcDoiTkVXIElOIix1cmw6VVJMKyIzMTMzP21hcD1wcm9kdWN0Q2x1c3RlcklkcyZvcmRlciIsdGludDoicmdiYSgyNDUsODUsMTA1LC41NSkiLHRpbnQyOiJyZ2JhKDIyNSwxOTUsMTI1LC41KSIsaW1nOklNRysiYjc0ZTY3NmUtNWQ2Ny00ODc2LThhMjYtM2VjZWQ0N2EwYmZhX19fYWQyYWY4OWNlNWQ3OGQ5NWE4NjQwOWZhMTUyNGI3YjkucG5nIixpbWdPbjpJTUcrIjhkYTI3YjRkLWYwMjYtNDE5ZC1iN2IxLWZlODRkYjc3MGE0Zl9fX2YxYjViOWMzMjU4MzA1NDU0NzUxZDczYWY2MGM0ZjMyLnBuZyJ9Cl07CkRBVEEuZm9yRWFjaChmdW5jdGlvbihkKXtpZihkLnByZT09bnVsbClkLnByZT0iSEFTVEEiO2lmKGQuc2lnbj09bnVsbClkLnNpZ249IiUiO2lmKGQudGFnPT1udWxsKWQudGFnPSJPRkYiO2lmKGQuY2hpcD09bnVsbClkLmNoaXA9ZC5vZmYrZC5zaWduO2lmKGQubGFiZWw9PW51bGwpZC5sYWJlbD1kLm5hbWV9KTsKZnVuY3Rpb24gJChpZCl7cmV0dXJuIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKGlkKX0KdmFyIHJvb3Q9JCgiY2MiKSxzaGVsZj0kKCJjYy1zaGVsZiIpLGJlYW09JCgiY2MtYmVhbSIpLHRpbnRzRWw9JCgiY2MtdGludHMiKSxmb2xsb3c9JCgiY2MtZm9sbG93IiksY2RFbD0kKCJjYy1jZCIpLGRvdHNFbD0kKCJjYy1kb3RzIik7CnZhciBOPURBVEEubGVuZ3RoLGFjdGl2ZT0wLGhvdmVyPWZhbHNlLHRpbWVyPW51bGwsY2VsbHM9W10sdGludHM9W10sZG90cz1bXSx0YXJnZXQ9LTEsc2Nyb2xsUmFmPW51bGwsdG91Y2hUPW51bGwsbW92ZVJhZj1udWxsOwp2YXIgcmVkdWNlPWZhbHNlO3RyeXtyZWR1Y2U9d2luZG93Lm1hdGNoTWVkaWEoIihwcmVmZXJzLXJlZHVjZWQtbW90aW9uOiByZWR1Y2UpIikubWF0Y2hlc31jYXRjaChlKXt9CmZ1bmN0aW9uIGdvKHUpe3RyeXt3aW5kb3cudG9wLmxvY2F0aW9uLmhyZWY9dX1jYXRjaChlKXt3aW5kb3cubG9jYXRpb24uaHJlZj11fX0KZnVuY3Rpb24gcGFkKHgpe3JldHVybih4PDEwPyIwIjoiIikreH0KZnVuY3Rpb24gZXNjKHMpe3JldHVybiBTdHJpbmcocykucmVwbGFjZSgvJi9nLCImYW1wOyIpLnJlcGxhY2UoLzwvZywiJmx0OyIpfQpmdW5jdGlvbiBtb2IoKXtyZXR1cm4gd2luZG93Lm1hdGNoTWVkaWEoIihtYXgtd2lkdGg6NzY4cHgpIikubWF0Y2hlc30KLyogQ29udGFkb3IgKi8KZnVuY3Rpb24gdGljaygpe3ZhciByPU1hdGgubWF4KDAsRU5ELURhdGUubm93KCkpO2lmKCFyKXtjZEVsLmlubmVySFRNTD0nPHNwYW4gY2xhc3M9ImNjLWNkLWxibCI+RklOQUxJWkFETzwvc3Bhbj4nO3JldHVybn0KdmFyIHM9TWF0aC5mbG9vcihyLzFlMyk7Y2RFbC5pbm5lckhUTUw9JzxzcGFuIGNsYXNzPSJjYy1jZC1sYmwiPlRFUk1JTkEgRU48L3NwYW4+JytbW01hdGguZmxvb3Iocy84NjQwMCksIkQiXSxbTWF0aC5mbG9vcihzJTg2NDAwLzM2MDApLCJIIl0sW01hdGguZmxvb3IocyUzNjAwLzYwKSwiTSJdLFtzJTYwLCJTIl1dLm1hcChmdW5jdGlvbihwKXtyZXR1cm4nPHNwYW4gY2xhc3M9ImNjLWNkLXUiPjxiPicrcGFkKHBbMF0pKyI8L2I+IitwWzFdKyI8L3NwYW4+In0pLmpvaW4oIiIpOwpzZXRUaW1lb3V0KHRpY2ssMWUzLURhdGUubm93KCklMWUzKX0KaWYoY2RFbCl0aWNrKCk7Ci8qIENpbnRhcyAqLwp2YXIgb2Zmcz1EQVRBLm1hcChmdW5jdGlvbihkKXtyZXR1cm4gcGFyc2VJbnQoZC5vZmYsMTApfSkuZmlsdGVyKGZ1bmN0aW9uKHgpe3JldHVybiFpc05hTih4KX0pLE1BWD1vZmZzLmxlbmd0aD9NYXRoLm1heC5hcHBseShudWxsLG9mZnMpOiJYWCI7CmZ1bmN0aW9uIGdyb3VwKHdvcmRzKXt2YXIgYT0iIjtmb3IodmFyIGs9MDtrPDg7aysrKXdvcmRzLmZvckVhY2goZnVuY3Rpb24odyl7YSs9IjxzcGFuPiIrdysiPC9zcGFuPjxzcGFuPuKclTwvc3Bhbj4ifSk7cmV0dXJuJzxkaXYgY2xhc3M9ImNjLXJncm91cCI+JythKyI8L2Rpdj4ifQp2YXIgZ2E9Z3JvdXAoWyJDWUJFUiBXRUVLIiwiUk9VR0UiXSksZ2I9Z3JvdXAoWyJDWUJFUiBXRUVLIiwiSEFTVEEgIitNQVgrIiUgT0ZGIiwiUk9VR0UiXSk7CiQoImNjLXJhIikuaW5uZXJIVE1MPWdhK2dhOyQoImNjLXJiIikuaW5uZXJIVE1MPWdiK2diOwovKiBDZWxkYXM6IHByb2R1Y3RvIGVuIGVsIGVzdGFudGU7IGxhIGFjdGl2YSBzZSBkZXNwbGllZ2EgY29tbyBjYXJkICovCkRBVEEuZm9yRWFjaChmdW5jdGlvbihkLGkpewp2YXIgdD1kb2N1bWVudC5jcmVhdGVFbGVtZW50KCJkaXYiKTt0LmNsYXNzTmFtZT0iY2MtdGludCI7dC5zdHlsZS5iYWNrZ3JvdW5kPSJyYWRpYWwtZ3JhZGllbnQoZWxsaXBzZSA3NSUgNTUlIGF0IDUwJSAxMDAlLHZhcigtLXRpbnQpIDAlLHJnYmEoNiw2LDYsMCkgNzIlKSI7dC5zdHlsZS5zZXRQcm9wZXJ0eSgiLS10aW50MSIsZC50aW50KTt0LnN0eWxlLnNldFByb3BlcnR5KCItLXRpbnQyIixkLnRpbnQyfHxkLnRpbnQpO2lmKGQuaW1nT24pdC5jbGFzc0xpc3QuYWRkKCJjYy10d28iKTt0aW50c0VsLmFwcGVuZENoaWxkKHQpO3RpbnRzLnB1c2godCk7CnZhciBiPWRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoImJ1dHRvbiIpO2IudHlwZT0iYnV0dG9uIjtiLmNsYXNzTmFtZT0iY2MtY2VsbCBjYy0iK2Qua2V5KyhkLmltZ09uPyIgY2MtdHdvIjoiIik7Yi5zdHlsZS5zZXRQcm9wZXJ0eSgiLS10aW50MSIsZC50aW50KTtiLnN0eWxlLnNldFByb3BlcnR5KCItLXRpbnQyIixkLnRpbnQyfHxkLnRpbnQpOwpiLnNldEF0dHJpYnV0ZSgiYXJpYS1sYWJlbCIsZC5uYW1lKyIsICIrKGQucHJlKyIgIitkLm9mZitkLnNpZ24rIiAiK2QudGFnKS50b0xvd2VyQ2FzZSgpKTsKYi5pbm5lckhUTUw9JzxzcGFuIGNsYXNzPSJjYy1jYXJkIiBhcmlhLWhpZGRlbj0idHJ1ZSI+PHNwYW4gY2xhc3M9ImNjLXJpbmciPjwvc3Bhbj48c3BhbiBjbGFzcz0iY2MtYmFyIj48L3NwYW4+PC9zcGFuPicrCic8aW1nIGNsYXNzPSJjYy1pbWciIHNyYz0iJytkLmltZysnIiBhbHQ9IiIgbG9hZGluZz0ibGF6eSI+JysoZC5pbWdPbj8nPGltZyBjbGFzcz0iY2MtaW1nIGNjLWltZzIiIHNyYz0iJytkLmltZ09uKyciIGFsdD0iIiBsb2FkaW5nPSJsYXp5Ij4nOicnKSsKJzxzcGFuIGNsYXNzPSJjYy1tZXRhIiBhcmlhLWhpZGRlbj0idHJ1ZSI+PHNwYW4gY2xhc3M9ImNjLWxhYmVsIj4nK2VzYyhkLmxhYmVsKSsnPC9zcGFuPjxzcGFuIGNsYXNzPSJjYy1jaGlwIj48c21hbGw+Jytlc2MoZC5wcmUpKyc8L3NtYWxsPjxiPicrZXNjKGQuY2hpcCkrJzwvYj48L3NwYW4+PC9zcGFuPicrCic8c3BhbiBjbGFzcz0iY2MtaW5mbyIgYXJpYS1oaWRkZW49InRydWUiPjxzcGFuIGNsYXNzPSJjYy1oZWFkIj48c3BhbiBjbGFzcz0iY2MtbmFtZSI+Jytlc2MoZC5uYW1lKSsnPC9zcGFuPjxzcGFuIGNsYXNzPSJjYy1kZXNjIj4nK2VzYyhkLmRlc2MpKyc8L3NwYW4+PC9zcGFuPicrCic8c3BhbiBjbGFzcz0iY2MtZm9vdCI+PHNwYW4gY2xhc3M9ImNjLXByaWNlIj48c3BhbiBjbGFzcz0iY2MtaGFzdGEiPicrZXNjKGQucHJlKSsnPC9zcGFuPjxzcGFuIGNsYXNzPSJjYy1wY3QiPicrZXNjKGQub2ZmKSsnPC9zcGFuPjxzcGFuIGNsYXNzPSJjYy1wc2lkZSI+PHNwYW4gY2xhc3M9ImNjLXBzaWduIj4nK2VzYyhkLnNpZ24pKyc8L3NwYW4+PHNwYW4gY2xhc3M9ImNjLW9mZnRhZyI+Jytlc2MoZC50YWcpKyc8L3NwYW4+PC9zcGFuPjwvc3Bhbj4nKwonPHNwYW4gY2xhc3M9ImNjLWdvIj5WRVIgTcOBUyA8c3ZnIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBhcmlhLWhpZGRlbj0idHJ1ZSI+PHBhdGggZD0iTTUgMTJoMTRNMTMgNmw2IDYtNiA2Ii8+PC9zdmc+PC9zcGFuPjwvc3Bhbj48L3NwYW4+JzsKYi5hZGRFdmVudExpc3RlbmVyKCJtb3VzZWVudGVyIixmdW5jdGlvbigpe2lmKHdpbmRvdy5tYXRjaE1lZGlhKCIoaG92ZXI6aG92ZXIpIikubWF0Y2hlcylzZXQoaSl9KTsKYi5hZGRFdmVudExpc3RlbmVyKCJmb2N1cyIsZnVuY3Rpb24oKXtzZXQoaSl9KTsKYi5hZGRFdmVudExpc3RlbmVyKCJjbGljayIsZnVuY3Rpb24oKXtpZihpPT09YWN0aXZlfHxtb2IoKSlnbyhkLnVybCk7ZWxzZSBzZXQoaSl9KTsKc2hlbGYuYXBwZW5kQ2hpbGQoYik7Y2VsbHMucHVzaChiKTsKaWYoZG90c0VsKXt2YXIgcz1kb2N1bWVudC5jcmVhdGVFbGVtZW50KCJzcGFuIik7ZG90c0VsLmFwcGVuZENoaWxkKHMpO2RvdHMucHVzaChzKX19KTsKLyogUmVmbGVjdG9yOiBjYWxjdWxhIGxhIHBvc2ljaW9uIGZpbmFsIGRlbCBwcm9kdWN0byBhY3Rpdm8gKG1pc21hIGN1cnZhIHF1ZSBlbCBmbGV4KSAqLwpmdW5jdGlvbiBiZWFtVG8oKXtpZighYmVhbXx8bW9iKCkpcmV0dXJuOwp2YXIgVz1zaGVsZi5jbGllbnRXaWR0aCxnPXBhcnNlRmxvYXQoZ2V0Q29tcHV0ZWRTdHlsZShzaGVsZikuY29sdW1uR2FwKXx8MCxjbG9zZWQ9KFctZyooTi0xKSkvKE4tMStHUk9XKSxhdz1HUk9XKmNsb3NlZCxsZWZ0PWFjdGl2ZSooY2xvc2VkK2cpOwpiZWFtLnN0eWxlLnRyYW5zZm9ybT0idHJhbnNsYXRlWCgiKyhsZWZ0K2F3Ki43Ny05KS50b0ZpeGVkKDEpKyJweCkifQp3aW5kb3cuYWRkRXZlbnRMaXN0ZW5lcigicmVzaXplIixiZWFtVG8pOwovKiBMdXogcXVlIHNpZ3VlIGFsIG1vdXNlICovCnJvb3QuYWRkRXZlbnRMaXN0ZW5lcigibW91c2Vtb3ZlIixmdW5jdGlvbihlKXtpZihyZWR1Y2V8fG1vdmVSYWYpcmV0dXJuO3ZhciByPXJvb3QuZ2V0Qm91bmRpbmdDbGllbnRSZWN0KCkseD1lLmNsaWVudFgtci5sZWZ0LHk9ZS5jbGllbnRZLXIudG9wOwptb3ZlUmFmPXJlcXVlc3RBbmltYXRpb25GcmFtZShmdW5jdGlvbigpe21vdmVSYWY9bnVsbDtmb2xsb3cuc3R5bGUub3BhY2l0eT0xO2ZvbGxvdy5zdHlsZS50cmFuc2Zvcm09InRyYW5zbGF0ZSgiKyh4LTM4MCkudG9GaXhlZCgwKSsicHgsIisoeS0zODApLnRvRml4ZWQoMCkrInB4KSJ9KX0pOwpyb290LmFkZEV2ZW50TGlzdGVuZXIoIm1vdXNlbGVhdmUiLGZ1bmN0aW9uKCl7Zm9sbG93LnN0eWxlLm9wYWNpdHk9MH0pOwpzaGVsZi5hZGRFdmVudExpc3RlbmVyKCJtb3VzZWVudGVyIixmdW5jdGlvbigpe2hvdmVyPXRydWU7YmVhbS5jbGFzc0xpc3QuYWRkKCJob3QiKTtiYXIoKTtzY2hlZHVsZSgpfSk7CnNoZWxmLmFkZEV2ZW50TGlzdGVuZXIoIm1vdXNlbGVhdmUiLGZ1bmN0aW9uKCl7aG92ZXI9ZmFsc2U7YmVhbS5jbGFzc0xpc3QucmVtb3ZlKCJob3QiKTtiYXIoKTtzY2hlZHVsZSgpfSk7Ci8qIE1vYmlsZTogY2FycnVzZWwgY29uIHN3aXBlICovCmZ1bmN0aW9uIHN0ZXAoKXtyZXR1cm4gY2VsbHMubGVuZ3RoPjE/Y2VsbHNbMV0ub2Zmc2V0TGVmdC1jZWxsc1swXS5vZmZzZXRMZWZ0OjF9CnNoZWxmLmFkZEV2ZW50TGlzdGVuZXIoInNjcm9sbCIsZnVuY3Rpb24oKXtpZighbW9iKCl8fHNjcm9sbFJhZilyZXR1cm47aWYodGFyZ2V0Pj0wKXtpZihNYXRoLmFicyhzaGVsZi5zY3JvbGxMZWZ0LXRhcmdldCk8Myl0YXJnZXQ9LTE7cmV0dXJufQpzY3JvbGxSYWY9cmVxdWVzdEFuaW1hdGlvbkZyYW1lKGZ1bmN0aW9uKCl7c2Nyb2xsUmFmPW51bGw7dmFyIGs9TWF0aC5tYXgoMCxNYXRoLm1pbihOLTEsTWF0aC5yb3VuZChzaGVsZi5zY3JvbGxMZWZ0L3N0ZXAoKSkpKTtpZihrIT09YWN0aXZlKXNldChrLGZhbHNlLHRydWUpfSl9LHtwYXNzaXZlOnRydWV9KTsKc2hlbGYuYWRkRXZlbnRMaXN0ZW5lcigid2hlZWwiLGZ1bmN0aW9uKCl7dGFyZ2V0PS0xfSx7cGFzc2l2ZTp0cnVlfSk7CnNoZWxmLmFkZEV2ZW50TGlzdGVuZXIoInRvdWNoc3RhcnQiLGZ1bmN0aW9uKCl7dGFyZ2V0PS0xO2NsZWFyVGltZW91dCh0b3VjaFQpO2hvdmVyPXRydWU7YmFyKCk7c2NoZWR1bGUoKX0se3Bhc3NpdmU6dHJ1ZX0pOwpzaGVsZi5hZGRFdmVudExpc3RlbmVyKCJ0b3VjaGVuZCIsZnVuY3Rpb24oKXtjbGVhclRpbWVvdXQodG91Y2hUKTt0b3VjaFQ9c2V0VGltZW91dChmdW5jdGlvbigpe2hvdmVyPWZhbHNlO2JhcigpO3NjaGVkdWxlKCl9LDI1MDApfSx7cGFzc2l2ZTp0cnVlfSk7CmZ1bmN0aW9uIGF1dG8oKXtyZXR1cm4hcmVkdWNlJiYhaG92ZXJ9CmZ1bmN0aW9uIGJhcigpe2NlbGxzLmZvckVhY2goZnVuY3Rpb24oYyxpKXtjLnF1ZXJ5U2VsZWN0b3IoIi5jYy1iYXIiKS5pbm5lckhUTUw9KGk9PT1hY3RpdmUmJmF1dG8oKSk/JzxzcGFuIGNsYXNzPSJjYy1wcm9nIiBzdHlsZT0iYW5pbWF0aW9uLWR1cmF0aW9uOicrSU5URVJWQUwrJ21zIj48L3NwYW4+JzoiIn0pfQpmdW5jdGlvbiBzY2hlZHVsZSgpe2NsZWFyVGltZW91dCh0aW1lcik7aWYoYXV0bygpKXRpbWVyPXNldFRpbWVvdXQoZnVuY3Rpb24oKXtzZXQoYWN0aXZlKzEsdHJ1ZSl9LElOVEVSVkFMKX0KZnVuY3Rpb24gc2V0KGksZnJvbUF1dG8sbm9TY3JvbGwpe3ZhciBuPShpK04pJU47aWYobj09PWFjdGl2ZSYmIWZyb21BdXRvJiZjZWxsc1tuXS5jbGFzc0xpc3QuY29udGFpbnMoIm9uIikpcmV0dXJuO2FjdGl2ZT1uOwpjZWxscy5mb3JFYWNoKGZ1bmN0aW9uKGMsayl7Yy5jbGFzc0xpc3QudG9nZ2xlKCJvbiIsaz09PWFjdGl2ZSk7Yy5zZXRBdHRyaWJ1dGUoImFyaWEtZXhwYW5kZWQiLGs9PT1hY3RpdmU/InRydWUiOiJmYWxzZSIpfSk7CnRpbnRzLmZvckVhY2goZnVuY3Rpb24odCxrKXt0LmNsYXNzTGlzdC50b2dnbGUoIm9uIixrPT09YWN0aXZlKX0pOwpkb3RzLmZvckVhY2goZnVuY3Rpb24ocyxrKXtzLmNsYXNzTGlzdC50b2dnbGUoIm9uIixrPT09YWN0aXZlKX0pOwpiZWFtVG8oKTsKaWYobW9iKCkmJiFub1Njcm9sbCl7dmFyIEw9Y2VsbHNbYWN0aXZlXS5vZmZzZXRMZWZ0LWNlbGxzWzBdLm9mZnNldExlZnQ7dGFyZ2V0PU1hdGguYWJzKHNoZWxmLnNjcm9sbExlZnQtTCk8Mz8tMTpMO3NoZWxmLnNjcm9sbFRvKHtsZWZ0OkwsYmVoYXZpb3I6cmVkdWNlPyJhdXRvIjoic21vb3RoIn0pfQpiYXIoKTtzY2hlZHVsZSgpfQpzZXQoMCx0cnVlKTsKfSgpOwo="
+        onerror="if(!window.ccRun){window.ccRun=1;try{new Function(decodeURIComponent(escape(atob(this.getAttribute('data-c')))))()}catch(e){var d=document.createElement('div');d.textContent='Error vitrina: '+e.message;d.style.cssText='color:#f00;background:#fff;padding:8px;font:14px monospace';document.body.appendChild(d)}}">
+    <svg width="0" height="0" style="position:absolute"
+        onload="var i=document.getElementById('cc-boot');if(i)if(i.onerror)i.onerror.call(i)"></svg>
+</body>

@@ -1,0 +1,585 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100,400;100,600;100,800;125,800;125,900&family=Raleway:wght@300&display=swap"
+        rel="stylesheet">
+    <title>Cyber Monday Beauty24</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        .b-wrap,
+        .b-wrap * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .b-wrap {
+            display: none;
+            container-type: inline-size;
+            background: #85004B;
+        }
+
+        .b-wrap.b-on {
+            display: block;
+        }
+
+        .b {
+            --px: calc(min(1cqw, 14.4px) / 14.4);
+            --accent: #EAFF00;
+            position: relative;
+            overflow: hidden;
+            background: #85004B;
+            color: #fff;
+            font-family: Archivo, Arial, sans-serif;
+        }
+
+        .b-stripes {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 0;
+            font-size: 0;
+            line-height: 0;
+            background: repeating-linear-gradient(90deg, rgba(255, 166, 213, 0.16) 0 46px, rgba(133, 0, 75, 0.10) 46px 92px);
+            -webkit-mask-image: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, 0.6) 35%, transparent 60%);
+            mask-image: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, 0.6) 35%, transparent 60%);
+        }
+
+        .b-shade {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 2;
+            font-size: 0;
+            line-height: 0;
+            background: linear-gradient(180deg, rgba(90, 0, 0, 0) 55%, rgba(90, 0, 0, 0.45) 100%);
+        }
+
+        .b-stage {
+            position: relative;
+            max-width: 1440px;
+            margin: 0 auto;
+            min-height: calc(640 * var(--px));
+        }
+
+        .b-orb {
+            position: absolute;
+            z-index: 1;
+            border-radius: 50%;
+            font-size: 0;
+            line-height: 0;
+            background: radial-gradient(circle, #EF5BA1 0%, rgba(239, 91, 161, 0.65) 35%, rgba(239, 91, 161, 0) 70%);
+        }
+
+        .b-a {
+            animation: bFloatA 11s ease-in-out infinite alternate;
+        }
+
+        .b-b {
+            animation: bFloatB 14s ease-in-out infinite alternate;
+        }
+
+        .b-o1 {
+            width: calc(520 * var(--px));
+            height: calc(520 * var(--px));
+            left: calc(-140 * var(--px));
+            top: calc(220 * var(--px));
+        }
+
+        .b-o2 {
+            width: calc(360 * var(--px));
+            height: calc(360 * var(--px));
+            left: calc(520 * var(--px));
+            top: calc(-160 * var(--px));
+        }
+
+        .b-o3 {
+            width: calc(460 * var(--px));
+            height: calc(460 * var(--px));
+            right: calc(-120 * var(--px));
+            bottom: calc(-220 * var(--px));
+        }
+
+        .b-o4 {
+            width: calc(260 * var(--px));
+            height: calc(260 * var(--px));
+            right: calc(380 * var(--px));
+            top: calc(60 * var(--px));
+            opacity: 0.7;
+        }
+
+        .b-in {
+            position: relative;
+            z-index: 3;
+            min-height: calc(640 * var(--px));
+            display: flex;
+            flex-direction: column;
+            gap: calc(28 * var(--px));
+            padding: calc(34 * var(--px)) calc(80 * var(--px)) calc(48 * var(--px));
+        }
+
+        .b-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: calc(16 * var(--px));
+            border-bottom: 1px solid rgba(255, 166, 213, 0.4);
+        }
+
+        .b-logo {
+            font-family: Raleway, Arial, sans-serif;
+            font-weight: 300;
+            font-size: calc(30 * var(--px));
+            letter-spacing: calc(0.5 * var(--px));
+        }
+
+        .b-live {
+            display: flex;
+            align-items: center;
+            gap: calc(12 * var(--px));
+            font-size: calc(13 * var(--px));
+            font-weight: 600;
+            letter-spacing: calc(3 * var(--px));
+        }
+
+        .b-dot {
+            display: inline-block;
+            width: calc(10 * var(--px));
+            height: calc(10 * var(--px));
+            border-radius: 50%;
+            background: var(--accent);
+            font-size: 0;
+            line-height: 0;
+            animation: bPulse 1.2s ease-in-out infinite;
+        }
+
+        .b-body {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: calc(56 * var(--px));
+        }
+
+        .b-left {
+            flex-shrink: 0;
+            width: calc(560 * var(--px));
+            display: flex;
+            flex-direction: column;
+            gap: calc(28 * var(--px));
+        }
+
+        .b-head {
+            font-stretch: 125%;
+            text-shadow: 0 0 34px rgba(239, 91, 161, 0.75);
+        }
+
+        .b-h1 {
+            font-weight: 900;
+            font-size: calc(92 * var(--px));
+            line-height: 0.9;
+            letter-spacing: calc(-1 * var(--px));
+            color: var(--accent);
+        }
+
+        .b-aviso {
+            max-width: calc(420 * var(--px));
+            font-size: calc(17 * var(--px));
+            line-height: 1.5;
+            color: #FFD6EC;
+        }
+
+        .b-aviso strong {
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .b-right {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: calc(22 * var(--px));
+        }
+
+        .b-lbl {
+            font-size: calc(14 * var(--px));
+            font-weight: 600;
+            letter-spacing: calc(5 * var(--px));
+        }
+
+        .b-ended {
+            display: none;
+            font-weight: 900;
+            font-size: calc(56 * var(--px));
+            line-height: 1;
+            color: var(--accent);
+        }
+
+        .b.is-ended .b-ended {
+            display: block;
+        }
+
+        .b.is-ended .b-grid,
+        .b.is-ended .b-lbl,
+        .b.is-ended .b-aviso {
+            display: none;
+        }
+
+        .b-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: calc(16 * var(--px));
+        }
+
+        .b-glass {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: calc(12 * var(--px));
+            padding: calc(22 * var(--px)) calc(14 * var(--px)) calc(18 * var(--px));
+            background: rgba(255, 166, 213, 0.14);
+            border: 1px solid rgba(255, 166, 213, 0.45);
+            -webkit-backdrop-filter: blur(14px);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 18px 40px rgba(60, 0, 30, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
+
+        .b-n {
+            font-weight: 800;
+            font-size: calc(96 * var(--px));
+            line-height: 0.9;
+            letter-spacing: calc(-3 * var(--px));
+            font-variant-numeric: tabular-nums;
+            color: #fff;
+        }
+
+        .b-glass-s .b-n {
+            color: var(--accent);
+        }
+
+        .b-bar {
+            position: relative;
+            overflow: hidden;
+            align-self: stretch;
+            height: calc(4 * var(--px));
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .b-fill {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            font-size: 0;
+            line-height: 0;
+            background: var(--accent);
+        }
+
+        .b-l {
+            font-size: calc(13 * var(--px));
+            font-weight: 600;
+            letter-spacing: calc(4 * var(--px));
+            color: #FFD6EC;
+        }
+
+        .b-chip {
+            position: relative;
+            overflow: hidden;
+            align-self: flex-start;
+            display: inline-flex;
+            align-items: center;
+            min-height: calc(46 * var(--px));
+            margin-top: calc(4 * var(--px));
+            padding: 0 calc(22 * var(--px));
+            background: #FFA6D5;
+            color: #85004B;
+            font-size: calc(14 * var(--px));
+            font-weight: 800;
+            letter-spacing: calc(2 * var(--px));
+        }
+
+        .b-chip::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+            animation: bSweep 2.6s ease-in-out infinite;
+        }
+
+        @keyframes bFloatA {
+            from {
+                transform: translate(0, 0) scale(1);
+            }
+
+            to {
+                transform: translate(60px, -40px) scale(1.12);
+            }
+        }
+
+        @keyframes bFloatB {
+            from {
+                transform: translate(0, 0) scale(1.05);
+            }
+
+            to {
+                transform: translate(-70px, 50px) scale(0.92);
+            }
+        }
+
+        @keyframes bPulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.35;
+                transform: scale(0.7);
+            }
+        }
+
+        @keyframes bSweep {
+            from {
+                transform: translateX(-100%);
+            }
+
+            to {
+                transform: translateX(100%);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .b-a,
+            .b-b,
+            .b-dot,
+            .b-chip::after {
+                animation: none;
+            }
+        }
+
+        @media (max-width: 701px) {
+            .b {
+                --px: 1px;
+            }
+
+            .b-stage,
+            .b-in {
+                min-height: 0;
+            }
+
+            .b-in {
+                gap: 28px;
+                padding: 24px 20px 36px;
+            }
+
+            .b-logo {
+                font-size: 24px;
+            }
+
+            .b-live {
+                font-size: 11px;
+                letter-spacing: 2px;
+            }
+
+            .b-body {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 28px;
+            }
+
+            .b-left {
+                width: 100%;
+                gap: 18px;
+            }
+
+            .b-h1 {
+                font-size: 48px;
+                letter-spacing: -0.5px;
+            }
+
+            .b-aviso {
+                max-width: none;
+                font-size: 15px;
+            }
+
+            .b-right {
+                gap: 18px;
+            }
+
+            .b-lbl {
+                font-size: 12px;
+                letter-spacing: 4px;
+            }
+
+            .b-ended {
+                font-size: 36px;
+            }
+
+            .b-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 12px;
+            }
+
+            .b-glass {
+                padding: 18px 12px 14px;
+                gap: 10px;
+            }
+
+            .b-n {
+                font-size: 64px;
+                letter-spacing: -2px;
+            }
+
+            .b-l {
+                font-size: 12px;
+                letter-spacing: 3px;
+            }
+
+            .b-chip {
+                min-height: 44px;
+                padding: 0 18px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="b-wrap" id="b-wrap">
+        <section class="b" id="b">
+            <div class="b-stripes" aria-hidden="true">&nbsp;</div>
+            <div class="b-shade" aria-hidden="true">&nbsp;</div>
+            <div class="b-stage">
+                <div class="b-orb b-a b-o1" aria-hidden="true">&nbsp;</div>
+                <div class="b-orb b-b b-o2" aria-hidden="true">&nbsp;</div>
+                <div class="b-orb b-a b-o3" aria-hidden="true">&nbsp;</div>
+                <div class="b-orb b-b b-o4" aria-hidden="true">&nbsp;</div>
+
+                <div class="b-in">
+                    <div class="b-top">
+                        <span class="b-logo">beauty24</span>
+                        <div class="b-live">
+                            <span class="b-dot" aria-hidden="true">&nbsp;</span>
+                            <span>CUENTA REGRESIVA</span>
+                        </div>
+                    </div>
+
+                    <div class="b-body">
+                        <div class="b-left">
+                            <h1 class="b-head b-h1">CYBER<br>MONDAY</h1>
+                            <p class="b-aviso">Preparate: el Cyber arranca el <strong>lunes 02.11, 00 h</strong>.</p>
+                        </div>
+
+                        <div class="b-right">
+                            <span class="b-lbl">EL CYBER EMPIEZA EN</span>
+                            <div class="b-head b-ended">¡YA EMPEZÓ!</div>
+                            <div class="b-grid" role="timer" id="b-timer" aria-label="Cuenta regresiva para el Cyber">
+                                <div class="b-glass">
+                                    <span class="b-n" id="b-d">00</span>
+                                    <div class="b-bar">
+                                        <div class="b-fill" id="b-bd">&nbsp;</div>
+                                    </div>
+                                    <span class="b-l">DÍAS</span>
+                                </div>
+                                <div class="b-glass">
+                                    <span class="b-n" id="b-h">00</span>
+                                    <div class="b-bar">
+                                        <div class="b-fill" id="b-bh">&nbsp;</div>
+                                    </div>
+                                    <span class="b-l">HORAS</span>
+                                </div>
+                                <div class="b-glass">
+                                    <span class="b-n" id="b-m">00</span>
+                                    <div class="b-bar">
+                                        <div class="b-fill" id="b-bm">&nbsp;</div>
+                                    </div>
+                                    <span class="b-l">MINUTOS</span>
+                                </div>
+                                <div class="b-glass b-glass-s">
+                                    <span class="b-n" id="b-s">00</span>
+                                    <div class="b-bar">
+                                        <div class="b-fill" id="b-bs">&nbsp;</div>
+                                    </div>
+                                    <span class="b-l">SEGUNDOS</span>
+                                </div>
+                            </div>
+                            <span class="b-chip">LUNES 02.11 · 00 H</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        (function () {
+            var ACTIVA = Date.UTC(2026, 9, 26, 3, 1, 0);
+            var envoltorio = document.getElementById("b-wrap");
+
+            function activar() {
+                if (envoltorio && new Date().getTime() >= ACTIVA) envoltorio.classList.add("b-on");
+            }
+
+            var OBJETIVO = Date.UTC(2026, 10, 2, 3, 0, 0);
+
+            var raiz = document.getElementById("b");
+            var timer = document.getElementById("b-timer");
+            var ids = ["d", "h", "m", "s"];
+            var num = {};
+            var barra = {};
+            for (var i = 0; i !== ids.length; i++) {
+                num[ids[i]] = document.getElementById("b-" + ids[i]);
+                barra[ids[i]] = document.getElementById("b-b" + ids[i]);
+            }
+            if (!raiz || !num.d || !num.h || !num.m || !num.s) return;
+
+            function pad(n) { return (n > 9 ? "" : "0") + n; }
+
+            function pct(valor, maximo) {
+                return Math.min(100, Math.round(valor / maximo * 100)) + "%";
+            }
+
+            function tick() {
+                activar();
+                var diff = Math.max(0, OBJETIVO - new Date().getTime());
+                var total = Math.floor(diff / 1000);
+                var d = Math.floor(total / 86400);
+                var h = Math.floor((total % 86400) / 3600);
+                var m = Math.floor((total % 3600) / 60);
+                var s = total % 60;
+                num.d.textContent = pad(d);
+                num.h.textContent = pad(h);
+                num.m.textContent = pad(m);
+                num.s.textContent = pad(s);
+                barra.d.style.width = pct(d, 7);
+                barra.h.style.width = pct(h, 24);
+                barra.m.style.width = pct(m, 60);
+                barra.s.style.width = pct(s, 60);
+                if (timer) timer.setAttribute("aria-label", "Faltan " + d + " días, " + h + " horas y " + m + " minutos para el Cyber");
+                if (diff === 0) raiz.classList.add("is-ended");
+            }
+
+            tick();
+            setInterval(tick, 1000);
+        })();
+    </script>
+</body>

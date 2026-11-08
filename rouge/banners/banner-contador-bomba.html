@@ -1,0 +1,156 @@
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @font-face {
+            font-family: 'HW Pano';
+            src: url('https://raw.githubusercontent.com/EBEUSD/videos-difu/main/servicios-difu/fonts/HW%20Pano%20Regular.ttf') format('truetype');
+            font-weight: 400;
+            font-display: swap
+        }
+
+        @font-face {
+            font-family: 'Basis Grotesque';
+            src: url('https://raw.githubusercontent.com/EBEUSD/videos-difu/main/servicios-difu/fonts/BasisGrotesqueArabicPro-Black.woff2') format('woff2');
+            font-weight: 800 900;
+            font-display: swap
+        }
+
+        html,
+        body {  
+            margin: 0 !important;
+            padding: 0 !important;
+            background: transparent
+        }
+
+        /* Banner: la imagen trae el hueco del contador; el contador se superpone en % de su ancho */
+        .bb {
+            position: relative;
+            display: block;
+            width: 100%;
+            container-type: inline-size;
+            line-height: 0;
+            text-decoration: none
+        }
+
+        .bb img {
+            display: block;
+            width: 100%;
+            height: auto
+        }
+
+        .bbTimer {
+            position: absolute;
+            left: 34.4%;
+            top: 86.6%;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            gap: 1.2cqw;
+            line-height: 1;
+            color: #fff
+        }
+
+
+
+
+        .bbBoxes {
+            display: flex;
+            gap: .3cqw
+        }
+
+        .bbBox {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: .25cqw;
+            width: 2.45cqw;
+            height: 2.5cqw;
+            border-radius: .3cqw;
+            background: #111;
+            box-shadow: 0 .3cqw .8cqw rgba(0, 0, 0, .3)
+        }
+
+        .bbBox b {
+            font-family: 'Basis Grotesque', Arial, sans-serif;
+            font-weight: 900;
+            font-size: 1.55cqw;
+            letter-spacing: -.02em;
+            font-variant-numeric: tabular-nums
+        }
+
+        .bbBox small {
+            font-family: 'Basis Grotesque', Arial, sans-serif;
+            font-weight: 900;
+            font-size: .42cqw;
+            letter-spacing: .08em
+        }
+
+        /* Mobile: misma pieza centrada entre los precios y los frascos */
+        @media (max-width:768px) {
+            .bbTimer {
+                left: 58.2%;
+                top: 41.1%;
+            }
+
+
+
+            .bbBoxes {
+                gap: .8cqw
+            }
+
+            .bbBox {
+                gap: .5cqw;
+                width: 5.5cqw;
+                height: 5.5cqw;
+                border-radius: .7cqw
+            }
+
+            .bbBox b {
+                font-size: 3.4cqw
+            }
+
+            .bbBox small {
+                font-size: .9cqw
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a class="bb" id="bb" href="https://www.perfumeriasrouge.com/3425?map=productClusterIds&amp;order=OrderByTopSaleDESC" target="_top" aria-label="Bombas megaofertas: hasta 65% off y más de 18 cuotas sin interés">
+        <picture>
+            <source media="(max-width:768px)" srcset="https://rougeb2car.vtexassets.com/assets/vtex.file-manager-graphql/images/fbd6c72a-cf7c-408a-b333-5ee0ec1da142___8f1effd50d06c3afc1bffa8f1fc66899.png">
+            <img src="https://rougeb2car.vtexassets.com/assets/vtex.file-manager-graphql/images/a379b850-9728-4179-b2c3-fecbf1341a03___2d088af44a1f4644d39d8a324039363a.png" alt="Bombas megaofertas. Hasta 65% off. Más de 18 cuotas sin interés en seleccionados. Rouge">
+        </picture>
+        <span class="bbTimer" role="timer" aria-label="Las bombas terminan a las 00 hs">
+            <span class="bbBoxes">
+                <span class="bbBox"><b id="bbH">--</b><small>HS</small></span>
+                <span class="bbBox"><b id="bbM">--</b><small>MIN</small></span>
+                <span class="bbBox"><b id="bbS">--</b><small>SEG</small></span>
+            </span>
+        </span>
+    </a>
+    <script>
+        (function () {
+            /* Cuenta hasta las 00 hs de Argentina (UTC-3); a medianoche vuelve a arrancar desde 24 hs */
+            var OFFSET = -3 * 3600000, DAY = 86400000;
+            var h = document.getElementById('bbH'), m = document.getElementById('bbM'), s = document.getElementById('bbS');
+            function pad(n) { return (n < 10 ? '0' : '') + n }
+            function tick() {
+                var now = Date.now(), left = Math.ceil((DAY - (now + OFFSET) % DAY) / 1000) % 86400;
+                h.textContent = pad(Math.floor(left / 3600));
+                m.textContent = pad(Math.floor(left % 3600 / 60));
+                s.textContent = pad(left % 60);
+                setTimeout(tick, 1000 - now % 1000 + 5);
+            }
+            tick();
+            /* El banner vive en un iframe: se navega la página de arriba (mismo método que el cyber) */
+            var a = document.getElementById('bb');
+            a.addEventListener('click', function (e) {
+                e.preventDefault();
+                try { window.top.location.href = a.href } catch (err) { window.location.href = a.href }
+            });
+        })();
+    </script>
+</body>
