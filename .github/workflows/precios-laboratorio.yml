@@ -1,0 +1,51 @@
+# Actualiza los precios del Laboratorio de notas cada 2 horas.
+# El laboratorio (dentro del Sandbox de VTEX) los lee desde GitHub Pages:
+# https://ebeusd.github.io/videos-difu/e-boutique/laboratorio-notas/precios.json
+name: Precios laboratorio de notas
+
+on:
+  schedule:
+    - cron: '7 */2 * * *'   # cada 2 horas (minuto 7, hora UTC)
+  workflow_dispatch:         # botón "Run workflow" para actualizar a mano
+
+permissions:
+  contents: write
+
+concurrency:
+  group: precios-laboratorio
+  cancel-in-progress: false
+
+jobs:
+  precios:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: e-boutique/laboratorio-notas   # no baja los videos
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Consultar precios en VTEX
+        run: python e-boutique/laboratorio-notas/herramientas/actualizar-precios.py
+
+      - name: Guardar si cambiaron
+        run: |
+          cd e-boutique/laboratorio-notas
+          # si solo cambió la fecha (mismos precios y stock) no se guarda, para no llenar el historial
+          if git show HEAD:./precios.json > /tmp/anterior.json 2>/dev/null && python - <<'EOF'
+          import json, sys
+          a = json.load(open('/tmp/anterior.json'))['p']
+          b = json.load(open('precios.json'))['p']
+          sys.exit(0 if a == b else 1)
+          EOF
+          then
+            echo "Sin cambios de precio/stock"; exit 0
+          fi
+          git config user.name "precios-bot"
+          git config user.email "precios-bot@users.noreply.github.com"
+          git add precios.json
+          git commit -m "Precios laboratorio: actualización automática"
+          git push
