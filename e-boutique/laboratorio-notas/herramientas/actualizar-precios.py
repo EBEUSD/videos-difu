@@ -5,23 +5,22 @@ Uso manual:  python herramientas/actualizar-precios.py        (desde la carpeta 
 import datetime, json, os, re, sys, time, urllib.request
 
 aqui = os.path.dirname(os.path.abspath(__file__))
-HTML = os.path.join(aqui, '..', 'arma-perfume-notas.html')
+CATALOGO = os.path.join(aqui, '..', 'catalogo.json')
 OUT = os.path.join(aqui, '..', 'precios.json')
-API = 'https://www.perfumeriasrouge.com/api/catalog_system/pub/products/search?fq=productId:'
+API = 'https://www.perfumeriasrouge.com/api/catalog_system/pub/products/search?'
 
-html = open(HTML, encoding='utf-8').read()
-bloque = html[html.index('var P = ['):]
-bloque = bloque[:bloque.index('];')]
-ids = re.findall(r'^\s*\{"id":"(\d+)"', bloque, re.M)
+ids = [p['id'] for p in json.load(open(CATALOGO, encoding='utf-8'))]
 if not ids:
     raise SystemExit('No encontré productos en el catálogo')
 
 
-def consultar(pid):
-    req = urllib.request.Request(API + pid, headers={'User-Agent': 'laboratorio-notas-precios'})
+def consultar(lote):
+    """hasta 50 productos por consulta (repetir fq=productId:... los suma)"""
+    q = '&'.join('fq=productId:' + pid for pid in lote) + '&_from=0&_to=49'
+    req = urllib.request.Request(API + q, headers={'User-Agent': 'laboratorio-notas-precios'})
     for intento in range(3):
         try:
-            return json.load(urllib.request.urlopen(req, timeout=25))
+            return json.load(urllib.request.urlopen(req, timeout=40))
         except Exception:
             if intento == 2:
                 raise
@@ -30,28 +29,30 @@ def consultar(pid):
 
 # misma lógica que el laboratorio en vivo: la presentación más barata con stock
 precios, errores = {}, 0
-for pid in ids:
+for i in range(0, len(ids), 50):
+    lote = ids[i:i + 50]
     try:
-        d = consultar(pid)
+        datos = {p['productId']: p for p in consultar(lote)}
     except Exception as e:
-        errores += 1
-        print('error', pid, e, file=sys.stderr)
+        errores += len(lote)
+        print('error', lote[0], '…', e, file=sys.stderr)
         continue
-    best, n = None, 0
-    for it in (d[0].get('items', []) if d else []):
-        for s in it.get('sellers', []):
-            c = s.get('commertialOffer', {})
-            if c.get('AvailableQuantity', 0) > 0 and c.get('Price', 0) > 0:
-                n += 1
-                if not best or c['Price'] < best['price']:
-                    best = {'price': c['Price'], 'list': c.get('ListPrice', 0), 'sku': it['itemId'],
-                            'seller': s['sellerId'], 'size': it.get('name', '')}
-    if best:
-        best['many'] = n > 1
-        precios[pid] = best
-    else:
-        precios[pid] = {'out': True}
-    time.sleep(0.05)
+    for pid in lote:
+        best, n = None, 0
+        for it in (datos[pid].get('items', []) if pid in datos else []):
+            for s in it.get('sellers', []):
+                c = s.get('commertialOffer', {})
+                if c.get('AvailableQuantity', 0) > 0 and c.get('Price', 0) > 0:
+                    n += 1
+                    if not best or c['Price'] < best['price']:
+                        best = {'price': c['Price'], 'list': c.get('ListPrice', 0), 'sku': it['itemId'],
+                                'seller': s['sellerId'], 'size': it.get('name', '')}
+        if best:
+            best['many'] = n > 1
+            precios[pid] = best
+        else:
+            precios[pid] = {'out': True}
+    time.sleep(0.2)
 
 # si fallaron demasiadas consultas, no pisar el archivo bueno anterior
 if errores > len(ids) * 0.2:

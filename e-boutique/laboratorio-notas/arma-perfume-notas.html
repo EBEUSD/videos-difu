@@ -200,31 +200,6 @@
             font-family: 'Archivo', Arial, sans-serif
         }
 
-        .ap-head {
-            flex: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 16px
-        }
-
-        .ap-eyebrow {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            font-size: 12px;
-            letter-spacing: .42em;
-            text-transform: uppercase;
-            color: #E8857A
-        }
-
-        .ap-head-r {
-            font-size: 12px;
-            letter-spacing: .32em;
-            text-transform: uppercase;
-            color: #B9AFA6
-        }
-
         .ap-body {
             flex: 1;
             min-height: 0;
@@ -756,6 +731,15 @@
             color: #B9AFA6
         }
 
+        .ap-capa-skip {
+            font-size: 13px;
+            color: #B9AFA6
+        }
+
+        .ap-skip-m {
+            display: none
+        }
+
         .ap-hint {
             flex: none;
             margin: 0;
@@ -1111,17 +1095,6 @@
             flex-wrap: wrap
         }
 
-        .ap-live {
-            font-size: 15px;
-            color: #CFC6BD
-        }
-
-        .ap-live b {
-            color: #F3ECE3;
-            font-weight: 600
-        }
-
-        .ap-skip,
         .ap-prof-sum .ap-link {
             text-decoration: underline;
             text-underline-offset: 3px
@@ -1183,56 +1156,6 @@
             color: #E8857A
         }
 
-        /* ===== Vista previa junto al frasco ===== */
-        .ap-peek {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 14px 10px 10px;
-            border: 1px solid rgba(243, 236, 227, 0.12);
-            border-radius: 6px;
-            background: rgba(5, 4, 4, 0.6);
-            max-width: 100%;
-            animation: rise .5s cubic-bezier(.2, .8, .2, 1) both
-        }
-
-        .ap-peek .txt {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            min-width: 0
-        }
-
-        .ap-peek .ap-label {
-            font-size: 10px;
-            color: #E8857A
-        }
-
-        .ap-peek .nm {
-            font-size: 17px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis
-        }
-
-        .ap-peek .hs {
-            font-size: 12px;
-            color: #B9AFA6
-        }
-
-        .ap-bar-peek {
-            display: block;
-            margin-top: 2px;
-            color: #E8857A;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis
-        }
-
-        .ap-bar-peek b {
-            font-weight: 600
-        }
-
         /* ===== Última mezcla ===== */
         .ap-last {
             display: flex;
@@ -1274,10 +1197,6 @@
             font-size: 13px;
             color: #E8857A;
             white-space: nowrap
-        }
-
-        .ap-how {
-            color: #8C837B
         }
 
         /* ===== Resultado: precio, por qué, acciones ===== */
@@ -1849,40 +1768,42 @@
             min-width: 0
         }
 
+        /* 6 recomendaciones, de a 3 por fila */
         .ap-alts {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 10px
         }
 
-        /* fila de 3 recomendaciones extra: tarjetas más compactas */
-        .ap-alts.ap-alts-more {
-            grid-template-columns: repeat(3, minmax(0, 1fr))
-        }
-
-        .ap-alts-more .ap-alt {
+        .ap-alts .ap-alt {
             gap: 10px;
             padding: 10px
         }
 
-        .ap-alts-more .ap-alt-name {
+        .ap-alts .ap-alt-name {
             font-size: 16px
+        }
+
+        @media (max-width: 599px) {
+            .ap-alts {
+                grid-template-columns: repeat(2, minmax(0, 1fr))
+            }
         }
 
         @media (max-width: 899px) {
 
-            /* en mobile: foto arriba y texto abajo para que entren 3 */
-            .ap-alts-more .ap-alt {
+            /* en mobile: foto arriba y texto abajo */
+            .ap-alts .ap-alt {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 8px
             }
 
-            .ap-alts-more .ap-alt-name {
+            .ap-alts .ap-alt-name {
                 font-size: 14px
             }
 
-            .ap-alts-more .ap-shot.sm {
+            .ap-alts .ap-shot.sm {
                 width: 100%;
                 aspect-ratio: 1 / 1
             }
@@ -2027,10 +1948,6 @@
         }
 
         @media (max-width: 899px) {
-            .ap-head-r {
-                display: none
-            }
-
             .ap-intro {
                 flex-direction: column;
                 align-items: stretch;
@@ -2159,12 +2076,29 @@
                 background: linear-gradient(180deg, rgba(10, 8, 8, 0), #0A0808 30%)
             }
 
+            /* Anterior (izquierda) y Continuar (derecha) en la misma fila */
             .ap-prof-cta .btn {
-                flex: 1 1 100%;
-                justify-content: center
+                flex: 1 1 0;
+                min-width: 0;
+                justify-content: center;
+                padding: 8px 14px;
+                letter-spacing: .12em;
+                line-height: 1.3;
+                text-align: center;
+                text-wrap: balance
+            }
+
+            .ap-skip-m {
+                display: block;
+                align-self: center;
+                padding: 12px 0;
+                font-size: 14px;
+                text-decoration: underline;
+                text-underline-offset: 3px
             }
 
             .ap-prof-cta .ghost {
+                flex: 0 0 auto;
                 padding: 0 14px
             }
 
@@ -2478,9 +2412,6 @@ y re-renderiza con morphdom para conservar nodos y animaciones. */
 var TPL = `
 <section id="apTop" class="{{phaseCls}}" style="--dx: {{dx}}px" aria-labelledby="lTitle">
 
-    <div class="ap-head">
-        <span class="ap-eyebrow"><span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 50%; background: {{accent}}; box-shadow: 0 0 0 4px rgba(115,1,1,0.3)"></span>Laboratorio de notas</span>
-    </div>
 
     <!-- Intro: la pirámide olfativa (mientras tanto se precargan las notas) -->
     <sc-if value="{{intro}}" hint-placeholder-val="{{ true }}">
@@ -2541,11 +2472,15 @@ var TPL = `
                 </div>
 
                 <div class="ap-cta">
-                    <button class="btn" type="button" onClick="{{start}}" style="background: {{accent}}; color: #F3ECE3">Empezar mi mezcla</button>
-                    <span class="ap-load">
-                        <span>{{loadText}}</span>
-                        <span><span style="{{loadStyle}}"></span></span>
-                    </span>
+                    <sc-if value="{{hasStart}}" hint-placeholder-val="{{ true }}">
+                        <button class="btn" type="button" onClick="{{start}}" style="background: {{accent}}; color: #F3ECE3">{{startText}}</button>
+                    </sc-if>
+                    <sc-if value="{{showLoad}}" hint-placeholder-val="{{ true }}">
+                        <span class="ap-load">
+                            <span>{{loadText}}</span>
+                            <span><span style="{{loadStyle}}"></span></span>
+                        </span>
+                    </sc-if>
                 </div>
             </div>
         </div>
@@ -2560,9 +2495,9 @@ var TPL = `
                 <sc-if value="{{profiling}}" hint-placeholder-val="{{ false }}">
                     <div class="ap-prof">
                         <div class="ap-qhead">
-                            <span class="ap-label" style="color: #E8857A">Contanos qué te gusta · {{qNum}} de 3</span>
+                            <span class="ap-label" style="color: #E8857A">Contanos qué te gusta · {{qNum}} de 4</span>
                             <span class="ap-qbar" role="list" aria-label="Progreso">
-                                <sc-for list="{{pqSteps}}" as="q" hint-placeholder-count="3">
+                                <sc-for list="{{pqSteps}}" as="q" hint-placeholder-count="4">
                                     <button type="button" role="listitem" class="{{q.cls}}" aria-label="{{q.label}}" aria-disabled="{{q.disabled}}" onClick="{{q.go}}"></button>
                                 </sc-for>
                             </span>
@@ -2614,18 +2549,27 @@ var TPL = `
                                     </sc-for>
                                 </div>
                             </sc-if>
+
+                            <sc-if value="{{q3}}" hint-placeholder-val="{{ false }}">
+                                <h2 id="lTitle" class="serif ap-h2 ap-prof-h">¿Cuánto querés <em>invertir</em>?</h2>
+                                <div class="ap-choices c3" role="group" aria-label="¿Cuánto querés invertir?">
+                                    <sc-for list="{{pp}}" as="o" hint-placeholder-count="3">
+                                        <button type="button" class="{{o.cls}}" aria-pressed="{{o.pressed}}" onClick="{{o.pick}}">
+                                            <span class="serif t">{{o.label}}</span><span class="d">{{o.sub}}</span>
+                                        </button>
+                                    </sc-for>
+                                </div>
+                            </sc-if>
                         </div>
 
                         <div class="ap-prof-cta">
-                            <sc-if value="{{q1}}" hint-placeholder-val="{{ false }}">
-                                <button class="btn" type="button" onClick="{{cont}}" style="background: {{accent}}; color: #F3ECE3">{{contText}}</button>
-                            </sc-if>
+                            <!-- lo que lleva hacia atrás siempre a la izquierda -->
                             <sc-if value="{{hasBack}}" hint-placeholder-val="{{ false }}">
                                 <button type="button" class="ghost" onClick="{{back}}">← Anterior</button>
                             </sc-if>
-                            <span class="ap-live" aria-live="polite"><b>{{profN}}</b> {{profNText}}</span>
-                            <button type="button" class="ap-link ap-skip" onClick="{{skipProf}}">Saltear</button>
-                            <button type="button" class="ap-link ap-how" onClick="{{showIntro}}">¿Cómo se arma un perfume?</button>
+                            <sc-if value="{{q1}}" hint-placeholder-val="{{ false }}">
+                                <button class="btn" type="button" onClick="{{cont}}" style="background: {{accent}}; color: #F3ECE3">{{contText}}</button>
+                            </sc-if>
                         </div>
                     </div>
                 </sc-if>
@@ -2676,6 +2620,9 @@ var TPL = `
                         </sc-for>
                         <sc-if value="{{hasMoreNotes}}" hint-placeholder-val="{{ true }}">
                             <button type="button" class="ap-more" onClick="{{toggleAll}}">{{moreText}}</button>
+                        </sc-if>
+                        <sc-if value="{{canSkip}}" hint-placeholder-val="{{ false }}">
+                            <button type="button" class="ap-link ap-capa-skip ap-skip-m" onClick="{{skipLayer}}">No tengo preferencia en {{curLabel}} →</button>
                         </sc-if>
                     </div>
                 </sc-if>
@@ -2746,7 +2693,7 @@ var TPL = `
                             <div class="rise ap-alts-block" style="display: flex; flex-direction: column; gap: 10px">
                                 <span class="ap-label">También te pueden gustar · tocá para ver sus notas</span>
                                 <div class="ap-alts">
-                                    <sc-for list="{{alts}}" as="a" hint-placeholder-count="2">
+                                    <sc-for list="{{alts}}" as="a" hint-placeholder-count="6">
                                         <button type="button" class="ap-alt" onClick="{{a.show}}">
                                             <sc-if value="{{a.hasImg}}" hint-placeholder-val="{{ false }}">
                                                 <span class="ap-shot sm"><img src="{{a.img}}" alt="" loading="lazy"></span>
@@ -2767,33 +2714,6 @@ var TPL = `
                                         </button>
                                     </sc-for>
                                 </div>
-                                <sc-if value="{{canMore}}" hint-placeholder-val="{{ true }}">
-                                    <button type="button" class="ap-more" onClick="{{moreRecs}}">Ver 3 recomendaciones más</button>
-                                </sc-if>
-                                <!-- 3 más, en fila -->
-                                <sc-if value="{{showMore}}" hint-placeholder-val="{{ false }}">
-                                    <div class="rise ap-alts ap-alts-more">
-                                        <sc-for list="{{moreAlts}}" as="a" hint-placeholder-count="3">
-                                            <button type="button" class="ap-alt" onClick="{{a.show}}">
-                                                <sc-if value="{{a.hasImg}}" hint-placeholder-val="{{ false }}">
-                                                    <span class="ap-shot sm"><img src="{{a.img}}" alt="" loading="lazy"></span>
-                                                </sc-if>
-                                                <sc-if value="{{a.noImg}}" hint-placeholder-val="{{ true }}">
-                                                    <span class="serif ap-mono sm" aria-hidden="true" style="{{a.monoStyle}}">{{a.mono}}</span>
-                                                </sc-if>
-                                                <span style="display: flex; flex-direction: column; gap: 4px; min-width: 0">
-                                                    <span class="ap-label" style="font-size: 11px">{{a.house}}</span>
-                                                    <span class="serif ap-alt-name">{{a.name}}</span>
-                                                    <span style="font-size: 13px; color: #CFC6BD">{{a.matchText}}</span>
-                                                    <span class="ap-alt-price">{{a.priceText}}</span>
-                                                </span>
-                                                <sc-if value="{{a.hasTag}}" hint-placeholder-val="{{ false }}">
-                                                    <span class="ap-alt-tag">{{a.tag}}</span>
-                                                </sc-if>
-                                            </button>
-                                        </sc-for>
-                                    </div>
-                                </sc-if>
                             </div>
                         </sc-if>
                     </div>
@@ -2842,16 +2762,6 @@ var TPL = `
 
                 <!-- Una sola acción principal, siempre en el mismo lugar: Siguiente → Mezclar -->
                 <sc-if value="{{picking}}" hint-placeholder-val="{{ true }}">
-                    <sc-if value="{{hasPeek}}" hint-placeholder-val="{{ false }}">
-                        <div class="ap-peek" id="{{peek.key}}" aria-live="polite">
-                            <span class="ap-shot xs"><img src="{{peek.img}}" alt=""></span>
-                            <span class="txt">
-                                <span class="ap-label">Se va pareciendo a</span>
-                                <span class="serif nm">{{peek.name}}</span>
-                                <span class="hs">{{peek.house}}</span>
-                            </span>
-                        </div>
-                    </sc-if>
                     <div class="ap-actions">
                         <sc-if value="{{full}}" hint-placeholder-val="{{ false }}">
                             <button class="btn" type="button" onClick="{{mix}}" style="background: {{accent}}; color: #F3ECE3">Mezclar</button>
@@ -2863,6 +2773,9 @@ var TPL = `
                             <span class="ap-wait">Elegí de 1 a {{max}} notas de {{curLabel}}</span>
                         </sc-if>
                     </div>
+                    <sc-if value="{{canSkip}}" hint-placeholder-val="{{ false }}">
+                        <button type="button" class="ap-link ap-capa-skip" onClick="{{skipLayer}}">No tengo preferencia en {{curLabel}} →</button>
+                    </sc-if>
                     <sc-if value="{{hasAny}}" hint-placeholder-val="{{ false }}">
                         <button type="button" class="ap-link ap-clear" onClick="{{clear}}">Vaciar mezcla</button>
                     </sc-if>
@@ -2882,7 +2795,7 @@ var TPL = `
                     </span>
                 </sc-for>
             </span>
-            <span style="flex: 1; min-width: 0; font-size: 13px; line-height: 1.25; color: #CFC6BD">{{barText}}<sc-if value="{{hasPeek}}" hint-placeholder-val="{{ false }}"><span class="ap-bar-peek" id="{{peek.key}}-b">Se parece a <b>{{peek.name}}</b></span></sc-if></span>
+            <span style="flex: 1; min-width: 0; font-size: 13px; line-height: 1.25; color: #CFC6BD">{{barText}}</span>
             <sc-if value="{{full}}" hint-placeholder-val="{{ false }}">
                 <button class="btn" type="button" onClick="{{mix}}" style="background: {{accent}}; color: #F3ECE3">Mezclar</button>
             </sc-if>
@@ -2900,6 +2813,22 @@ var TPL = `
         // ===================== Utilidades =====================
         var AP = {};
         AP.SITE = 'https://www.perfumeriasrouge.com';
+        AP.CARRITO = false; // false = "Ver en la boutique" lleva a la PDP; true = "Agregar al carrito" (va al checkout)
+        // Marcas a destacar: suben en el ranking cuando la coincidencia de notas es parecida (en VTEX se eligen desde el Site Editor)
+        AP.MARCAS = [];
+        // Marcas a excluir: sus perfumes no se recomiendan (en VTEX se eligen desde el Site Editor)
+        AP.EXCLUIR = [];
+        // Orden de la colección (ventas, relevancia…): {id del producto: posición}. Desempata perfumes con los mismos puntos
+        AP.ORDEN = null;
+        // 'lab' = el laboratorio completo; 'capas' = solo la explicación de salida, corazón y fondo (bloque aparte)
+        AP.MODO = 'lab';
+        AP.FUERZA = 'media';
+        AP.clave = function (t) { return String(t || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim(); };
+        AP.extraMarca = function (house) {
+            if (!AP.MARCAS.length) return 0;
+            AP.setMarcas = AP.setMarcas || AP.MARCAS.map(AP.clave);
+            return AP.setMarcas.indexOf(AP.clave(house)) >= 0 ? ({ suave: 0.5, media: 1, fuerte: 2 }[AP.FUERZA] || 1) : 0;
+        };
 
         // Analítica: eventos al dataLayer (GTM). Dentro del iframe se usa el de la página si es del mismo dominio.
         AP.track = function (accion, data) {
@@ -2915,11 +2844,32 @@ var TPL = `
         };
         AP.money = function (n) { return '$ ' + Math.round(n).toLocaleString('es-AR'); };
         AP.prices = {};
+        // Lista de precios y stock de todo el catálogo (para el filtro de presupuesto y el Sandbox)
+        AP.lista = function () {
+            var u = AP.LISTA_URL || AP.PRECIOS_URL;
+            if (!u || !window.fetch) return Promise.resolve(null);
+            AP.listaPrecios = AP.listaPrecios || fetch(u, { cache: 'no-cache' })
+                .then(function (r) { return r.json(); }).catch(function () { return null; });
+            return AP.listaPrecios;
+        };
         // Precio, stock y SKU en vivo desde el catálogo público de VTEX (el más barato con stock)
         AP.price = function (id, done) {
             if (AP.prices[id]) return;
             var o = AP.origin();
-            if (!o || !window.fetch) { AP.prices[id] = { na: true }; return; }
+            if (!window.fetch) { AP.prices[id] = { na: true }; return; }
+            if (!o) {
+                // Sandbox de VTEX: sin API en vivo. Se usa precios.json, que GitHub actualiza cada 2 horas
+                // (herramientas/actualizar-precios.py + .github/workflows/precios-laboratorio.yml)
+                if (!AP.PRECIOS_URL) { AP.prices[id] = { na: true }; return; }
+                AP.prices[id] = { loading: true };
+                AP.lista().then(function (d) {
+                    var x = d && d.p && d.p[id];
+                    AP.prices[id] = !x ? { na: true } : x.out ? { out: true }
+                        : { price: x.price, list: x.list, sku: x.sku, seller: x.seller, size: x.size, many: x.many };
+                    done();
+                });
+                return;
+            }
             AP.prices[id] = { loading: true };
             fetch(o + '/api/catalog_system/pub/products/search?fq=productId:' + encodeURIComponent(id))
                 .then(function (r) { return r.json(); })
@@ -2941,11 +2891,19 @@ var TPL = `
         };
 
         // URL de la página (la de VTEX si el iframe es del mismo dominio) y sus parámetros
-        AP.pageUrl = function () { var u; try { u = window.top.location.href; } catch (e) { u = location.href; } return u.split('#')[0]; };
+        // OJO: dentro del Sandbox de VTEX el iframe es una página "data:" cuya dirección es TODO el HTML.
+        // Nunca usar location.href ahí: se toma la página de la tienda (si se puede) o el sitio.
+        AP.http = function (u) { return /^https?:/.test(u || '') ? u : ''; };
+        AP.pageUrl = function () {
+            var u = '';
+            try { u = AP.http(window.top.location.href); } catch (e) { }
+            u = u || AP.http(location.href) || AP.http(document.referrer) || AP.SITE + '/';
+            return u.split('#')[0].slice(0, 500);
+        };
         AP.param = function (name) {
             var rx = new RegExp('[?&]' + name + '=([^&#]*)'), m = null;
             try { m = window.top.location.search.match(rx); } catch (e) { }
-            m = m || location.search.match(rx);
+            m = m || (AP.http(location.href) ? location.search.match(rx) : null);
             try { return m ? decodeURIComponent(m[1]) : ''; } catch (e) { return ''; }
         };
         // reemplaza mezcla/perfil y conserva el resto de los parámetros de la página
@@ -2961,14 +2919,16 @@ var TPL = `
             var L = m.split('-'), ok = /^[a-zA-Z]+$/;
             if (L.length !== 3) return null;
             var lay = L.map(function (x) { return x.split('.').filter(function (k) { return ok.test(k); }).slice(0, 3); });
-            if (lay.some(function (x) { return !x.length; })) return null;
+            if (!lay.some(function (x) { return x.length; })) return null;
             var q = (pf || '').split('-'), S = ['fresco', 'floral', 'dulce', 'madera', 'especia'];
             return {
                 picks: { top: lay[0], heart: lay[1], base: lay[2] },
+                skip: { top: !lay[0].length, heart: !lay[1].length, base: !lay[2].length },
                 prof: {
                     g: ['f', 'm', 'u'].indexOf(q[0]) >= 0 ? q[0] : '',
                     s: (q[1] || '').split('.').filter(function (k) { return S.indexOf(k) >= 0; }).slice(0, 2),
-                    w: ['d', 'n'].indexOf(q[2]) >= 0 ? q[2] : ''
+                    w: ['d', 'n'].indexOf(q[2]) >= 0 ? q[2] : '',
+                    p: ['100', '200'].indexOf(q[3]) >= 0 ? q[3] : ''
                 }
             };
         };
@@ -3117,14 +3077,17 @@ var TPL = `
             constructor(props) {
                 super(props);
                 // se arranca directo por "¿Para quién es?"; la pirámide olfativa queda como ayuda (botón i)
-                this.state = { picks: { top: [], heart: [], base: [] }, step: 0, phase: 'profile', intro: 0, auto: false, loaded: 0, seed: [], prof: { g: '', s: [], w: '' }, pq: 0, allNotes: false, lastMix: AP.loadLast() };
+                this.state = { picks: { top: [], heart: [], base: [] }, skip: { top: false, heart: false, base: false }, step: 0, phase: 'profile', intro: 0, auto: false, loaded: 0, seed: [], prof: { g: '', s: [], w: '', p: '' }, pq: 0, allNotes: false, lastMix: AP.loadLast() };
                 // link compartido (?mezcla=...&perfil=...): se abre directo en el resultado
+                if (AP.MODO === 'capas') { this.state.phase = 'intro'; return; }
                 var sh = AP.parseMix(AP.param('mezcla'), AP.param('perfil'));
                 if (sh) Object.assign(this.state, sh, { phase: 'result', shared: true });
                 AP.track('inicio', { compartida: !!sh });
             }
             componentDidMount() {
                 var self = this;
+                if (AP.MODO === 'capas') { this.play(); return; }
+                AP.lista().then(function (d) { if (d && d.p) { self.lista = d.p; self.setState({ listaLista: true }); } });
                 // Precarga: mientras leen la intro se bajan todas las notas
                 (this.allImgs || []).forEach(function (src) {
                     var im = new Image();
@@ -3188,6 +3151,7 @@ var TPL = `
                     { k: 'pera', label: 'Pera', f: 'Pera.webp', fam: 'frutales', c: [210, 210, 120] },
                     { k: 'lavanda', label: 'Lavanda', f: 'Lavanda.webp', fam: 'aromaticas', c: [138, 106, 192] },
                     { k: 'salvia', label: 'Salvia', f: 'Salvia.webp', fam: 'aromaticas', c: [130, 150, 120] },
+                    { k: 'menta', label: 'Menta', f: 'Menta.webp', fam: 'aromaticas', c: [90, 180, 130] },
                     { k: 'te', label: 'Té verde', f: 'Te_verde.webp', fam: 'aromaticas', c: [120, 160, 80] },
                     { k: 'verdes', label: 'Notas verdes', f: 'Notas_verdes.webp', fam: 'aromaticas', c: [110, 160, 70] },
                     { k: 'marinas', label: 'Notas marinas', f: 'Notas_marinas.webp', fam: 'aromaticas', c: [60, 170, 190] },
@@ -3195,12 +3159,16 @@ var TPL = `
                     { k: 'azahar', label: 'Azahar', f: 'Azahar.webp', fam: 'florales', c: [245, 235, 210] },
                     { k: 'geranio', label: 'Geranio', f: 'Geranio.webp', fam: 'florales', c: [220, 110, 150] },
                     { k: 'loto', label: 'Flor de loto', f: 'Flor_de_loto.webp', fam: 'florales', c: [235, 170, 200] },
+                    { k: 'peonia', label: 'Peonía', f: 'Peonia.webp', fam: 'florales', c: [235, 140, 170] },
+                    { k: 'lirio', label: 'Lirio', f: 'Lirio.webp', fam: 'florales', c: [240, 238, 225] },
                     { k: 'violeta', label: 'Hojas de violeta', f: 'Hojas_de_violeta.webp', fam: 'florales', c: [90, 130, 80] },
                     { k: 'iris', label: 'Iris', f: 'Iris.webp', fam: 'florales', c: [120, 110, 190] },
                     { k: 'jazmin', label: 'Jazmín', f: 'Jazmin.webp', fam: 'florales', c: [245, 240, 220] },
+                    { k: 'tuberosa', label: 'Tuberosa', f: 'Tuberosa.webp', fam: 'florales', c: [245, 240, 228] },
                     { k: 'rosa', label: 'Rosa damascena', f: 'Rosa_damascena.webp', fam: 'florales', c: [200, 60, 100] },
                     { k: 'azafran', label: 'Azafrán', f: 'Azafran.webp', fam: 'especiadas', c: [210, 80, 30] },
                     { k: 'canela', label: 'Canela', f: 'Canela.webp', fam: 'especiadas', c: [160, 80, 40] },
+                    { k: 'nuezMoscada', label: 'Nuez moscada', f: 'Nuez_moscada.webp', fam: 'especiadas', c: [150, 95, 55] },
                     { k: 'cardamomo', label: 'Cardamomo', f: 'Cardamomo.webp', fam: 'especiadas', c: [122, 154, 74] },
                     { k: 'jengibre', label: 'Jengibre', f: 'Jengibre.webp', fam: 'especiadas', c: [220, 190, 110] },
                     { k: 'pimientaNegra', label: 'Pimienta negra', f: 'Pimienta_negra.webp', fam: 'especiadas', c: [50, 40, 35] },
@@ -3215,8 +3183,11 @@ var TPL = `
                     { k: 'almizcle', label: 'Almizcle blanco', f: 'Almizcle_blanco.webp', fam: 'calidas', c: [237, 230, 221] },
                     { k: 'almendra', label: 'Almendra', f: 'Almendra.webp', fam: 'calidas', c: [220, 190, 150] },
                     { k: 'ambar', label: 'Ámbar', f: 'Ambar.webp', fam: 'calidas', c: [210, 140, 40] },
+                    { k: 'benjui', label: 'Benjuí', f: 'Benjui.webp', fam: 'calidas', c: [190, 120, 55] },
                     { k: 'cuero', label: 'Cuero', f: 'Cuero.webp', fam: 'calidas', c: [110, 60, 35] },
                     { k: 'tonka', label: 'Haba tonka', f: 'Haba_tonka.webp', fam: 'calidas', c: [120, 70, 40] },
+                    { k: 'praline', label: 'Praliné', f: 'Praline.webp', fam: 'calidas', c: [185, 125, 70] },
+                    { k: 'cafe', label: 'Café', f: 'Cafe.webp', fam: 'calidas', c: [80, 45, 25] },
                     { k: 'incienso', label: 'Incienso', f: 'Incienso.webp', fam: 'calidas', c: [160, 150, 140] },
                     { k: 'mirra', label: 'Mirra', f: 'Mirra.webp', fam: 'calidas', c: [140, 70, 40] },
                     { k: 'tabaco', label: 'Tabaco', f: 'Tabaco.webp', fam: 'calidas', c: [150, 90, 40] },
@@ -3239,7 +3210,9 @@ var TPL = `
                     naranja: 'cítrica, jugosa y soleada', coco: 'cremosa, solar y dulce', durazno: 'frutal, aterciopelada y dulce', higo: 'frutal, verde y lechosa',
                     verdes: 'verde, fresca y vegetal', marinas: 'acuática, salada y fresca', enebro: 'aromática, fresca y resinosa', geranio: 'floral, verde y mentolada',
                     jengibre: 'especiada, fresca y picante', musgo: 'terrosa, húmeda y elegante', pachuli: 'terrosa, oscura y amaderada',
-                    almendra: 'golosa, suave y cremosa', tabaco: 'cálida, seca y melosa'
+                    almendra: 'golosa, suave y cremosa', tabaco: 'cálida, seca y melosa',
+                    menta: 'aromática, fresca y helada', peonia: 'floral, fresca y rosada', lirio: 'floral, blanca y luminosa', tuberosa: 'floral, cremosa y opulenta',
+                    nuezMoscada: 'especiada, cálida y amaderada', benjui: 'balsámica, dulce y avainillada', praline: 'golosa, tostada y acaramelada', cafe: 'tostada, intensa y amarga'
                 };
                 self.allImgs = N.map(function (n) { return n.img; }).concat([BOTTLE.glass, BOTTLE.cap]);
 
@@ -3265,232 +3238,26 @@ var TPL = `
                     }
                 ];
 
-                // Catálogo real: generado desde Productos_fragancias_nicho_Rouge.xlsx (scratchpad/catalogo.py).
+                // Catálogo: catalogo.json (herramientas/catalogo-desde-vtex.py), se carga antes de montar el laboratorio.
                 // t/h/b: notas del laboratorio por capa · d: notas originales del producto por capa, con las notas del laboratorio que representan
-                var P = [
-                    {"id":"16650","name":"24 Old Bond Street","house":"Atkinsons","url":"https://www.perfumeriasrouge.com/24-old-bond-street-edc-x3040110/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/219511-400-400/8011003866359.jpg","g":"Unisex","f":["Aromática","Amaderada"],"m":"Día","t":["cardamomo","enebro"],"h":["rosa","te"],"b":[],"d":[[["Cardamomo",["cardamomo"]],["Enebro",["enebro"]]],[["Rosa",["rosa"]],["Té",["te"]]],[["Licor",[]]]]},
-                    {"id":"16651","name":"24 Old Bond Street Triple Extract","house":"Atkinsons","url":"https://www.perfumeriasrouge.com/24-old-bond-street-triple-extract-edc-x3040210/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/219514-400-400/8011003866496.jpg","g":"Unisex","f":["Amaderada","Aromática"],"m":"Día","t":["enebro","verdes"],"h":["rosa","cardamomo","te"],"b":["tonka","incienso"],"d":[[["Enebro",["enebro"]],["Notas verdes",["verdes"]]],[["Rosa",["rosa"]],["Cardamomo",["cardamomo"]],["Té",["te"]]],[["Haba tonka",["tonka"]],["Licor",[]],["Incienso",["incienso"]]]]},
-                    {"id":"16652","name":"44 Gerrard Street","house":"Atkinsons","url":"https://www.perfumeriasrouge.com/44-gerrard-street-edc-x3040410/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/219517-400-400/8011003866571.jpg","g":"Unisex","f":["Cítrica","Floral"],"m":"Día","t":["limon","jengibre"],"h":["jazmin","loto","rosa"],"b":["ambar","almizcle"],"d":[[["Limón",["limon"]],["Jengibre",["jengibre"]]],[["Jazmín",["jazmin"]],["Orquídea",["loto"]],["Rosa",["rosa"]]],[["Ámbar",["ambar"]],["Almizcle",["almizcle"]]]]},
-                    {"id":"21332","name":"Born for Eternity","house":"Atkinsons","url":"https://www.perfumeriasrouge.com/born-for-eternity-edp-intense-x3031710/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/247670-400-400/8011003894833.jpg","g":"Unisex","f":["Cuero","Ambarada"],"m":"Noche","t":["incienso","azafran"],"h":["geranio","cardamomo","oud","tonka"],"b":["cuero","ambar"],"d":[[["Incienso",["incienso"]],["Azafrán",["azafran"]]],[["Geranio",["geranio"]],["Cardamomo",["cardamomo"]],["Oud",["oud"]],["Praliné",["tonka"]]],[["Cuero",["cuero"]],["Ámbar",["ambar"]]]]},
-                    {"id":"16648","name":"Gold Fair in Mayfair","house":"Atkinsons","url":"https://www.perfumeriasrouge.com/gold-fair-in-mayfair-edp-x3031010/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/219505-400-400/8011003866205.jpg","g":"Unisex","f":["Ambarada","Amaderada"],"m":"Noche","t":["canela"],"h":["iris","tonka"],"b":["ambar","vetiver","incienso"],"d":[[["Nuez moscada",["canela"]]],[["Iris",["iris"]],["Cacao",["tonka"]]],[["Ámbar",["ambar"]],["Vetiver",["vetiver"]],["Incienso",["incienso"]]]]},
-                    {"id":"16649","name":"James","house":"Atkinsons","url":"https://www.perfumeriasrouge.com/james-edp-x3031510/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/219508-400-400/8011003877973.jpg","g":"Unisex","f":["Amaderada","Aromática"],"m":"Ambos","t":["bergamota","pimientaRosa","salvia","limon"],"h":["pachuli","almizcle","vetiver"],"b":["jazmin","violeta"],"d":[[["Bergamota",["bergamota"]],["Pimienta",["pimientaRosa"]],["Salvia",["salvia"]],["Lima",["limon"]]],[["Pachulí",["pachuli"]],["Almizcle",["almizcle"]],["Vetiver",["vetiver"]]],[["Flores blancas",["jazmin"]],["Violeta",["violeta"]]]]},
-                    {"id":"16656","name":"Mint & Tonic","house":"Atkinsons","url":"https://www.perfumeriasrouge.com/mint-and-tonic-edp-x3030910/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/219502-400-400/8011003866168.jpg","g":"Unisex","f":["Cítrica","Aromática"],"m":"Día","t":["limon","salvia","pomelo"],"h":["cedro","vetiver","almizcle"],"b":["geranio","jengibre"],"d":[[["Lima",["limon"]],["Menta",["salvia"]],["Pomelo",["pomelo"]]],[["Cedro",["cedro"]],["Vetiver",["vetiver"]],["Almizcle",["almizcle"]]],[["Geranio",["geranio"]],["Jengibre",["jengibre"]]]]},
-                    {"id":"16654","name":"Oud Save The King","house":"Atkinsons","url":"https://www.perfumeriasrouge.com/oud-save-the-king-edp-x3060110/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/219523-400-400/8011003867158.jpg","g":"Unisex","f":["Amaderada","Cuero"],"m":"Ambos","t":["bergamota","te"],"h":["iris","cuero"],"b":["sandalo","oud"],"d":[[["Bergamota",["bergamota"]],["Té",["te"]]],[["Iris",["iris"]],["Gamuza",["cuero"]],["Cuero",["cuero"]]],[["Sándalo",["sandalo"]],["Oud",["oud"]]]]},
-                    {"id":"16655","name":"Oud Save The Queen","house":"Atkinsons","url":"https://www.perfumeriasrouge.com/oud-save-the-queen-edp-x3060210/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/219526-400-400/8011003867196.jpg","g":"Unisex","f":["Amaderada","Floral"],"m":"Ambos","t":["bergamota","te"],"h":["jazmin","azahar"],"b":["cedro","oud"],"d":[[["Bergamota",["bergamota"]],["Té",["te"]]],[["Jazmín",["jazmin"]],["Neroli",["azahar"]]],[["Notas amaderadas",["cedro"]],["Oud",["oud"]]]]},
-                    {"id":"21331","name":"Platinum Blend","house":"Atkinsons","url":"https://www.perfumeriasrouge.com/plantinum-blend-edp-intense-x3032010/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/247667-400-400/8011003894925.jpg","g":"Unisex","f":["Ambarada","Especiada"],"m":"Noche","t":[],"h":["pimientaNegra","azafran","sandalo"],"b":["ambar","tonka"],"d":[[],[["Pimienta",["pimientaNegra"]],["Azafrán",["azafran"]],["Sándalo",["sandalo"]]],[["Benjuí",["ambar"]],["Haba tonka",["tonka"]]]]},
-                    {"id":"16647","name":"Rose in Wonderland","house":"Atkinsons","url":"https://www.perfumeriasrouge.com/rose-in-wonderland-edp-x3030210/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/219499-400-400/8011003865949.jpg","g":"Unisex","f":["Floral","Frutal"],"m":"Ambos","t":["rosa","grosella"],"h":["geranio"],"b":["ambar","vetiver"],"d":[[["Rosa",["rosa"]],["Frutos rojos",["grosella"]]],[["Geranio",["geranio"]]],[["Ámbar",["ambar"]],["Vetiver",["vetiver"]]]]},
-                    {"id":"21333","name":"Shine Despite Everything","house":"Atkinsons","url":"https://www.perfumeriasrouge.com/shine-despite-everything-edp-intense-x3031610/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/247673-400-400/8011003894802.jpg","g":"Unisex","f":["Ambarada","Floral"],"m":"Noche","t":["incienso"],"h":["pimientaNegra","iris"],"b":["tonka","ambar","vainilla"],"d":[[["Incienso",["incienso"]]],[["Pimienta",["pimientaNegra"]],["Iris",["iris"]]],[["Praliné",["tonka"]],["Ámbar",["ambar"]],["Haba tonka",["tonka"]],["Vainilla",["vainilla"]]]]},
-                    {"id":"16653","name":"Tulipe Noir","house":"Atkinsons","url":"https://www.perfumeriasrouge.com/tulipe-noir-edp-x3051010/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/219520-400-400/8011003866939.jpg","g":"Unisex","f":["Floral","Almizclada"],"m":"Ambos","t":["bergamota"],"h":["jazmin"],"b":["cedro","sandalo","almizcle"],"d":[[["Bergamota",["bergamota"]]],[["Jazmín",["jazmin"]],["Nardo",["jazmin"]]],[["Cedro",["cedro"]],["Sándalo",["sandalo"]],["Almizcle",["almizcle"]]]]},
-                    {"id":"20610","name":"Absolu Aventus","house":"Creed","url":"https://www.perfumeriasrouge.com/absolu-aventus-x1110090/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/242796-400-400/3508440004352.jpg","g":"Hombre","f":["Frutal","Amaderada"],"m":"Ambos","t":["anana","grosella","limon","bergamota","pomelo","pimientaRosa"],"h":["cardamomo","canela","jengibre"],"b":["vetiver","pachuli"],"d":[[["Frutas tropicales",["anana"]],["Frutos rojos",["grosella"]],["Limón",["limon"]],["Bergamota",["bergamota"]],["Pomelo",["pomelo"]],["Pimienta",["pimientaRosa"]]],[["Cardamomo",["cardamomo"]],["Canela",["canela"]],["Jengibre",["jengibre"]]],[["Vetiver",["vetiver"]],["Pachulí",["pachuli"]]]]},
-                    {"id":"3802","name":"Aventus","house":"Creed","url":"https://www.perfumeriasrouge.com/aventus-edp-x1105042c-1/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/167285-400-400/Aventus-EDP-50ml-1.jpg","g":"Hombre","f":["Chipre","Frutal"],"m":"Ambos","t":["manzana","limon","bergamota"],"h":["canela","rosa","geranio"],"b":["cedro","ambar","pachuli","almizcle"],"d":[[["Manzana",["manzana"]],["Limón",["limon"]],["Bergamota",["bergamota"]]],[["Canela",["canela"]],["Rosa",["rosa"]],["Geranio",["geranio"]]],[["Cedro",["cedro"]],["Ámbar",["ambar"]],["Pachulí",["pachuli"]],["Almizcle",["almizcle"]]]]},
-                    {"id":"3804","name":"Aventus Cologne","house":"Creed","url":"https://www.perfumeriasrouge.com/aventus-cologne-edp-x1105097c-1/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/178651-400-400/X1105097c_1.jpg","g":"Hombre","f":["Cítrica","Aromática"],"m":"Día","t":["jengibre","mandarina","pimientaRosa"],"h":["pachuli","sandalo","vetiver"],"b":["almizcle","tonka"],"d":[[["Jengibre",["jengibre"]],["Mandarina",["mandarina"]],["Pimienta",["pimientaRosa"]]],[["Pachulí",["pachuli"]],["Sándalo",["sandalo"]],["Vetiver",["vetiver"]]],[["Almizcle",["almizcle"]],["Haba tonka",["tonka"]]]]},
-                    {"id":"3799","name":"Aventus For Her","house":"Creed","url":"https://www.perfumeriasrouge.com/aventus-for-her-edp-x1103066c-1/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/178647-400-400/X1103066c_1--30ml-.jpg","g":"Mujer","f":["Chipre","Frutal"],"m":"Ambos","t":["manzana","pachuli","violeta","bergamota","limon","pimientaRosa"],"h":["rosa","sandalo","almizcle"],"b":["durazno","jazmin","grosella","ambar"],"d":[[["Manzana",["manzana"]],["Pachulí",["pachuli"]],["Violeta",["violeta"]],["Bergamota",["bergamota"]],["Limón",["limon"]],["Pimienta",["pimientaRosa"]]],[["Rosa",["rosa"]],["Sándalo",["sandalo"]],["Almizcle",["almizcle"]]],[["Durazno",["durazno"]],["Ylang-ylang",["jazmin"]],["Frutos rojos",["grosella"]],["Ámbar",["ambar"]]]]},
-                    {"id":"6311","name":"Bois du Portugal","house":"Creed","url":"https://www.perfumeriasrouge.com/bois-du-portugal-edp-x1110030/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/193636-400-400/3508440561008_1.jpg","g":"Hombre","f":["Amaderada","Aromática"],"m":"Ambos","t":["bergamota"],"h":["lavanda"],"b":["sandalo","cedro","vetiver"],"d":[[["Bergamota",["bergamota"]]],[["Lavanda",["lavanda"]]],[["Sándalo",["sandalo"]],["Cedro",["cedro"]],["Vetiver",["vetiver"]]]]},
-                    {"id":"17996","name":"Centaurus","house":"Creed","url":"https://www.perfumeriasrouge.com/centaurus-edp-x1110091/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/224399-400-400/3508440001337.jpg","g":"Unisex","f":["Ambarada","Especiada"],"m":"Noche","t":["canela","cardamomo","pimientaRosa","tabaco"],"h":["sandalo","geranio","jazmin","pachuli"],"b":["vainilla","ambar","tonka"],"d":[[["Canela",["canela"]],["Cardamomo",["cardamomo"]],["Pimienta",["pimientaRosa"]],["Tabaco",["tabaco"]]],[["Sándalo",["sandalo"]],["Geranio",["geranio"]],["Jazmín",["jazmin"]],["Pachulí",["pachuli"]]],[["Vainilla",["vainilla"]],["Ámbar",["ambar"]],["Haba tonka",["tonka"]],["Benjuí",["ambar"]]]]},
-                    {"id":"17997","name":"Delphinus","house":"Creed","url":"https://www.perfumeriasrouge.com/delphinus-edp-x1110093/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/224402-400-400/3508440001238.jpg","g":"Unisex","f":["Ambarada","Gourmand"],"m":"Noche","t":["almendra","pimientaNegra","pimientaRosa","incienso"],"h":["loto"],"b":["vainilla","cuero","pachuli","tonka"],"d":[[["Almendra",["almendra"]],["Pimienta",["pimientaNegra","pimientaRosa"]],["Incienso",["incienso"]]],[["Orquídea",["loto"]]],[["Vainilla",["vainilla"]],["Cuero",["cuero"]],["Pachulí",["pachuli"]],["Haba tonka",["tonka"]]]]},
-                    {"id":"1504","name":"Erolfa","house":"Creed","url":"https://www.perfumeriasrouge.com/erolfa-edp/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/189710-400-400/3508441001015_1.jpg","g":"Hombre","f":["Acuática","Cítrica"],"m":"Día","t":["bergamota","limon"],"h":["jengibre"],"b":["ambar","almizcle","sandalo"],"d":[[["Bergamota",["bergamota"]],["Lima",["limon"]]],[["Jengibre",["jengibre"]]],[["Ámbar",["ambar"]],["Almizcle",["almizcle"]],["Sándalo",["sandalo"]]]]},
-                    {"id":"3794","name":"Green Irish Tweed","house":"Creed","url":"https://www.perfumeriasrouge.com/green-irish-tweed-edp-x1103032c-1/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/167269-400-400/Green-Irish-Tweed-EDT-50ml-1.jpg","g":"Hombre","f":["Aromática","Verde"],"m":"Día","t":["iris","verdes","cedro"],"h":["violeta"],"b":["ambar","sandalo"],"d":[[["Iris",["iris"]],["Notas verdes",["verdes"]],["Cedro",["cedro"]]],[["Violeta",["violeta"]]],[["Ámbar",["ambar"]],["Sándalo",["sandalo"]]]]},
-                    {"id":"3796","name":"Himalaya","house":"Creed","url":"https://www.perfumeriasrouge.com/himalaya-edp-x1103039c-1/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/167273-400-400/Himalaya-EDT-50ml-1.jpg","g":"Hombre","f":["Amaderada","Cítrica"],"m":"Ambos","t":["bergamota","pomelo","limon"],"h":["sandalo"],"b":["almizcle","ambar","cedro"],"d":[[["Bergamota",["bergamota"]],["Pomelo",["pomelo"]],["Limón",["limon"]]],[["Sándalo",["sandalo"]]],[["Almizcle",["almizcle"]],["Ámbar",["ambar"]],["Cedro",["cedro"]]]]},
-                    {"id":"24327","name":"Iris Debonair","house":"Creed","url":"https://www.perfumeriasrouge.com/iris-debonair-edp-x1110023/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/271230-400-400/3508440006462.png","g":"Unisex","f":["Aromática","Floral"],"m":"Día","t":["bergamota","cardamomo","pimientaRosa"],"h":["lavanda","higo","violeta"],"b":["iris","ambar"],"d":[[["Bergamota",["bergamota"]],["Cardamomo",["cardamomo"]],["Pimienta",["pimientaRosa"]]],[["Lavanda",["lavanda"]],["Higo",["higo"]],["Violeta",["violeta"]]],[["Iris",["iris"]],["Ámbar",["ambar"]]]]},
-                    {"id":"5085","name":"Love in White","house":"Creed","url":"https://www.perfumeriasrouge.com/love-in-white-edp-x1107561c-1/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/185028-400-400/75-ml-1.jpg","g":"Mujer","f":["Floral","Amaderada"],"m":"Ambos","t":["loto","bergamota","cedro"],"h":["iris"],"b":["ambar","sandalo","jazmin","manzana"],"d":[[["Magnolia",["loto"]],["Bergamota",["bergamota"]],["Cedro",["cedro"]]],[["Iris",["iris"]]],[["Ámbar",["ambar"]],["Sándalo",["sandalo"]],["Jazmín",["jazmin"]],["Manzana",["manzana"]]]]},
-                    {"id":"8203","name":"Millesime Carmina","house":"Creed","url":"https://www.perfumeriasrouge.com/millesime-carmina-edp-x1107573/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/205446-400-400/3508440251435.jpg","g":"Mujer","f":["Floral","Amaderada"],"m":"Ambos","t":["cerezas","pimientaRosa","azafran"],"h":["loto","violeta","rosa"],"b":["almizcle","ambar","incienso","mirra"],"d":[[["Frutos rojos",["cerezas"]],["Pimienta",["pimientaRosa"]],["Azafrán",["azafran"]]],[["Peonía",["loto"]],["Violeta",["violeta"]],["Rosa",["rosa"]]],[["Almizcle",["almizcle"]],["Ámbar",["ambar"]],["Incienso",["incienso"]],["Mirra",["mirra"]]]]},
-                    {"id":"19281","name":"Millesime Eladaria","house":"Creed","url":"https://www.perfumeriasrouge.com/millesime-eladaria-edp-x1107520/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/231506-400-400/3508440004185.jpg","g":"Mujer","f":["Floral","Almizclada"],"m":"Ambos","t":["pimientaRosa","bergamota","mandarina"],"h":["iris","loto","rosa"],"b":["ambar","almizcle","vainilla"],"d":[[["Pimienta",["pimientaRosa"]],["Bergamota",["bergamota"]],["Mandarina",["mandarina"]]],[["Iris",["iris"]],["Peonía",["loto"]],["Rosa",["rosa"]]],[["Ámbar",["ambar"]],["Almizcle",["almizcle"]],["Vainilla",["vainilla"]]]]},
-                    {"id":"4410","name":"Millesime Imperial","house":"Creed","url":"https://www.perfumeriasrouge.com/millesime-imperial-edp-100ml--1/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/169291-400-400/Millesime-Imperial-EDT-100ml-1.jpg","g":"Hombre","f":["Cítrica","Acuática"],"m":"Día","t":["limon","salvia"],"h":[],"b":["iris","sandalo","ambar"],"d":[[["Limón",["limon"]],["Menta",["salvia"]]],[],[["Iris",["iris"]],["Sándalo",["sandalo"]],["Ámbar",["ambar"]]]]},
-                    {"id":"22377","name":"Millesime Wild Vetiver","house":"Creed","url":"https://www.perfumeriasrouge.com/millesime-wild-vetiver-edp-x1110022/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/257087-400-400/3508440005366.jpg","g":"Unisex","f":["Amaderada","Verde"],"m":"Ambos","t":["bergamota","pimientaRosa"],"h":["rosa","geranio","grosella"],"b":["vetiver"],"d":[[["Bergamota",["bergamota"]],["Pimienta",["pimientaRosa"]]],[["Rosa",["rosa"]],["Geranio",["geranio"]],["Frutos rojos",["grosella"]]],[["Vetiver",["vetiver"]]]]},
-                    {"id":"3801","name":"Original Santal","house":"Creed","url":"https://www.perfumeriasrouge.com/original-santal-edp-x1105041c-1/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/167283-400-400/Original-Santal-EDP-50ml-1.jpg","g":"Hombre","f":["Amaderada","Especiada"],"m":"Ambos","t":["naranja","limon","jengibre"],"h":[],"b":["sandalo","vainilla","ambar","almizcle","cedro"],"d":[[["Naranja",["naranja"]],["Limón",["limon"]],["Jengibre",["jengibre"]]],[],[["Sándalo",["sandalo"]],["Vainilla",["vainilla"]],["Benjuí",["ambar"]],["Almizcle",["almizcle"]],["Cedro",["cedro"]],["Ámbar",["ambar"]]]]},
-                    {"id":"3807","name":"Original Vetiver","house":"Creed","url":"https://www.perfumeriasrouge.com/original-vetiver-edp-x1107540c-1/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/243105-400-400/3508441001091.jpg","g":"Hombre","f":["Amaderada","Aromática"],"m":"Ambos","t":["jengibre","limon","verdes"],"h":["vetiver","cedro"],"b":["almizcle"],"d":[[["Jengibre",["jengibre"]],["Limón",["limon"]],["Notas verdes",["verdes"]]],[["Vetiver",["vetiver"]],["Ciprés",["cedro"]],["Cedro",["cedro"]]],[["Almizcle",["almizcle"]]]]},
-                    {"id":"21447","name":"Oud Zarian","house":"Creed","url":"https://www.perfumeriasrouge.com/oud-zarian-x1110021/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/248498-400-400/3508440004130.jpg","g":"Unisex","f":["Amaderada","Ambarada"],"m":"Ambos","t":["incienso"],"h":["rosa"],"b":["oud","pachuli","sandalo","mirra"],"d":[[["Incienso",["incienso"]]],[["Rosa",["rosa"]]],[["Oud",["oud"]],["Pachulí",["pachuli"]],["Sándalo",["sandalo"]],["Mirra",["mirra"]]]]},
-                    {"id":"15091","name":"Queen of Silk","house":"Creed","url":"https://www.perfumeriasrouge.com/queen-of-silk-edp-x1103074c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/214811-400-400/3508440000507.jpg","g":"Mujer","f":["Floral","Ambarada"],"m":"Ambos","t":["azafran","loto"],"h":["jazmin","pachuli","cedro","anana","oud"],"b":["ambar","incienso","vainilla","mirra","almizcle"],"d":[[["Azafrán",["azafran"]],["Magnolia",["loto"]]],[["Nardo",["jazmin"]],["Pachulí",["pachuli"]],["Cedro",["cedro"]],["Frutas tropicales",["anana"]],["Oud",["oud"]]],[["Ámbar",["ambar"]],["Incienso",["incienso"]],["Vainilla",["vainilla"]],["Mirra",["mirra"]],["Almizcle",["almizcle"]]]]},
-                    {"id":"3795","name":"Silver Mountain Water","house":"Creed","url":"https://www.perfumeriasrouge.com/silver-mountain-water-edp-x1103035c-1/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/167271-400-400/Silver-Mountain-Water-EDT-50ml-1.jpg","g":"Hombre","f":["Aromática","Cítrica"],"m":"Día","t":["bergamota","mandarina"],"h":["te","grosella"],"b":["almizcle","azahar","sandalo","verdes"],"d":[[["Bergamota",["bergamota"]],["Mandarina",["mandarina"]]],[["Té",["te"]],["Frutos rojos",["grosella"]]],[["Almizcle",["almizcle"]],["Neroli",["azahar"]],["Sándalo",["sandalo"]],["Notas verdes",["verdes"]]]]},
-                    {"id":"6833","name":"Spring Flower","house":"Creed","url":"https://www.perfumeriasrouge.com/spring-flower-edt-x1107556/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/198585-400-400/3508441104563.jpg","g":"Mujer","f":["Frutal","Floral"],"m":"Ambos","t":["manzana","durazno"],"h":["jazmin","rosa"],"b":["almizcle","ambar"],"d":[[["Manzana",["manzana"]],["Durazno",["durazno"]]],[["Jazmín",["jazmin"]],["Rosa",["rosa"]]],[["Almizcle",["almizcle"]],["Ámbar",["ambar"]]]]},
-                    {"id":"3805","name":"Viking Cologne","house":"Creed","url":"https://www.perfumeriasrouge.com/viking-cologne-edp-x1105098c-1/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/167294-400-400/Viking-Cologne-EDP-50ml-1.jpg","g":"Hombre","f":["Aromática","Cítrica"],"m":"Día","t":["mandarina","bergamota","limon","pimientaRosa"],"h":["geranio","salvia","lavanda","canela"],"b":["sandalo","pachuli","cedro","vetiver","incienso"],"d":[[["Mandarina",["mandarina"]],["Bergamota",["bergamota"]],["Limón",["limon"]],["Pimienta",["pimientaRosa"]]],[["Geranio",["geranio"]],["Romero",["salvia"]],["Lavanda",["lavanda"]],["Salvia",["salvia"]],["Nuez moscada",["canela"]]],[["Sándalo",["sandalo"]],["Pachulí",["pachuli"]],["Cedro",["cedro"]],["Vetiver",["vetiver"]],["Incienso",["incienso"]]]]},
-                    {"id":"3797","name":"Virgin Island Water","house":"Creed","url":"https://www.perfumeriasrouge.com/virgin-islan-edp-x1103062c-1/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/189014-400-400/X1105062frasco.jpg","g":"Hombre","f":["Cítrica","Gourmand"],"m":"Día","t":["coco","bergamota","mandarina","limon"],"h":["jazmin","jengibre"],"b":["almizcle"],"d":[[["Coco",["coco"]],["Bergamota",["bergamota"]],["Mandarina",["mandarina"]],["Lima",["limon"]]],[["Ylang-ylang",["jazmin"]],["Jazmín",["jazmin"]],["Jengibre",["jengibre"]]],[["Almizcle",["almizcle"]],["Licor",[]]]]},
-                    {"id":"5123","name":"Wind Flowers","house":"Creed","url":"https://www.perfumeriasrouge.com/creed-wind-flowers-edp-x1107569c-1/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/185195-400-400/75-ml-1.jpg","g":"Mujer","f":["Floral","Almizclada"],"m":"Ambos","t":["jazmin","azahar","durazno"],"h":["rosa","jazmin"],"b":["almizcle","tonka"],"d":[[["Jazmín",["jazmin"]],["Neroli",["azahar"]],["Durazno",["durazno"]]],[["Rosa",["rosa"]],["Nardo",["jazmin"]]],[["Almizcle",["almizcle"]],["Praliné",["tonka"]]]]},
-                    {"id":"16506","name":"Barénia EDP","house":"Hermès","url":"https://www.perfumeriasrouge.com/barenia-edp-x110435voc/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/219083-400-400/3346130421337.jpg","g":"Mujer","f":["Chipre","Floral"],"m":"Ambos","t":["bergamota","jengibre"],"h":[],"b":["pachuli","cedro","abedul"],"d":[[["Bergamota",["bergamota"]],["Jengibre",["jengibre"]]],[],[["Pachulí",["pachuli"]],["Notas amaderadas",["cedro"]],["Roble",["abedul"]]]]},
-                    {"id":"20935","name":"Barénia EDP Intense","house":"Hermès","url":"https://www.perfumeriasrouge.com/barenia-eau-de-parfum-intense-x116302vo/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/245078-400-400/3346130018926.jpg","g":"Mujer","f":["Chipre","Cuero"],"m":"Noche","t":[],"h":["iris","abedul"],"b":["cuero","pachuli"],"d":[[],[["Iris",["iris"]],["Roble",["abedul"]]],[["Cuero",["cuero"]],["Pachulí",["pachuli"]]]]},
-                    {"id":"24181","name":"Barénia Pleine Fleur","house":"Hermès","url":"https://www.perfumeriasrouge.com/barenia-plenie-fleur-eau-de-parfum-x118010vo/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/270250-400-400/3346130027096_1.jpg","g":"Mujer","f":["Floral","Chipre"],"m":"Ambos","t":["azahar"],"h":["iris","jazmin"],"b":["pachuli"],"d":[[["Neroli",["azahar"]]],[["Iris",["iris"]],["Flores blancas",["jazmin"]]],[["Pachulí",["pachuli"]]]]},
-                    {"id":"3830","name":"Concentré d'Orange Verte","house":"Hermès","url":"https://www.perfumeriasrouge.com/concentre-d-orange-verte-eau-de-toilette-x24723c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/167435-400-400/Concentre-D-Orange-Verte-EDT-100ml-1.jpg","g":"Hombre","f":["Cítrica","Aromática"],"m":"Día","t":["naranja","limon","salvia","frambuesa"],"h":[],"b":["musgo","pachuli"],"d":[[["Naranja",["naranja"]],["Limón",["limon"]],["Menta",["salvia"]],["Frutos rojos",["frambuesa"]]],[],[["Musgo",["musgo"]],["Pachulí",["pachuli"]]]]},
-                    {"id":"3791","name":"Eau d'Orange Verte","house":"Hermès","url":"https://www.perfumeriasrouge.com/eau-d-orange-verte-eau-de-cologne-x101918voc/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/167250-400-400/Eau-D-Orange-Verte-EDC-100ml-1.jpg","g":"Unisex","f":["Cítrica","Aromática"],"m":"Día","t":["naranja","limon","salvia","frambuesa"],"h":[],"b":["musgo","pachuli"],"d":[[["Naranja",["naranja"]],["Limón",["limon"]],["Menta",["salvia"]],["Frutos rojos",["frambuesa"]]],[],[["Musgo",["musgo"]],["Pachulí",["pachuli"]]]]},
-                    {"id":"5581","name":"Eau de Basilic Pourpre","house":"Hermès","url":"https://www.perfumeriasrouge.com/eau-de-basilic-pourpre-eau-de-cologne-x105009vo/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/188075-400-400/3346130000020_1.jpg","g":"Unisex","f":["Aromática","Verde"],"m":"Día","t":["salvia","verdes"],"h":["bergamota"],"b":["geranio"],"d":[[["Albahaca",["salvia"]],["Notas verdes",["verdes"]]],[["Bergamota",["bergamota"]]],[["Geranio",["geranio"]]]]},
-                    {"id":"4469","name":"Eau de Citron Noir","house":"Hermès","url":"https://www.perfumeriasrouge.com/eau-de-citron-noir-eau-de-cologne-x40408/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/169371-400-400/Eau-de-Citron-Noir-EDC-100ml-1.jpg","g":"Unisex","f":["Cítrica","Amaderada"],"m":"Día","t":["limon"],"h":[],"b":["cedro"],"d":[[["Limón",["limon"]],["Lima",["limon"]]],[],[["Notas amaderadas",["cedro"]]]]},
-                    {"id":"22026","name":"Eau de Narcisse Bleu","house":"Hermès","url":"https://www.perfumeriasrouge.com/eau-de-narcisse-bleu-edc-x30570/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/253631-400-400/3346132001339_1.jpg","g":"Unisex","f":["Floral","Verde"],"m":"Día","t":["verdes"],"h":["azahar"],"b":["bergamota","cedro"],"d":[[["Notas verdes",["verdes"]]],[["Neroli",["azahar"]]],[["Bergamota",["bergamota"]],["Notas amaderadas",["cedro"]]]]},
-                    {"id":"4564","name":"Eau de Pamplemousse Rose","house":"Hermès","url":"https://www.perfumeriasrouge.com/eau-de-pamplemousse-rose-eau-de-cologne-xhe25602/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/169475-400-400/Rose-EDC-100ml-1.jpg","g":"Unisex","f":["Cítrica","Floral"],"m":"Día","t":["pomelo","verdes"],"h":["rosa"],"b":["vetiver"],"d":[[["Pomelo",["pomelo"]],["Notas verdes",["verdes"]]],[["Rosa",["rosa"]]],[["Vetiver",["vetiver"]]]]},
-                    {"id":"4465","name":"Eau de Rhubarbe Écarlate","house":"Hermès","url":"https://www.perfumeriasrouge.com/eau-de-rhubarbe-ecarlate-eau-de-cologne-x107157vo/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/169367-400-400/Eau-De-Rhubarbe-Ecarlate-EDC-100ml-1.jpg","g":"Unisex","f":["Frutal","Almizclada"],"m":"Día","t":["verdes"],"h":["frambuesa"],"b":["almizcle"],"d":[[["Notas verdes",["verdes"]]],[["Frutos rojos",["frambuesa"]]],[["Almizcle",["almizcle"]]]]},
-                    {"id":"3808","name":"Eau des Merveilles","house":"Hermès","url":"https://www.perfumeriasrouge.com/eau-des-merveilles-eau-de-toilette-x101324voc/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/167301-400-400/Eau-des-Merveilles-EDT-100ml-1.jpg","g":"Mujer","f":["Ambarada","Amaderada"],"m":"Noche","t":[],"h":["ambar","pimientaNegra"],"b":["naranja","cedro"],"d":[[],[["Benjuí",["ambar"]],["Pimienta",["pimientaNegra"]],["Ámbar",["ambar"]]],[["Naranja",["naranja"]],["Cedro",["cedro"]]]]},
-                    {"id":"3868","name":"Eau des Merveilles Bleue","house":"Hermès","url":"https://www.perfumeriasrouge.com/eau-des-merveilles-bleue-eau-de-toilette-x39053c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/188983-400-400/X39052.jpg","g":"Mujer","f":["Acuática","Amaderada"],"m":"Día","t":["enebro","marinas"],"h":["pachuli"],"b":[],"d":[[["Enebro",["enebro"]],["Notas marinas",["marinas"]]],[["Pachulí",["pachuli"]]],[]]},
-                    {"id":"6312","name":"H24 EDP","house":"Hermès","url":"https://www.perfumeriasrouge.com/h24-eau-de-parfum-x108421voc/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/193639-400-400/3346130413752_1.jpg","g":"Hombre","f":["Aromática","Amaderada"],"m":"Día","t":["salvia","verdes"],"h":[],"b":["musgo","cedro"],"d":[[["Salvia",["salvia"]],["Notas verdes",["verdes"]]],[],[["Musgo",["musgo"]],["Notas amaderadas",["cedro"]]]]},
-                    {"id":"3790","name":"H24 EDT","house":"Hermès","url":"https://www.perfumeriasrouge.com/h24-eau-de-toilette-x101563voc/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/235315-400-400/3346130010968.jpg.jpg","g":"Hombre","f":["Aromática","Verde"],"m":"Día","t":["salvia","verdes"],"h":[],"b":["cedro"],"d":[[["Salvia",["salvia"]],["Notas verdes",["verdes"]]],[],[["Notas amaderadas",["cedro"]]]]},
-                    {"id":"15089","name":"H24 Herbes Vives","house":"Hermès","url":"https://www.perfumeriasrouge.com/h24-herbes-vives-eau-de-parfum-x113601voc/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/248180-400-400/3346130432111.jpg","g":"Hombre","f":["Aromática","Verde"],"m":"Día","t":["verdes","pera","salvia"],"h":[],"b":[],"d":[[["Notas verdes",["verdes"]],["Pera",["pera"]],["Menta",["salvia"]]],[],[]]},
-                    {"id":"22378","name":"Jardin Sous La Mer","house":"Hermès","url":"https://www.perfumeriasrouge.com/jardin-sous-la-mer-edt-x117484vo/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/257527-400-400/3346130025658.jpg","g":"Unisex","f":["Acuática","Floral"],"m":"Día","t":["marinas","bergamota","limon","verdes"],"h":["jazmin"],"b":["almizcle","ambar"],"d":[[["Notas marinas",["marinas"]],["Bergamota",["bergamota"]],["Limón",["limon"]],["Notas verdes",["verdes"]]],[["Jazmín",["jazmin"]]],[["Almizcle",["almizcle"]],["Ámbar",["ambar"]]]]},
-                    {"id":"3835","name":"Jour d'Hermès","house":"Hermès","url":"https://www.perfumeriasrouge.com/jour-d-hermes-eau-de-parfum-x27551c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/167456-400-400/Jour-D-Hermes-EDP-85ml-1.jpg","g":"Mujer","f":["Floral","Almizclada"],"m":"Ambos","t":["jazmin"],"h":[],"b":["almizcle","cedro"],"d":[[["Flores blancas",["jazmin"]],["Gardenia",["jazmin"]]],[],[["Almizcle",["almizcle"]],["Notas amaderadas",["cedro"]]]]},
-                    {"id":"3865","name":"Jour d'Hermès Absolu","house":"Hermès","url":"https://www.perfumeriasrouge.com/jour-d-hermes-absolu-eau-de-parfum-x33001c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/167612-400-400/Jour-D-Hermes-Absolu-EDP-85ml-1.jpg","g":"Mujer","f":["Floral"],"m":"Ambos","t":["jazmin"],"h":["durazno"],"b":["almizcle","cedro"],"d":[[["Flores blancas",["jazmin"]],["Gardenia",["jazmin"]]],[["Durazno",["durazno"]]],[["Almizcle",["almizcle"]],["Notas amaderadas",["cedro"]]]]},
-                    {"id":"4395","name":"L'Ombre des Merveilles","house":"Hermès","url":"https://www.perfumeriasrouge.com/l-ombre-des-merveilles-eau-de-parfum-x101653voc/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/245440-400-400/3346131797080.jpg","g":"Mujer","f":["Ambarada","Amaderada"],"m":"Noche","t":["te"],"h":["incienso"],"b":["tonka"],"d":[[["Té",["te"]]],[["Incienso",["incienso"]]],[["Haba tonka",["tonka"]]]]},
-                    {"id":"3864","name":"Le Jardin de Monsieur Li","house":"Hermès","url":"https://www.perfumeriasrouge.com/le-jardin-de-monsieur-li-eau-de-toilette-x32118c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/167603-400-400/Le-Jardin-de-Monsieur-Li-EDT-100ml-1.jpg","g":"Unisex","f":["Cítrica","Floral"],"m":"Día","t":["mandarina","bergamota","salvia"],"h":["jazmin"],"b":[],"d":[[["Mandarina",["mandarina"]],["Bergamota",["bergamota"]],["Menta",["salvia"]]],[["Jazmín",["jazmin"]]],[]]},
-                    {"id":"19355","name":"Terre d'Hermès EDP Intense","house":"Hermès","url":"https://www.perfumeriasrouge.com/terre-d-hermes-eau-de-parfum-intense-x111230vo/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/232271-400-400/3346130424109.jpg","g":"Hombre","f":["Amaderada","Especiada"],"m":"Noche","t":["bergamota","pimientaNegra"],"h":["tonka"],"b":["cedro"],"d":[[["Bergamota",["bergamota"]],["Pimienta",["pimientaNegra"]]],[["Café",["tonka"]]],[["Notas amaderadas",["cedro"]]]]},
-                    {"id":"3811","name":"Terre d'Hermès EDT","house":"Hermès","url":"https://www.perfumeriasrouge.com/terre-d-hermes-eau-de-toilette-x107189voc/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/179762-400-400/Terre-D-EDT-100-ml-1.jpg","g":"Hombre","f":["Amaderada","Cítrica"],"m":"Ambos","t":["pomelo","naranja","marinas"],"h":["pimientaNegra","cedro"],"b":["vetiver"],"d":[[["Pomelo",["pomelo"]],["Naranja",["naranja"]],["Notas marinas",["marinas"]]],[["Pimienta",["pimientaNegra"]],["Cedro",["cedro"]]],[["Vetiver",["vetiver"]]]]},
-                    {"id":"5549","name":"Terre d'Hermès Eau Givrée","house":"Hermès","url":"https://www.perfumeriasrouge.com/terre-d-hermes-eau-givree-eau-de-parfum-x107535voc/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/233685-400-400/X107522VO.jpg.jpg","g":"Hombre","f":["Cítrica","Amaderada"],"m":"Día","t":["limon","enebro","marinas"],"h":["pimientaNegra"],"b":["cedro"],"d":[[["Limón",["limon"]],["Enebro",["enebro"]],["Notas marinas",["marinas"]]],[["Pimienta",["pimientaNegra"]]],[["Notas amaderadas",["cedro"]]]]},
-                    {"id":"3871","name":"Terre d'Hermès Eau Intense Vétiver","house":"Hermès","url":"https://www.perfumeriasrouge.com/terre-d-hermes-eau-intense-vetiver-eau-de-parfum-x100056voc/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/167639-400-400/Terre-d-Hermes-Eau-Intense-Vetiver-EDP-200ml-1.jpg","g":"Hombre","f":["Amaderada","Cítrica"],"m":"Ambos","t":["bergamota","limon","pomelo"],"h":["geranio","pimientaNegra"],"b":["vetiver","incienso","pachuli"],"d":[[["Bergamota",["bergamota"]],["Limón",["limon"]],["Pomelo",["pomelo"]]],[["Geranio",["geranio"]],["Pimienta",["pimientaNegra"]]],[["Vetiver",["vetiver"]],["Incienso",["incienso"]],["Pachulí",["pachuli"]]]]},
-                    {"id":"4854","name":"Terre d'Hermès Parfum","house":"Hermès","url":"https://www.perfumeriasrouge.com/terre-d-hermes-parfum-x24578/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/235595-400-400/3346130013501.jpg.jpg","g":"Hombre","f":["Amaderada","Cítrica"],"m":"Noche","t":["naranja","pomelo"],"h":[],"b":["cedro","musgo","abedul","ambar"],"d":[[["Naranja",["naranja"]],["Pomelo",["pomelo"]]],[],[["Notas amaderadas",["cedro"]],["Musgo",["musgo"]],["Roble",["abedul"]],["Benjuí",["ambar"]]]]},
-                    {"id":"13769","name":"Tutti Twilly","house":"Hermès","url":"https://www.perfumeriasrouge.com/tutti-twilly-eau-de-parfum-x110827voc/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/212236-400-400/3346130422495-1.jpg","g":"Mujer","f":["Frutal","Floral"],"m":"Ambos","t":["jengibre"],"h":["lichi"],"b":["almizcle"],"d":[[["Jengibre",["jengibre"]]],[["Frutas tropicales",["lichi"]]],[["Almizcle",["almizcle"]]]]},
-                    {"id":"3792","name":"Twilly Eau Ginger","house":"Hermès","url":"https://www.perfumeriasrouge.com/twilly-eau-ginger-eau-de-parfum-x103950voc/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/233313-400-400/Twilly-Eau-Ginger-EDP-85ml-1.jpg","g":"Mujer","f":["Floral","Especiada"],"m":"Ambos","t":["loto"],"h":["jengibre"],"b":["cedro"],"d":[[["Peonía",["loto"]]],[["Jengibre",["jengibre"]]],[["Cedro",["cedro"]]]]},
-                    {"id":"3867","name":"Twilly d'Hermès","house":"Hermès","url":"https://www.perfumeriasrouge.com/twilly-d-hermes-eau-de-parfum-x107265voc/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/167622-400-400/Twilly-D-Hermes-EDP-85ml-1.jpg","g":"Mujer","f":["Floral","Especiada"],"m":"Ambos","t":["jengibre"],"h":["jazmin"],"b":["sandalo"],"d":[[["Jengibre",["jengibre"]]],[["Nardo",["jazmin"]]],[["Sándalo",["sandalo"]]]]},
-                    {"id":"3789","name":"Twilly d'Hermès Eau Poivrée","house":"Hermès","url":"https://www.perfumeriasrouge.com/twilly-d-hermes-eau-poivree-eau-de-parfum-x100806voc/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/167233-400-400/Twilly-d-Hermes-Eau-Poivree-EDP-85ml-1.jpg","g":"Mujer","f":["Especiada","Chipre"],"m":"Noche","t":["pimientaRosa"],"h":["rosa"],"b":["pachuli"],"d":[[["Pimienta",["pimientaRosa"]]],[["Rosa",["rosa"]]],[["Pachulí",["pachuli"]]]]},
-                    {"id":"3940","name":"Un Jardin en Méditerranée","house":"Hermès","url":"https://www.perfumeriasrouge.com/un-jardin-en-mediterranee-eau-de-toilette-x712645c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/168466-400-400/Un-Jardin-En-Mediterranee-EDT-100ml-1.jpg","g":"Unisex","f":["Verde","Cítrica"],"m":"Día","t":["bergamota","mandarina","limon"],"h":["azahar"],"b":["higo","cedro","enebro","almizcle"],"d":[[["Bergamota",["bergamota"]],["Mandarina",["mandarina"]],["Limón",["limon"]]],[["Neroli",["azahar"]]],[["Higo",["higo"]],["Ciprés",["cedro"]],["Enebro",["enebro"]],["Almizcle",["almizcle"]],["Cedro",["cedro"]]]]},
-                    {"id":"3788","name":"Un Jardin sur la Lagune","house":"Hermès","url":"https://www.perfumeriasrouge.com/un-jardin-sur-la-lagune-eau-de-toilette-x100081voc/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/200349-400-400/167221-800-auto.jpg","g":"Unisex","f":["Floral","Amaderada"],"m":"Ambos","t":["verdes"],"h":["loto","jazmin"],"b":["cedro"],"d":[[["Notas verdes",["verdes"]]],[["Magnolia",["loto"]],["Flores blancas",["jazmin"]]],[["Notas amaderadas",["cedro"]]]]},
-                    {"id":"3810","name":"Un Jardin sur le Nil","house":"Hermès","url":"https://www.perfumeriasrouge.com/un-jardin-sur-le-nil-eau-de-toilette-x20397c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/167309-400-400/Un-Jardin-Sur-Le-Nil-EDT-100ml-1.jpg","g":"Unisex","f":["Frutal","Verde"],"m":"Ambos","t":["pomelo","mango"],"h":["naranja","loto"],"b":["iris","incienso","canela","almizcle"],"d":[[["Pomelo",["pomelo"]],["Frutas tropicales",["mango"]]],[["Naranja",["naranja"]],["Peonía",["loto"]]],[["Iris",["iris"]],["Incienso",["incienso"]],["Canela",["canela"]],["Almizcle",["almizcle"]]]]},
-                    {"id":"3838","name":"Un Jardin sur le Toit","house":"Hermès","url":"https://www.perfumeriasrouge.com/un-jardin-sur-le-toit-eau-de-toilette-x28105c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/167461-400-400/Un-Jardin-Sur-Le-Toit-EDT-100ml-1.jpg","g":"Unisex","f":["Verde","Frutal"],"m":"Día","t":["manzana","pera","verdes"],"h":["loto"],"b":[],"d":[[["Manzana",["manzana"]],["Pera",["pera"]],["Notas verdes",["verdes"]]],[["Magnolia",["loto"]]],[]]},
-                    {"id":"7346","name":"Un Jardin à Cythère","house":"Hermès","url":"https://www.perfumeriasrouge.com/un-jardin-a-cythere-eau-de-toilette-x109289v0c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/200402-400-400/3346130417262.jpg","g":"Mujer","f":["Cítrica","Amaderada"],"m":"Día","t":["limon","verdes"],"h":[],"b":["cedro","almendra"],"d":[[["Limón",["limon"]],["Notas verdes",["verdes"]]],[],[["Notas amaderadas",["cedro"]],["Almendra",["almendra"]]]]},
-                    {"id":"3834","name":"Voyage d'Hermès EDT","house":"Hermès","url":"https://www.perfumeriasrouge.com/voyage-d-hermes-eau-de-toilette-x26213c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/245392-400-400/Voyage-D-Hermes-EDT-35ml-1.jpg","g":"Hombre","f":["Amaderada","Aromática"],"m":"Ambos","t":["limon","enebro"],"h":["cardamomo","cedro"],"b":["almizcle"],"d":[[["Limón",["limon"]],["Enebro",["enebro"]]],[["Cardamomo",["cardamomo"]],["Cedro",["cedro"]]],[["Almizcle",["almizcle"]]]]},
-                    {"id":"3840","name":"Voyage d'Hermès Parfum","house":"Hermès","url":"https://www.perfumeriasrouge.com/voyage-d-hermes-parfum-x28766c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/167470-400-400/Voyage-D-Hermes-Parfum-100ml-1.jpg","g":"Hombre","f":["Amaderada","Aromática"],"m":"Noche","t":["cardamomo","limon","enebro"],"h":["te","rosa","verdes"],"b":["ambar","sandalo","almizcle"],"d":[[["Cardamomo",["cardamomo"]],["Limón",["limon"]],["Enebro",["enebro"]]],[["Té",["te"]],["Rosa",["rosa"]],["Notas verdes",["verdes"]]],[["Ámbar",["ambar"]],["Sándalo",["sandalo"]],["Almizcle",["almizcle"]]]]},
-                    {"id":"16816","name":"154","house":"Jo Malone London","url":"https://www.perfumeriasrouge.com/154-edc-xl0gc010000/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/220038-400-400/L0GC01_1.jpg","g":"Unisex","f":["Aromática","Cítrica"],"m":"Día","t":["mandarina","verdes"],"h":["lavanda"],"b":["vetiver"],"d":[[["Mandarina",["mandarina"]],["Notas verdes",["verdes"]]],[["Lavanda",["lavanda"]]],[["Vetiver",["vetiver"]]]]},
-                    {"id":"16825","name":"Basil & Neroli","house":"Jo Malone London","url":"https://www.perfumeriasrouge.com/basil-and-neroli-edc-xl5nh010000/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/220073-400-400/L5NH01_1.jpg","g":"Unisex","f":["Aromática","Cítrica"],"m":"Día","t":["salvia"],"h":["azahar"],"b":["almizcle"],"d":[[["Albahaca",["salvia"]]],[["Neroli",["azahar"]]],[["Almizcle",["almizcle"]]]]},
-                    {"id":"16821","name":"Blackberry & Bay","house":"Jo Malone London","url":"https://www.perfumeriasrouge.com/blackberry-and-bay-edc-xl32p010000/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/228789-400-400/L32R01_1.jpg","g":"Unisex","f":["Frutal","Verde"],"m":"Día","t":["grosella"],"h":["verdes"],"b":["cedro"],"d":[[["Frutos rojos",["grosella"]]],[["Notas verdes",["verdes"]]],[["Cedro",["cedro"]]]]},
-                    {"id":"16830","name":"Cypress & Grapevine","house":"Jo Malone London","url":"https://www.perfumeriasrouge.com/cypress-and-grapevine-edc-intense-xlgwn010000/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/253434-400-400/690251122233_1.jpg","g":"Unisex","f":["Amaderada","Aromática"],"m":"Ambos","t":["cedro"],"h":["ambar","vetiver"],"b":[],"d":[[["Ciprés",["cedro"]],["Cedro",["cedro"]]],[["Benjuí",["ambar"]],["Vetiver",["vetiver"]],["Ámbar",["ambar"]]],[]]},
-                    {"id":"16835","name":"Dark Amber & Ginger Lily","house":"Jo Malone London","url":"https://www.perfumeriasrouge.com/dark-amber-and-ginger-lily-edc-intense-xlgwy010000/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/253446-400-400/690251122295_1.jpg","g":"Unisex","f":["Ambarada","Amaderada"],"m":"Noche","t":["cardamomo","jengibre"],"h":["loto","jazmin"],"b":["incienso","ambar"],"d":[[["Cardamomo",["cardamomo"]],["Jengibre",["jengibre"]]],[["Orquídea",["loto"]],["Jazmín",["jazmin"]]],[["Incienso",["incienso"]],["Ámbar",["ambar"]]]]},
-                    {"id":"17029","name":"Earl Grey & Cucumber","house":"Jo Malone London","url":"https://www.perfumeriasrouge.com/earl-grey-and-cucumber-edc-xl38l010000/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/220661-400-400/L38L01_1.jpg","g":"Unisex","f":["Cítrica","Verde"],"m":"Día","t":["bergamota","te","verdes"],"h":[],"b":["vainilla","tabaco"],"d":[[["Bergamota",["bergamota"]],["Té",["te"]],["Notas verdes",["verdes"]]],[],[["Miel",["vainilla"]],["Tabaco",["tabaco"]]]]},
-                    {"id":"16826","name":"English Oak & Hazelnut","house":"Jo Malone London","url":"https://www.perfumeriasrouge.com/english-oak-and-hazelnut-edc-xl6tf010000c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/220077-400-400/L6TF01_1.jpg","g":"Unisex","f":["Amaderada","Verde"],"m":"Día","t":["verdes"],"h":["cedro"],"b":["almendra","abedul"],"d":[[["Notas verdes",["verdes"]]],[["Cedro",["cedro"]]],[["Almendra",["almendra"]],["Roble",["abedul"]]]]},
-                    {"id":"16819","name":"English Pear & Freesia","house":"Jo Malone London","url":"https://www.perfumeriasrouge.com/english-pear-and-freesia-edc-xl26l010000c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/228801-400-400/L26L01_1.jpg","g":"Unisex","f":["Frutal","Floral"],"m":"Día","t":["pera"],"h":["loto"],"b":["pachuli"],"d":[[["Pera",["pera"]]],[["Fresia",["loto"]]],[["Pachulí",["pachuli"]]]]},
-                    {"id":"16829","name":"Fig & Lotus Flower","house":"Jo Malone London","url":"https://www.perfumeriasrouge.com/fig-and-lotus-flower-edc-xlc8g010000c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/220087-400-400/LC8G01_1.jpg","g":"Unisex","f":["Verde","Floral"],"m":"Día","t":["higo","verdes"],"h":["azahar"],"b":["vetiver"],"d":[[["Higo",["higo"]],["Notas verdes",["verdes"]]],[["Neroli",["azahar"]]],[["Vetiver",["vetiver"]]]]},
-                    {"id":"16814","name":"Grapefruit","house":"Jo Malone London","url":"https://www.perfumeriasrouge.com/grapefruit-edc-xl00c010000c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/220032-400-400/L00C01_1.jpg","g":"Unisex","f":["Cítrica","Aromática"],"m":"Día","t":["pomelo"],"h":["salvia","lavanda"],"b":["musgo"],"d":[[["Pomelo",["pomelo"]]],[["Romero",["salvia"]],["Lavanda",["lavanda"]],["Menta",["salvia"]]],[["Musgo",["musgo"]]]]},
-                    {"id":"16827","name":"Honeysuckle & Davana","house":"Jo Malone London","url":"https://www.perfumeriasrouge.com/honeysuckle-and-davana-edc-xl7jk010000/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/220667-400-400/L7JL01_1.jpg","g":"Unisex","f":["Floral","Verde"],"m":"Día","t":["verdes"],"h":["rosa","vainilla"],"b":["musgo"],"d":[[["Notas verdes",["verdes"]]],[["Rosa",["rosa"]],["Miel",["vainilla"]]],[["Musgo",["musgo"]]]]},
-                    {"id":"16831","name":"Jasmine Sambac & Marigold","house":"Jo Malone London","url":"https://www.perfumeriasrouge.com/jazmine-sambac-and-marigold-edc-intense-xlgwp010000/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/253436-400-400/690251122240_1.jpg","g":"Unisex","f":["Floral","Ambarada"],"m":"Ambos","t":[],"h":["jazmin"],"b":["ambar","vainilla"],"d":[[],[["Jazmín",["jazmin"]]],[["Benjuí",["ambar"]],["Vainilla",["vainilla"]]]]},
-                    {"id":"16813","name":"Lime Basil & Mandarin","house":"Jo Malone London","url":"https://www.perfumeriasrouge.com/lime-basil-and-mandarin-edc-xl004010000/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/228813-400-400/L00401_1.jpg","g":"Unisex","f":["Cítrica","Aromática"],"m":"Día","t":["mandarina","limon"],"h":["salvia"],"b":["ambar"],"d":[[["Mandarina",["mandarina"]],["Lima",["limon"]]],[["Albahaca",["salvia"]]],[["Ámbar",["ambar"]]]]},
-                    {"id":"16824","name":"Mimosa & Cardamom","house":"Jo Malone London","url":"https://www.perfumeriasrouge.com/mimosa-and-cardamon-edc-xl51a010000/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/220665-400-400/L51C01_1.jpg","g":"Unisex","f":["Floral","Especiada"],"m":"Día","t":["cardamomo","limon"],"h":[],"b":["tonka","almendra","vainilla","tabaco"],"d":[[["Cardamomo",["cardamomo"]],["Limón",["limon"]]],[],[["Haba tonka",["tonka"]],["Almendra",["almendra"]],["Vainilla",["vainilla"]],["Tabaco",["tabaco"]]]]},
-                    {"id":"16832","name":"Myrrh & Tonka","house":"Jo Malone London","url":"https://www.perfumeriasrouge.com/myrrh-and-tonka-edc-intense-xlgwr010000/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/253438-400-400/690251122257_1.jpg","g":"Unisex","f":["Ambarada","Gourmand"],"m":"Noche","t":["lavanda","vainilla"],"h":["mirra","ambar"],"b":["tonka","almendra"],"d":[[["Lavanda",["lavanda"]],["Miel",["vainilla"]],["Vainilla",["vainilla"]]],[["Mirra",["mirra"]],["Ámbar",["ambar"]]],[["Haba tonka",["tonka"]],["Almendra",["almendra"]]]]},
-                    {"id":"17028","name":"Nectarine Blossom & Honey","house":"Jo Malone London","url":"https://www.perfumeriasrouge.com/nectarine-blossom-and-honey-edc-xl0y5010000c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/220651-400-400/L0Y501_1.jpg","g":"Unisex","f":["Frutal","Floral"],"m":"Día","t":["grosella"],"h":["vainilla"],"b":["durazno"],"d":[[["Frutos rojos",["grosella"]]],[["Miel",["vainilla"]]],[["Durazno",["durazno"]]]]},
-                    {"id":"16817","name":"Orange Blossom","house":"Jo Malone London","url":"https://www.perfumeriasrouge.com/orange-blossom-edc-xl0jj010000c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/220040-400-400/L0JJ01_1.jpg","g":"Unisex","f":["Floral","Cítrica"],"m":"Día","t":["mandarina"],"h":["azahar","jazmin"],"b":["iris","vetiver"],"d":[[["Mandarina",["mandarina"]]],[["Neroli",["azahar"]],["Flores blancas",["jazmin"]]],[["Iris",["iris"]],["Vetiver",["vetiver"]]]]},
-                    {"id":"16833","name":"Oud & Bergamot","house":"Jo Malone London","url":"https://www.perfumeriasrouge.com/oud-and-bergamot-edc-intense-xlgwt010000/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/253440-400-400/690251122264_1.jpg","g":"Unisex","f":["Amaderada","Cítrica"],"m":"Ambos","t":["bergamota","te"],"h":["cedro"],"b":["oud","ambar","tonka"],"d":[[["Bergamota",["bergamota"]],["Té",["te"]]],[["Cedro",["cedro"]]],[["Oud",["oud"]],["Benjuí",["ambar"]],["Praliné",["tonka"]]]]},
-                    {"id":"16822","name":"Peony & Blush Suede","house":"Jo Malone London","url":"https://www.perfumeriasrouge.com/peony-and-blush-suede-edc-xl3af010000c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/228783-400-400/L3AF01_1.jpg","g":"Unisex","f":["Floral","Frutal"],"m":"Día","t":["manzana"],"h":["loto","rosa","jazmin","vainilla"],"b":["cuero"],"d":[[["Manzana",["manzana"]]],[["Peonía",["loto"]],["Rosa",["rosa"]],["Jazmín",["jazmin"]],["Miel",["vainilla"]]],[["Gamuza",["cuero"]]]]},
-                    {"id":"16818","name":"Pomegranate Noir","house":"Jo Malone London","url":"https://www.perfumeriasrouge.com/pomegranate-noir-edc-xl10g010000c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/228807-400-400/L10G01_1.jpg","g":"Unisex","f":["Frutal","Amaderada"],"m":"Día","t":["frambuesa"],"h":["iris","pimientaNegra"],"b":["pachuli"],"d":[[["Frutos rojos",["frambuesa"]]],[["Iris",["iris"]],["Pimienta",["pimientaNegra"]]],[["Pachulí",["pachuli"]]]]},
-                    {"id":"16828","name":"Poppy & Barley","house":"Jo Malone London","url":"https://www.perfumeriasrouge.com/poppy-and-barley-edc-xla00010000c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/220081-400-400/LA0001_1.jpg","g":"Unisex","f":["Floral","Frutal"],"m":"Día","t":["grosella"],"h":["rosa","violeta"],"b":["almizcle"],"d":[[["Frutos rojos",["grosella"]]],[["Rosa",["rosa"]],["Violeta",["violeta"]]],[["Almizcle",["almizcle"]]]]},
-                    {"id":"19024","name":"Red Hibiscus","house":"Jo Malone London","url":"https://www.perfumeriasrouge.com/red-hibiscus-edc-intense-xljkf010000/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/228432-400-400/690251135141.jpg","g":"Unisex","f":["Floral","Gourmand"],"m":"Ambos","t":["mandarina","limon"],"h":[],"b":["vainilla"],"d":[[["Mandarina",["mandarina"]],["Lima",["limon"]]],[],[["Vainilla",["vainilla"]]]]},
-                    {"id":"16815","name":"Red Roses","house":"Jo Malone London","url":"https://www.perfumeriasrouge.com/red-roses-edc-xl08e010000c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/220036-400-400/L08E01_1.jpg","g":"Unisex","f":["Floral"],"m":"Día","t":["limon"],"h":["rosa","violeta"],"b":["vainilla"],"d":[[["Limón",["limon"]]],[["Rosa",["rosa"]],["Violeta",["violeta"]]],[["Miel",["vainilla"]]]]},
-                    {"id":"16837","name":"Scarlet Poppy","house":"Jo Malone London","url":"https://www.perfumeriasrouge.com/scarlet-poppy-edc-intense-xlhg0010000c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/253450-400-400/690251126668_1.jpg","g":"Unisex","f":["Floral","Gourmand"],"m":"Ambos","t":[],"h":[],"b":["almizcle","tonka","almendra","vainilla","tabaco"],"d":[[],[],[["Almizcle",["almizcle"]],["Haba tonka",["tonka"]],["Almendra",["almendra"]],["Vainilla",["vainilla"]],["Tabaco",["tabaco"]]]]},
-                    {"id":"16834","name":"Tuberose Angelica","house":"Jo Malone London","url":"https://www.perfumeriasrouge.com/tuberose-angelica-edc-intense-xlgww010000/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/253442-400-400/690251122271_1.jpg","g":"Unisex","f":["Floral","Ambarada"],"m":"Ambos","t":["verdes"],"h":["jazmin"],"b":["ambar"],"d":[[["Notas verdes",["verdes"]]],[["Nardo",["jazmin"]]],[["Ámbar",["ambar"]]]]},
-                    {"id":"17030","name":"Velvet Rose & Oud","house":"Jo Malone London","url":"https://www.perfumeriasrouge.com/velvet-rose-and-oud-edc-intense-xlgx5010000c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/253444-400-400/690251122288_1.jpg","g":"Unisex","f":["Floral","Amaderada"],"m":"Ambos","t":["canela"],"h":["rosa"],"b":["oud","ambar"],"d":[[["Clavo",["canela"]]],[["Rosa",["rosa"]]],[["Oud",["oud"]],["Benjuí",["ambar"]]]]},
-                    {"id":"16836","name":"Vetiver & Golden Vanilla","house":"Jo Malone London","url":"https://www.perfumeriasrouge.com/vetiver-and-golden-vainilla-edc-intense-xlh32010000c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/253448-400-400/690251123629_1.jpg","g":"Unisex","f":["Amaderada","Gourmand"],"m":"Ambos","t":["cardamomo","pomelo","lavanda"],"h":["vetiver"],"b":["vainilla"],"d":[[["Cardamomo",["cardamomo"]],["Pomelo",["pomelo"]],["Lavanda",["lavanda"]]],[["Vetiver",["vetiver"]]],[["Vainilla",["vainilla"]]]]},
-                    {"id":"16820","name":"Wild Bluebell","house":"Jo Malone London","url":"https://www.perfumeriasrouge.com/wild-bluebell-edc-xl2h6010000c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/228795-400-400/L2H601_1.jpg","g":"Unisex","f":["Floral","Verde"],"m":"Día","t":["verdes","canela"],"h":["durazno"],"b":["almizcle"],"d":[[["Notas verdes",["verdes"]],["Clavo",["canela"]]],[["Durazno",["durazno"]]],[["Almizcle",["almizcle"]]]]},
-                    {"id":"16823","name":"Wood Sage & Sea Salt","house":"Jo Malone London","url":"https://www.perfumeriasrouge.com/wood-sage-and-sea-salt-edc-xl415010000c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/220066-400-400/L41501_1.jpg","g":"Unisex","f":["Aromática","Acuática"],"m":"Día","t":[],"h":["marinas"],"b":["almizcle","salvia"],"d":[[],[["Notas marinas",["marinas"]]],[["Almizcle",["almizcle"]],["Salvia",["salvia"]]]]},
-                    {"id":"14938","name":"Another Oud","house":"Juliette Has A Gun","url":"https://www.perfumeriasrouge.com/another-oud-edp-xpao100/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/214158-400-400/3770000002669.jpg","g":"Unisex","f":["Amaderada","Frutal"],"m":"Ambos","t":["bergamota","frambuesa"],"h":["oud"],"b":["ambar","almizcle"],"d":[[["Bergamota",["bergamota"]],["Frutos rojos",["frambuesa"]]],[["Oud",["oud"]]],[["Ámbar",["ambar"]],["Almizcle",["almizcle"]]]]},
-                    {"id":"6180","name":"Anyway","house":"Juliette Has A Gun","url":"https://www.perfumeriasrouge.com/anyway-edp-xany-100/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/245351-400-400/3770000002904.jpg","g":"Mujer","f":["Almizclada","Floral"],"m":"Ambos","t":["limon","azahar"],"h":["jazmin"],"b":["ambar","almizcle","cedro"],"d":[[["Lima",["limon"]],["Neroli",["azahar"]]],[["Jazmín",["jazmin"]]],[["Ámbar",["ambar"]],["Almizcle",["almizcle"]],["Notas amaderadas",["cedro"]]]]},
-                    {"id":"19683","name":"Juliette","house":"Juliette Has A Gun","url":"https://www.perfumeriasrouge.com/juliette-edp-xpjul100/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/234942-400-400/3760022734112.jpg","g":"Mujer","f":["Frutal","Floral"],"m":"Ambos","t":["cerezas","pimientaRosa"],"h":["jazmin"],"b":["ambar","tonka"],"d":[[["Frutos rojos",["cerezas"]],["Pimienta",["pimientaRosa"]]],[["Jazmín",["jazmin"]]],[["Ámbar",["ambar"]],["Haba tonka",["tonka"]]]]},
-                    {"id":"6181","name":"Lady Vengeance","house":"Juliette Has A Gun","url":"https://www.perfumeriasrouge.com/lady-vengeance-edp-xlv-100/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/192600-400-400/3770000002683.jpg","g":"Mujer","f":["Floral","Chipre"],"m":"Ambos","t":["lavanda","bergamota"],"h":["rosa","pachuli"],"b":["almizcle","ambar","vainilla"],"d":[[["Lavanda",["lavanda"]],["Bergamota",["bergamota"]]],[["Rosa",["rosa"]],["Pachulí",["pachuli"]]],[["Almizcle",["almizcle"]],["Ámbar",["ambar"]],["Vainilla",["vainilla"]]]]},
-                    {"id":"7329","name":"Lipstick Fever","house":"Juliette Has A Gun","url":"https://www.perfumeriasrouge.com/lipstick-fever-edp-xplip100c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/200285-400-400/3760022731753.jpg","g":"Mujer","f":["Gourmand","Floral"],"m":"Noche","t":["frambuesa","violeta"],"h":["iris","pachuli"],"b":["vainilla"],"d":[[["Frutos rojos",["frambuesa"]],["Violeta",["violeta"]]],[["Iris",["iris"]],["Pachulí",["pachuli"]]],[["Vainilla",["vainilla"]]]]},
-                    {"id":"13030","name":"Lust For Sun","house":"Juliette Has A Gun","url":"https://www.perfumeriasrouge.com/lust-for-sun-edp-xplust100/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/207240-400-400/3760022733580_2.png","g":"Mujer","f":["Floral","Gourmand"],"m":"Ambos","t":["coco","bergamota","loto"],"h":["jazmin","azahar"],"b":["almizcle","vainilla","ambar"],"d":[[["Coco",["coco"]],["Bergamota",["bergamota"]],["Fresia",["loto"]]],[["Ylang-ylang",["jazmin"]],["Jazmín",["jazmin"]],["Neroli",["azahar"]],["Gardenia",["jazmin"]]],[["Almizcle",["almizcle"]],["Vainilla",["vainilla"]],["Ámbar",["ambar"]]]]},
-                    {"id":"7255","name":"Magnolia Bliss","house":"Juliette Has A Gun","url":"https://www.perfumeriasrouge.com/magnolia-bliss-edp-xpmag100/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/200038-400-400/3770000002331.jpg","g":"Mujer","f":["Floral","Frutal"],"m":"Ambos","t":["bergamota","azahar","limon","jengibre"],"h":["loto"],"b":["almizcle","tonka","ambar","vainilla"],"d":[[["Bergamota",["bergamota"]],["Neroli",["azahar"]],["Limón",["limon"]],["Lima",["limon"]],["Jengibre",["jengibre"]]],[["Magnolia",["loto"]],["Fresia",["loto"]],["Peonía",["loto"]]],[["Almizcle",["almizcle"]],["Haba tonka",["tonka"]],["Ámbar",["ambar"]],["Vainilla",["vainilla"]]]]},
-                    {"id":"6574","name":"Metal Chypre","house":"Juliette Has A Gun","url":"https://www.perfumeriasrouge.com/metal-chypre-edp-xmetc/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/195760-400-400/XMETC-1.jpg","g":"Unisex","f":["Chipre","Ambarada"],"m":"Ambos","t":["pimientaRosa","bergamota"],"h":["iris","pachuli","ambar","cuero"],"b":["almizcle","tonka"],"d":[[["Pimienta",["pimientaRosa"]],["Bergamota",["bergamota"]]],[["Iris",["iris"]],["Pachulí",["pachuli"]],["Ámbar",["ambar"]],["Gamuza",["cuero"]]],[["Almizcle",["almizcle"]],["Haba tonka",["tonka"]]]]},
-                    {"id":"7256","name":"Mmmm","house":"Juliette Has A Gun","url":"https://www.perfumeriasrouge.com/mmmm-edp-xpmm100c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/200041-400-400/3760022730251.jpg","g":"Mujer","f":["Gourmand","Floral"],"m":"Noche","t":["frambuesa","azahar","geranio"],"h":["jazmin"],"b":["vainilla","sandalo","pachuli"],"d":[[["Frutos rojos",["frambuesa"]],["Neroli",["azahar"]],["Geranio",["geranio"]]],[["Jazmín",["jazmin"]],["Nardo",["jazmin"]]],[["Vainilla",["vainilla"]],["Sándalo",["sandalo"]],["Pachulí",["pachuli"]]]]},
-                    {"id":"14935","name":"Moscow Mule","house":"Juliette Has A Gun","url":"https://www.perfumeriasrouge.com/moscow-mule-edp-xpmos100c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/214143-400-400/3760022730664.jpg","g":"Unisex","f":["Cítrica","Especiada"],"m":"Día","t":["bergamota","limon","jengibre"],"h":["manzana","jazmin"],"b":["almizcle","ambar"],"d":[[["Bergamota",["bergamota"]],["Limón",["limon"]],["Jengibre",["jengibre"]]],[["Manzana",["manzana"]],["Jazmín",["jazmin"]]],[["Almizcle",["almizcle"]],["Ámbar",["ambar"]]]]},
-                    {"id":"14936","name":"Musc Invisible","house":"Juliette Has A Gun","url":"https://www.perfumeriasrouge.com/musc-invisible-edp-xpmusk50c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/214149-400-400/3760022731838.jpg","g":"Mujer","f":["Almizclada","Floral"],"m":"Ambos","t":["jazmin"],"h":[],"b":["almizcle"],"d":[[["Jazmín",["jazmin"]],["Flores blancas",["jazmin"]]],[],[["Almizcle",["almizcle"]]]]},
-                    {"id":"6182","name":"Not A Perfume","house":"Juliette Has A Gun","url":"https://www.perfumeriasrouge.com/not-a-perfume-edp-xnot-100/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/192528-400-400/image1.jpg","g":"Mujer","f":["Almizclada","Amaderada"],"m":"Ambos","t":[],"h":[],"b":["ambar","almizcle","cedro"],"d":[[],[],[["Ámbar",["ambar"]],["Almizcle",["almizcle"]],["Notas amaderadas",["cedro"]]]]},
-                    {"id":"6575","name":"Oil Fiction","house":"Juliette Has A Gun","url":"https://www.perfumeriasrouge.com/oil-fiction-edp-xoil/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/195761-400-400/XOIL-1.jpg","g":"Unisex","f":["Ambarada","Floral"],"m":"Noche","t":["jazmin","ambar"],"h":["iris","vainilla","azafran"],"b":["bergamota"],"d":[[["Nardo",["jazmin"]],["Ámbar",["ambar"]],["Benjuí",["ambar"]],["Ylang-ylang",["jazmin"]]],[["Iris",["iris"]],["Vainilla",["vainilla"]],["Azafrán",["azafran"]]],[["Bergamota",["bergamota"]]]]},
-                    {"id":"6183","name":"Pear Inc.","house":"Juliette Has A Gun","url":"https://www.perfumeriasrouge.com/pear-inc-edp-xppear100c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/192531-400-400/image1.jpg","g":"Mujer","f":["Frutal","Almizclada"],"m":"Ambos","t":["pera"],"h":["ambar"],"b":["almizcle"],"d":[[["Pera",["pera"]]],[["Ámbar",["ambar"]]],[["Almizcle",["almizcle"]]]]},
-                    {"id":"6876","name":"Sunny Side Up","house":"Juliette Has A Gun","url":"https://www.perfumeriasrouge.com/sunny-side-up-edp-xpsun100c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/198834-400-400/3760022730466.jpg","g":"Mujer","f":["Gourmand","Amaderada"],"m":"Noche","t":["vainilla","jazmin"],"h":["coco","sandalo","iris"],"b":["almizcle"],"d":[[["Vainilla",["vainilla"]],["Jazmín",["jazmin"]]],[["Coco",["coco"]],["Sándalo",["sandalo"]],["Iris",["iris"]]],[["Almizcle",["almizcle"]]]]},
-                    {"id":"6184","name":"Vanilla Vibes","house":"Juliette Has A Gun","url":"https://www.perfumeriasrouge.com/vanilla-vibes-edp-xpvan100/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/192533-400-400/image1.jpg","g":"Mujer","f":["Gourmand","Almizclada"],"m":"Noche","t":["marinas"],"h":["vainilla","loto"],"b":["tonka","sandalo","almizcle"],"d":[[["Notas marinas",["marinas"]]],[["Vainilla",["vainilla"]],["Orquídea",["loto"]]],[["Haba tonka",["tonka"]],["Sándalo",["sandalo"]],["Almizcle",["almizcle"]]]]},
-                    {"id":"21450","name":"Abu Dhabi","house":"Memo","url":"https://www.perfumeriasrouge.com/abu-dhabi-edp-xmmedp75ad/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/248507-400-400/3700458606508.jpg","g":"Unisex","f":["Especiada","Amaderada"],"m":"Noche","t":["bergamota","pimientaRosa","jengibre","naranja","cardamomo","incienso"],"h":["azahar"],"b":["pachuli","ambar","vetiver","vainilla"],"d":[[["Bergamota",["bergamota"]],["Pimienta",["pimientaRosa"]],["Jengibre",["jengibre"]],["Naranja",["naranja"]],["Cardamomo",["cardamomo"]],["Incienso",["incienso"]]],[["Neroli",["azahar"]]],[["Pachulí",["pachuli"]],["Ámbar",["ambar"]],["Vetiver",["vetiver"]],["Vainilla",["vainilla"]]]]},
-                    {"id":"5801","name":"African Leather","house":"Memo","url":"https://www.perfumeriasrouge.com/african-leather-edp-xmmedp75al/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/190521-400-400/3700458602999_1.jpg","g":"Unisex","f":["Cuero","Especiada"],"m":"Noche","t":["bergamota"],"h":["cardamomo"],"b":["cuero","pachuli","oud","almizcle"],"d":[[["Bergamota",["bergamota"]]],[["Cardamomo",["cardamomo"]]],[["Cuero",["cuero"]],["Pachulí",["pachuli"]],["Oud",["oud"]],["Almizcle",["almizcle"]]]]},
-                    {"id":"21326","name":"Cap Camarat","house":"Memo","url":"https://www.perfumeriasrouge.com/cap-camarat-edp-xmmedp75cc/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/274228-400-400/a.jpg","g":"Unisex","f":["Floral","Amaderada"],"m":"Ambos","t":["pimientaRosa","marinas","manzana"],"h":["jazmin","vainilla"],"b":["sandalo","pachuli","ambar"],"d":[[["Pimienta",["pimientaRosa"]],["Notas marinas",["marinas"]],["Manzana",["manzana"]]],[["Ylang-ylang",["jazmin"]],["Vainilla",["vainilla"]],["Jazmín",["jazmin"]]],[["Sándalo",["sandalo"]],["Pachulí",["pachuli"]],["Benjuí",["ambar"]]]]},
-                    {"id":"5803","name":"Corfu","house":"Memo","url":"https://www.perfumeriasrouge.com/corfu-edp-xmmedp75co/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/190526-400-400/3700458602524_1.jpg","g":"Unisex","f":["Chipre","Floral"],"m":"Ambos","t":["limon","naranja","bergamota","mandarina","pomelo","salvia","frambuesa","grosella"],"h":["iris","jazmin","rosa","geranio","durazno","canela"],"b":["cedro","tonka","sandalo","pachuli","musgo","ambar","almizcle"],"d":[[["Limón",["limon"]],["Naranja",["naranja"]],["Bergamota",["bergamota"]],["Mandarina",["mandarina"]],["Pomelo",["pomelo"]],["Albahaca",["salvia"]],["Frutos rojos",["frambuesa","grosella"]]],[["Iris",["iris"]],["Nardo",["jazmin"]],["Rosa",["rosa"]],["Jazmín",["jazmin"]],["Geranio",["geranio"]],["Durazno",["durazno"]],["Clavo",["canela"]]],[["Cedro",["cedro"]],["Haba tonka",["tonka"]],["Sándalo",["sandalo"]],["Pachulí",["pachuli"]],["Musgo",["musgo"]],["Ámbar",["ambar"]],["Almizcle",["almizcle"]]]]},
-                    {"id":"5804","name":"Eau de Memo","house":"Memo","url":"https://www.perfumeriasrouge.com/eau-de-memo-edp-xmmnedp100edm/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/190529-400-400/3700458614534_1.jpg","g":"Unisex","f":["Cítrica","Cuero"],"m":"Día","t":["te","limon","pomelo"],"h":["jazmin","azafran","iris"],"b":["cuero","almizcle","musgo"],"d":[[["Té",["te"]],["Limón",["limon"]],["Pomelo",["pomelo"]]],[["Jazmín",["jazmin"]],["Azafrán",["azafran"]],["Iris",["iris"]]],[["Cuero",["cuero"]],["Almizcle",["almizcle"]],["Musgo",["musgo"]]]]},
-                    {"id":"5806","name":"French Leather","house":"Memo","url":"https://www.perfumeriasrouge.com/french-leather-edp-xmmedp200flc/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/190588-400-400/3700458611601_1.jpg","g":"Unisex","f":["Cuero","Floral"],"m":"Noche","t":["enebro","bergamota","limon","pimientaRosa"],"h":["rosa","salvia"],"b":["cuero","cedro"],"d":[[["Enebro",["enebro"]],["Bergamota",["bergamota"]],["Lima",["limon"]],["Pimienta",["pimientaRosa"]]],[["Rosa",["rosa"]],["Salvia",["salvia"]]],[["Gamuza",["cuero"]],["Cuero",["cuero"]],["Cedro",["cedro"]]]]},
-                    {"id":"5808","name":"Iberian Leather","house":"Memo","url":"https://www.perfumeriasrouge.com/iberian-leather-edp-xmmedp75ibl/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/190540-400-400/3700458603095_1.jpg","g":"Unisex","f":["Cuero","Especiada"],"m":"Noche","t":["cuero","oud","pachuli"],"h":["canela","azafran"],"b":["salvia","geranio"],"d":[[["Cuero",["cuero"]],["Oud",["oud"]],["Pachulí",["pachuli"]]],[["Clavo",["canela"]],["Azafrán",["azafran"]],["Canela",["canela"]]],[["Romero",["salvia"]],["Geranio",["geranio"]]]]},
-                    {"id":"5809","name":"Inle","house":"Memo","url":"https://www.perfumeriasrouge.com/inle-edp--xmmnedp075in/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/190541-400-400/3700458611069_1.jpg","g":"Mujer","f":["Floral","Verde"],"m":"Ambos","t":["bergamota","salvia"],"h":["jazmin","te"],"b":["iris","almizcle","cedro"],"d":[[["Bergamota",["bergamota"]],["Menta",["salvia"]]],[["Jazmín",["jazmin"]],["Té",["te"]]],[["Iris",["iris"]],["Almizcle",["almizcle"]],["Cedro",["cedro"]]]]},
-                    {"id":"5810","name":"Irish Leather","house":"Memo","url":"https://www.perfumeriasrouge.com/irish-leather-edp-xmmedp75il/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/190544-400-400/3700458602982_1.jpg","g":"Unisex","f":["Cuero","Verde"],"m":"Noche","t":["pimientaNegra","enebro","mandarina"],"h":["iris","salvia","te"],"b":["cuero","vetiver","cedro"],"d":[[["Pimienta",["pimientaNegra"]],["Enebro",["enebro"]],["Mandarina",["mandarina"]]],[["Iris",["iris"]],["Salvia",["salvia"]],["Té",["te"]]],[["Cuero",["cuero"]],["Vetiver",["vetiver"]],["Cedro",["cedro"]]]]},
-                    {"id":"5811","name":"Italian Leather","house":"Memo","url":"https://www.perfumeriasrouge.com/italian-leather-edp-xmmedp75itl/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/190546-400-400/3700458603040_1.jpg","g":"Unisex","f":["Cuero","Verde"],"m":"Noche","t":["cuero","vainilla","salvia"],"h":["iris","verdes"],"b":["mirra","almizcle","sandalo","ambar"],"d":[[["Cuero",["cuero"]],["Vainilla",["vainilla"]],["Salvia",["salvia"]]],[["Iris",["iris"]],["Notas verdes",["verdes"]]],[["Mirra",["mirra"]],["Almizcle",["almizcle"]],["Sándalo",["sandalo"]],["Benjuí",["ambar"]]]]},
-                    {"id":"21449","name":"Ithaque","house":"Memo","url":"https://www.perfumeriasrouge.com/ithaque-edp-xmmedp75it/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/248504-400-400/3700458603385.jpg","g":"Unisex","f":["Chipre"],"m":"Ambos","t":["bergamota","pimientaNegra","enebro","naranja","canela"],"h":["grosella","jazmin"],"b":["pachuli","cedro"],"d":[[["Bergamota",["bergamota"]],["Pimienta",["pimientaNegra"]],["Enebro",["enebro"]],["Naranja",["naranja"]],["Canela",["canela"]]],[["Frutos rojos",["grosella"]],["Jazmín",["jazmin"]]],[["Pachulí",["pachuli"]],["Cedro",["cedro"]]]]},
-                    {"id":"5812","name":"Jannat","house":"Memo","url":"https://www.perfumeriasrouge.com/jannat-edp-xmmedp75ja/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/190548-400-400/3700458603187_1.jpg","g":"Unisex","f":["Cítrica","Floral"],"m":"Día","t":["pomelo","jengibre"],"h":["azahar"],"b":["almizcle"],"d":[[["Pomelo",["pomelo"]],["Jengibre",["jengibre"]]],[["Neroli",["azahar"]]],[["Almizcle",["almizcle"]]]]},
-                    {"id":"5813","name":"Kedu","house":"Memo","url":"https://www.perfumeriasrouge.com/kedu-edp-xmmedp75ke/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/190550-400-400/3700458602968_1.jpg","g":"Unisex","f":["Floral","Cítrica"],"m":"Ambos","t":["pomelo","azahar","mandarina"],"h":["loto","rosa","te"],"b":["almizcle","musgo"],"d":[[["Pomelo",["pomelo"]],["Neroli",["azahar"]],["Mandarina",["mandarina"]]],[["Fresia",["loto"]],["Rosa",["rosa"]],["Peonía",["loto"]],["Té",["te"]]],[["Almizcle",["almizcle"]],["Musgo",["musgo"]]]]},
-                    {"id":"5814","name":"Lalibela","house":"Memo","url":"https://www.perfumeriasrouge.com/lalibela-edp-xmmnedp075ll/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/190552-400-400/3700458611120_1.jpg","g":"Mujer","f":["Floral","Gourmand"],"m":"Ambos","t":["coco","loto","rosa"],"h":["vainilla","pachuli","jazmin"],"b":["incienso","tabaco"],"d":[[["Coco",["coco"]],["Orquídea",["loto"]],["Rosa",["rosa"]]],[["Vainilla",["vainilla"]],["Pachulí",["pachuli"]],["Jazmín",["jazmin"]]],[["Incienso",["incienso"]],["Tabaco",["tabaco"]]]]},
-                    {"id":"13263","name":"Madurai","house":"Memo","url":"https://www.perfumeriasrouge.com/madurai-edp-xmmedp75mad/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/208321-400-400/3700458604061.jpg","g":"Unisex","f":["Floral","Frutal"],"m":"Ambos","t":[],"h":["jazmin"],"b":["durazno","cedro"],"d":[[],[["Jazmín",["jazmin"]]],[["Durazno",["durazno"]],["Notas amaderadas",["cedro"]]]]},
-                    {"id":"5815","name":"Marfa","house":"Memo","url":"https://www.perfumeriasrouge.com/marfa-edp-xmmedp75mar/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/190554-400-400/3700458602920_1.jpg","g":"Unisex","f":["Floral","Gourmand"],"m":"Ambos","t":["azahar","mandarina"],"h":["jazmin"],"b":["vainilla","almizcle","cedro","sandalo"],"d":[[["Neroli",["azahar"]],["Mandarina",["mandarina"]]],[["Ylang-ylang",["jazmin"]],["Nardo",["jazmin"]]],[["Vainilla",["vainilla"]],["Almizcle",["almizcle"]],["Cedro",["cedro"]],["Sándalo",["sandalo"]]]]},
-                    {"id":"5816","name":"Moroccan Leather","house":"Memo","url":"https://www.perfumeriasrouge.com/moroccan-leather-edp-xmmedp75ml/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/190556-400-400/3700458603460_1.jpg","g":"Unisex","f":["Cuero","Floral"],"m":"Noche","t":["verdes"],"h":["iris","azahar"],"b":["cuero","almizcle","tonka"],"d":[[["Notas verdes",["verdes"]]],[["Iris",["iris"]],["Neroli",["azahar"]]],[["Cuero",["cuero"]],["Almizcle",["almizcle"]],["Haba tonka",["tonka"]]]]},
-                    {"id":"5817","name":"Ocean Leather","house":"Memo","url":"https://www.perfumeriasrouge.com/ocean-leather-edp-xmmedp75ocl/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/190558-400-400/3700458603002_1.jpg","g":"Unisex","f":["Cuero","Acuática"],"m":"Noche","t":["mandarina","violeta","salvia"],"h":["cedro","salvia"],"b":["ambar","cuero","canela","vetiver"],"d":[[["Mandarina",["mandarina"]],["Violeta",["violeta"]],["Albahaca",["salvia"]]],[["Cedro",["cedro"]],["Salvia",["salvia"]]],[["Benjuí",["ambar"]],["Cuero",["cuero"]],["Nuez moscada",["canela"]],["Vetiver",["vetiver"]]]]},
-                    {"id":"21451","name":"Odéon","house":"Memo","url":"https://www.perfumeriasrouge.com/odeon-edp-xmmedp75od/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/248510-400-400/3700458604320.jpg","g":"Unisex","f":["Ambarada","Floral"],"m":"Noche","t":["rosa"],"h":["sandalo","pachuli"],"b":["tonka","ambar","almizcle"],"d":[[["Rosa",["rosa"]]],[["Sándalo",["sandalo"]],["Pachulí",["pachuli"]]],[["Haba tonka",["tonka"]],["Ámbar",["ambar"]],["Almizcle",["almizcle"]]]]},
-                    {"id":"19379","name":"Palais Bourbon","house":"Memo","url":"https://www.perfumeriasrouge.com/palais-bourbon-edp-xmmedp75pb/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/274184-400-400/3700458605327.jpg","g":"Unisex","f":["Ambarada","Especiada"],"m":"Noche","t":["pimientaNegra","canela","incienso","geranio","cardamomo"],"h":["tonka","vainilla","ambar"],"b":["sandalo","vetiver","pachuli"],"d":[[["Pimienta",["pimientaNegra"]],["Canela",["canela"]],["Incienso",["incienso"]],["Geranio",["geranio"]],["Cardamomo",["cardamomo"]]],[["Haba tonka",["tonka"]],["Vainilla",["vainilla"]],["Benjuí",["ambar"]]],[["Sándalo",["sandalo"]],["Vetiver",["vetiver"]],["Pachulí",["pachuli"]]]]},
-                    {"id":"5805","name":"Paris Flam","house":"Memo","url":"https://www.perfumeriasrouge.com/paris-flam-edp-xmmedp75fla/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/190531-400-400/3700458602975_1.jpg","g":"Unisex","f":["Floral","Gourmand"],"m":"Ambos","t":["bergamota"],"h":["jazmin"],"b":["cedro","tonka","vainilla","almizcle"],"d":[[["Bergamota",["bergamota"]]],[["Jazmín",["jazmin"]]],[["Cedro",["cedro"]],["Haba tonka",["tonka"]],["Vainilla",["vainilla"]],["Almizcle",["almizcle"]]]]},
-                    {"id":"5818","name":"Russian Leather","house":"Memo","url":"https://www.perfumeriasrouge.com/russian-leather-edp-xmmedp75rl/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/190560-400-400/3700458603446_1.jpg","g":"Unisex","f":["Cuero","Aromática"],"m":"Noche","t":[],"h":[],"b":["cedro","cuero"],"d":[[],[],[["Notas amaderadas",["cedro"]],["Ciprés",["cedro"]],["Cuero",["cuero"]]]]},
-                    {"id":"5820","name":"Sicilian Leather","house":"Memo","url":"https://www.perfumeriasrouge.com/sicilian-leather-edp-xmmedp75sl/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/190564-400-400/3700458602944_1.jpg","g":"Unisex","f":["Cuero","Cítrica"],"m":"Noche","t":["cuero","limon","naranja","cedro"],"h":["bergamota","violeta","cardamomo"],"b":["pachuli"],"d":[[["Cuero",["cuero"]],["Limón",["limon"]],["Naranja",["naranja"]],["Lima",["limon"]],["Cedro",["cedro"]]],[["Bergamota",["bergamota"]],["Violeta",["violeta"]],["Cardamomo",["cardamomo"]]],[["Pachulí",["pachuli"]]]]},
-                    {"id":"5822","name":"Siwa","house":"Memo","url":"https://www.perfumeriasrouge.com/siwa-edp-xmmedp75si/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/190568-400-400/3700458603026_1.jpg","g":"Mujer","f":["Gourmand","Floral"],"m":"Noche","t":["verdes","violeta"],"h":["canela"],"b":["tonka","vainilla","almizcle"],"d":[[["Notas verdes",["verdes"]],["Violeta",["violeta"]]],[["Licor",[]],["Canela",["canela"]]],[["Praliné",["tonka"]],["Vainilla",["vainilla"]],["Almizcle",["almizcle"]]]]},
-                    {"id":"5823","name":"Tamarindo","house":"Memo","url":"https://www.perfumeriasrouge.com/tamarindo-edp-xmmedp75tm/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/190570-400-400/3700458603224_1.jpg","g":"Unisex","f":["Gourmand","Frutal"],"m":"Noche","t":["bergamota","naranja","mandarina","cardamomo"],"h":["anana","coco","jazmin","durazno"],"b":["ambar","pachuli","vainilla"],"d":[[["Bergamota",["bergamota"]],["Naranja",["naranja"]],["Mandarina",["mandarina"]],["Cardamomo",["cardamomo"]]],[["Frutas tropicales",["anana"]],["Coco",["coco"]],["Ylang-ylang",["jazmin"]],["Jazmín",["jazmin"]],["Nardo",["jazmin"]],["Durazno",["durazno"]]],[["Benjuí",["ambar"]],["Pachulí",["pachuli"]],["Vainilla",["vainilla"]]]]},
-                    {"id":"5824","name":"Winter Palace","house":"Memo","url":"https://www.perfumeriasrouge.com/winter-palace-edp-xmmedp75wp/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/190576-400-400/3700458603217_1.jpg","g":"Unisex","f":["Especiada","Cítrica"],"m":"Noche","t":["bergamota","naranja","te"],"h":[],"b":["ambar"],"d":[[["Bergamota",["bergamota"]],["Naranja",["naranja"]],["Té",["te"]]],[],[["Benjuí",["ambar"]]]]},
-                    {"id":"21448","name":"Zante","house":"Memo","url":"https://www.perfumeriasrouge.com/zante-edp-xmmedp75zan/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/248501-400-400/3700458605358.jpg","g":"Unisex","f":["Cítrica","Aromática"],"m":"Día","t":["azahar","mandarina","bergamota"],"h":["lavanda","salvia"],"b":["pachuli","ambar"],"d":[[["Neroli",["azahar"]],["Mandarina",["mandarina"]],["Bergamota",["bergamota"]]],[["Lavanda",["lavanda"]],["Romero",["salvia"]]],[["Pachulí",["pachuli"]],["Ámbar",["ambar"]]]]},
-                    {"id":"14133","name":"Althair","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/althair-edp-xnpm2900pv/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/211424-400-400/3700578504364.jpg","g":"Hombre","f":["Gourmand","Ambarada"],"m":"Noche","t":["azahar","bergamota","canela"],"h":["vainilla"],"b":["ambar","tonka","almizcle"],"d":[[["Neroli",["azahar"]],["Bergamota",["bergamota"]],["Canela",["canela"]]],[["Vainilla",["vainilla"]]],[["Benjuí",["ambar"]],["Praliné",["tonka"]],["Almizcle",["almizcle"]],["Ámbar",["ambar"]]]]},
-                    {"id":"22382","name":"Athénaïs","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/athenais-edp-xnpm0024pv/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/257181-400-400/3700578509536.jpg","g":"Mujer","f":["Floral","Ambarada"],"m":"Ambos","t":["azahar","bergamota","limon"],"h":["jazmin"],"b":["vainilla","tonka","ambar"],"d":[[["Neroli",["azahar"]],["Bergamota",["bergamota"]],["Limón",["limon"]]],[["Jazmín",["jazmin"]]],[["Vainilla",["vainilla"]],["Haba tonka",["tonka"]],["Ámbar",["ambar"]]]]},
-                    {"id":"22381","name":"Carios","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/carios-extrait-parfum-xnpm3300pv/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/257102-400-400/3701415904361.jpg","g":"Unisex","f":["Especiada","Amaderada"],"m":"Noche","t":["azafran","pimientaNegra","pimientaRosa","bergamota","mandarina"],"h":["geranio"],"b":["ambar","tonka","vetiver","cedro"],"d":[[["Azafrán",["azafran"]],["Pimienta",["pimientaNegra","pimientaRosa"]],["Bergamota",["bergamota"]],["Mandarina",["mandarina"]]],[["Geranio",["geranio"]]],[["Ámbar",["ambar"]],["Haba tonka",["tonka"]],["Vetiver",["vetiver"]],["Cedro",["cedro"]]]]},
-                    {"id":"5310","name":"Carlisle","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/carlisle-edp/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/186196-400-400/image1.jpg","g":"Unisex","f":["Ambarada","Gourmand"],"m":"Noche","t":["canela","manzana"],"h":["tonka","rosa"],"b":["pachuli","vainilla"],"d":[[["Nuez moscada",["canela"]],["Manzana",["manzana"]]],[["Haba tonka",["tonka"]],["Rosa",["rosa"]]],[["Pachulí",["pachuli"]],["Vainilla",["vainilla"]]]]},
-                    {"id":"5303","name":"Cassili","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/cassili-edp/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/186180-400-400/image1.jpg","g":"Mujer","f":["Floral","Frutal"],"m":"Ambos","t":["grosella","rosa"],"h":[],"b":["vainilla","tonka","sandalo"],"d":[[["Frutos rojos",["grosella"]],["Rosa",["rosa"]]],[],[["Vainilla",["vainilla"]],["Haba tonka",["tonka"]],["Sándalo",["sandalo"]]]]},
-                    {"id":"5306","name":"Darley","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/darley-edp/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/186187-400-400/image1.jpg","g":"Hombre","f":["Aromática","Amaderada"],"m":"Día","t":["salvia","limon","bergamota"],"h":["canela","rosa","lavanda"],"b":["sandalo","pachuli","ambar","tonka"],"d":[[["Menta",["salvia"]],["Limón",["limon"]],["Romero",["salvia"]],["Bergamota",["bergamota"]]],[["Canela",["canela"]],["Rosa",["rosa"]],["Lavanda",["lavanda"]]],[["Sándalo",["sandalo"]],["Pachulí",["pachuli"]],["Ámbar",["ambar"]],["Haba tonka",["tonka"]]]]},
-                    {"id":"5283","name":"Delina","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/delina-edp/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/189696-400-400/3700578521002_1.jpg","g":"Mujer","f":["Floral","Frutal"],"m":"Ambos","t":["lichi","canela","bergamota"],"h":["loto","almizcle","rosa","vainilla"],"b":["cedro","incienso","vetiver"],"d":[[["Frutas tropicales",["lichi"]],["Nuez moscada",["canela"]],["Bergamota",["bergamota"]]],[["Peonía",["loto"]],["Almizcle",["almizcle"]],["Rosa",["rosa"]],["Vainilla",["vainilla"]]],[["Cedro",["cedro"]],["Incienso",["incienso"]],["Vetiver",["vetiver"]]]]},
-                    {"id":"5284","name":"Delina Exclusif","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/delina-exclusif-edp/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/189695-400-400/3700578522009_1.jpg","g":"Mujer","f":["Floral","Frutal"],"m":"Ambos","t":["lichi","pera","bergamota"],"h":["rosa","oud","incienso"],"b":["vainilla","ambar"],"d":[[["Frutas tropicales",["lichi"]],["Pera",["pera"]],["Bergamota",["bergamota"]]],[["Rosa",["rosa"]],["Oud",["oud"]],["Incienso",["incienso"]]],[["Vainilla",["vainilla"]],["Ámbar",["ambar"]]]]},
-                    {"id":"5304","name":"Delina La Rosée","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/delina-la-rosee-edp/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/186183-400-400/image1.jpg","g":"Mujer","f":["Floral","Frutal"],"m":"Ambos","t":["lichi","pera","bergamota"],"h":["loto","rosa"],"b":["almizcle","vetiver"],"d":[[["Frutas tropicales",["lichi"]],["Pera",["pera"]],["Bergamota",["bergamota"]]],[["Peonía",["loto"]],["Rosa",["rosa"]]],[["Almizcle",["almizcle"]],["Vetiver",["vetiver"]]]]},
-                    {"id":"22380","name":"Eragon","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/eragon-extrait-parfum-xnpm3200pv/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/257107-400-400/3701415904354.jpg","g":"Unisex","f":["Ambarada","Especiada"],"m":"Noche","t":["cardamomo","mandarina","bergamota"],"h":["canela"],"b":["vainilla","cuero","pachuli","tonka"],"d":[[["Cardamomo",["cardamomo"]],["Mandarina",["mandarina"]],["Bergamota",["bergamota"]]],[["Canela",["canela"]]],[["Vainilla",["vainilla"]],["Cuero",["cuero"]],["Pachulí",["pachuli"]],["Haba tonka",["tonka"]]]]},
-                    {"id":"6508","name":"Galloway","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/galloway-edp-xpm0800pv/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/194510-400-400/3700578508003_1.jpg","g":"Hombre","f":["Amaderada","Cítrica"],"m":"Ambos","t":[],"h":["pimientaNegra","iris","azahar"],"b":["almizcle","ambar","sandalo"],"d":[[],[["Pimienta",["pimientaNegra"]],["Iris",["iris"]],["Neroli",["azahar"]]],[["Almizcle",["almizcle"]],["Ámbar",["ambar"]],["Sándalo",["sandalo"]]]]},
-                    {"id":"7107","name":"Godolphin","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/godolphin-edp-125-ml-xpm0500pv/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/199593-400-400/3700578505002.jpg","g":"Hombre","f":["Cuero","Amaderada"],"m":"Noche","t":["azafran","cedro","te","verdes"],"h":["rosa","jazmin"],"b":["ambar","vainilla","vetiver","almizcle","cuero"],"d":[[["Azafrán",["azafran"]],["Cedro",["cedro"]],["Té",["te"]],["Ciprés",["cedro"]],["Notas verdes",["verdes"]]],[["Rosa",["rosa"]],["Jazmín",["jazmin"]]],[["Ámbar",["ambar"]],["Vainilla",["vainilla"]],["Vetiver",["vetiver"]],["Almizcle",["almizcle"]],["Cuero",["cuero"]]]]},
-                    {"id":"5286","name":"Greenley","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/greenley-edp/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/186139-400-400/image1.jpg","g":"Hombre","f":["Verde","Cítrica"],"m":"Día","t":["manzana","mandarina","bergamota"],"h":["cedro","violeta","azahar"],"b":["abedul","ambar","musgo","almizcle"],"d":[[["Manzana",["manzana"]],["Mandarina",["mandarina"]],["Bergamota",["bergamota"]]],[["Cedro",["cedro"]],["Violeta",["violeta"]],["Neroli",["azahar"]]],[["Roble",["abedul"]],["Ámbar",["ambar"]],["Musgo",["musgo"]],["Almizcle",["almizcle"]]]]},
-                    {"id":"6509","name":"Habdan","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/habdan-edp-xpm1100pv/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/194513-400-400/3700578511003_1.jpg","g":"Hombre","f":["Ambarada","Especiada"],"m":"Noche","t":["manzana"],"h":["azafran","rosa"],"b":["ambar"],"d":[[["Manzana",["manzana"]]],[["Azafrán",["azafran"]],["Rosa",["rosa"]]],[["Ámbar",["ambar"]],["Benjuí",["ambar"]]]]},
-                    {"id":"6510","name":"Haltane","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/haltane-edp-xpm2600pv/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/194516-400-400/3700578502681_1.jpg","g":"Hombre","f":["Amaderada","Aromática"],"m":"Ambos","t":["bergamota","salvia"],"h":["tonka"],"b":["cedro","vetiver","cuero","pachuli","almizcle"],"d":[[["Bergamota",["bergamota"]],["Salvia",["salvia"]]],[["Praliné",["tonka"]]],[["Cedro",["cedro"]],["Vetiver",["vetiver"]],["Cuero",["cuero"]],["Pachulí",["pachuli"]],["Almizcle",["almizcle"]]]]},
-                    {"id":"5308","name":"Herod","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/herod-edp/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/186191-400-400/image1.jpg","g":"Hombre","f":["Ambarada","Especiada"],"m":"Noche","t":["canela","pimientaNegra"],"h":["tabaco","incienso"],"b":["vainilla","almizcle","vetiver","cedro"],"d":[[["Canela",["canela"]],["Pimienta",["pimientaNegra"]]],[["Tabaco",["tabaco"]],["Incienso",["incienso"]]],[["Vainilla",["vainilla"]],["Almizcle",["almizcle"]],["Vetiver",["vetiver"]],["Cedro",["cedro"]]]]},
-                    {"id":"7187","name":"Kalan","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/kalan-edp-xpm20000pv/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/199809-400-400/3700578525000.jpg","g":"Hombre","f":["Ambarada","Aromática"],"m":"Noche","t":["naranja","pimientaNegra"],"h":["azahar","lavanda"],"b":["musgo","tonka","ambar","sandalo"],"d":[[["Naranja",["naranja"]],["Pimienta",["pimientaNegra"]]],[["Neroli",["azahar"]],["Lavanda",["lavanda"]]],[["Musgo",["musgo"]],["Haba tonka",["tonka"]],["Ámbar",["ambar"]],["Sándalo",["sandalo"]]]]},
-                    {"id":"5309","name":"Layton","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/layton-edp/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/246678-400-400/image1.jpg","g":"Unisex","f":["Ambarada","Aromática"],"m":"Noche","t":["manzana","lavanda","bergamota"],"h":["jazmin","geranio","violeta"],"b":["vainilla","pachuli","pimientaRosa"],"d":[[["Manzana",["manzana"]],["Lavanda",["lavanda"]],["Bergamota",["bergamota"]]],[["Jazmín",["jazmin"]],["Geranio",["geranio"]],["Violeta",["violeta"]]],[["Vainilla",["vainilla"]],["Pachulí",["pachuli"]],["Pimienta",["pimientaRosa"]]]]},
-                    {"id":"5311","name":"Layton Exclusif","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/layton-exclusif-edp/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/186199-400-400/image1.jpg","g":"Unisex","f":["Amaderada","Gourmand"],"m":"Ambos","t":["almendra","bergamota","mandarina"],"h":["geranio","rosa","jazmin"],"b":["oud","tonka","musgo","pimientaRosa","sandalo","pachuli","ambar","vainilla"],"d":[[["Almendra",["almendra"]],["Bergamota",["bergamota"]],["Mandarina",["mandarina"]]],[["Geranio",["geranio"]],["Rosa",["rosa"]],["Gardenia",["jazmin"]]],[["Oud",["oud"]],["Café",["tonka"]],["Musgo",["musgo"]],["Pimienta",["pimientaRosa"]],["Sándalo",["sandalo"]],["Pachulí",["pachuli"]],["Ámbar",["ambar"]],["Vainilla",["vainilla"]]]]},
-                    {"id":"6511","name":"Oajan","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/oajan-edp-xpm1200pv/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/194519-400-400/3700578512000_1.jpg","g":"Hombre","f":["Ambarada","Gourmand"],"m":"Noche","t":[],"h":["canela","ambar"],"b":["vainilla","tonka","pachuli"],"d":[[],[["Canela",["canela"]],["Ámbar",["ambar"]]],[["Miel",["vainilla"]],["Vainilla",["vainilla"]],["Haba tonka",["tonka"]],["Pachulí",["pachuli"]]]]},
-                    {"id":"5305","name":"Oriana","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/oriana-edp/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/186185-400-400/image1.jpg","g":"Mujer","f":["Gourmand","Frutal"],"m":"Noche","t":["mandarina","pomelo","bergamota"],"h":["frambuesa","grosella","azahar"],"b":["tonka","almizcle"],"d":[[["Mandarina",["mandarina"]],["Pomelo",["pomelo"]],["Bergamota",["bergamota"]]],[["Frutos rojos",["frambuesa","grosella"]],["Neroli",["azahar"]]],[["Praliné",["tonka"]],["Almizcle",["almizcle"]]]]},
-                    {"id":"18790","name":"Palatine","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/palatine-edp-xnpm0017pv/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/227096-400-400/3700578504555.jpg","g":"Mujer","f":["Floral","Almizclada"],"m":"Ambos","t":["mandarina","pera","bergamota"],"h":["violeta","lavanda"],"b":["sandalo","pachuli","vainilla","almizcle"],"d":[[["Mandarina",["mandarina"]],["Pera",["pera"]],["Bergamota",["bergamota"]]],[["Violeta",["violeta"]],["Lavanda",["lavanda"]]],[["Sándalo",["sandalo"]],["Pachulí",["pachuli"]],["Vainilla",["vainilla"]],["Almizcle",["almizcle"]]]]},
-                    {"id":"5307","name":"Pegasus","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/pegasus-edp/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/186189-400-400/image1.jpg","g":"Hombre","f":["Ambarada","Gourmand"],"m":"Noche","t":["bergamota"],"h":["almendra","lavanda","jazmin"],"b":["vainilla","sandalo","ambar"],"d":[[["Bergamota",["bergamota"]]],[["Almendra",["almendra"]],["Lavanda",["lavanda"]],["Jazmín",["jazmin"]]],[["Vainilla",["vainilla"]],["Sándalo",["sandalo"]],["Ámbar",["ambar"]]]]},
-                    {"id":"5313","name":"Pegasus Exclusif","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/pegasus-exclusif-edp/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/186203-400-400/image1.jpg","g":"Hombre","f":["Ambarada","Gourmand"],"m":"Noche","t":["cardamomo","bergamota","pimientaRosa"],"h":["lavanda","geranio","jazmin","almendra"],"b":["oud","ambar","sandalo","vainilla"],"d":[[["Cardamomo",["cardamomo"]],["Bergamota",["bergamota"]],["Pimienta",["pimientaRosa"]]],[["Lavanda",["lavanda"]],["Geranio",["geranio"]],["Jazmín",["jazmin"]],["Almendra",["almendra"]]],[["Oud",["oud"]],["Ámbar",["ambar"]],["Sándalo",["sandalo"]],["Vainilla",["vainilla"]]]]},
-                    {"id":"5312","name":"Percival","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/percival-edp/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/190517-400-400/125ML.jpg","g":"Hombre","f":["Aromática","Amaderada"],"m":"Día","t":["lavanda","bergamota","geranio","mandarina"],"h":["violeta","canela","jazmin"],"b":["almizcle","ambar"],"d":[[["Lavanda",["lavanda"]],["Bergamota",["bergamota"]],["Geranio",["geranio"]],["Mandarina",["mandarina"]]],[["Violeta",["violeta"]],["Canela",["canela"]],["Jazmín",["jazmin"]]],[["Almizcle",["almizcle"]],["Ámbar",["ambar"]]]]},
-                    {"id":"15659","name":"Perseus","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/perseus-edp-xnpm2800pv/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/216245-400-400/3700578502919.jpg","g":"Hombre","f":["Amaderada","Cítrica"],"m":"Ambos","t":["pomelo","bergamota","grosella"],"h":["mandarina","geranio","vetiver"],"b":["ambar"],"d":[[["Pomelo",["pomelo"]],["Bergamota",["bergamota"]],["Frutos rojos",["grosella"]]],[["Mandarina",["mandarina"]],["Geranio",["geranio"]],["Vetiver",["vetiver"]]],[["Ámbar",["ambar"]]]]},
-                    {"id":"5285","name":"Sedley","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/sedley-edp/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/186136-400-400/image1.jpg","g":"Hombre","f":["Aromática","Cítrica"],"m":"Día","t":["salvia","pomelo","bergamota","limon","mandarina"],"h":["lavanda","geranio","salvia","incienso"],"b":["vetiver","pachuli","cedro","sandalo","ambar"],"d":[[["Menta",["salvia"]],["Pomelo",["pomelo"]],["Bergamota",["bergamota"]],["Limón",["limon"]],["Mandarina",["mandarina"]]],[["Lavanda",["lavanda"]],["Geranio",["geranio"]],["Romero",["salvia"]],["Incienso",["incienso"]]],[["Vetiver",["vetiver"]],["Pachulí",["pachuli"]],["Cedro",["cedro"]],["Sándalo",["sandalo"]],["Ámbar",["ambar"]]]]},
-                    {"id":"13167","name":"Valaya","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/valaya-edp-xnpm0014pv/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/208008-400-400/3700578503046-75ml-.jpg","g":"Mujer","f":["Floral","Almizclada"],"m":"Ambos","t":["durazno","mandarina","bergamota"],"h":["azahar","vetiver"],"b":["almizcle","vainilla","ambar"],"d":[[["Durazno",["durazno"]],["Mandarina",["mandarina"]],["Bergamota",["bergamota"]]],[["Neroli",["azahar"]],["Vetiver",["vetiver"]]],[["Almizcle",["almizcle"]],["Vainilla",["vainilla"]],["Ámbar",["ambar"]]]]},
-                    {"id":"20104","name":"Valaya Exclusif","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/valaya-exclusif-edp-xnpm0020pv/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/237968-400-400/3700578505767.jpg","g":"Mujer","f":["Floral","Almizclada"],"m":"Ambos","t":["almendra","bergamota","mandarina"],"h":["azahar","jazmin","naranja"],"b":["ambar","vainilla","sandalo"],"d":[[["Almendra",["almendra"]],["Bergamota",["bergamota"]],["Mandarina",["mandarina"]]],[["Neroli",["azahar"]],["Flores blancas",["jazmin"]],["Naranja",["naranja"]]],[["Ámbar",["ambar"]],["Vainilla",["vainilla"]],["Sándalo",["sandalo"]]]]},
-                    {"id":"22379","name":"Valero","house":"Parfums de Marly","url":"https://www.perfumeriasrouge.com/valero-extrait-parfum-xnpm3100pv-1/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/257112-400-400/3701415904347.jpg","g":"Unisex","f":["Aromática","Amaderada"],"m":"Día","t":["bergamota","enebro","cedro"],"h":["lavanda","geranio","canela"],"b":["pachuli","ambar","sandalo"],"d":[[["Bergamota",["bergamota"]],["Enebro",["enebro"]],["Ciprés",["cedro"]],["Cedro",["cedro"]]],[["Lavanda",["lavanda"]],["Geranio",["geranio"]],["Nuez moscada",["canela"]]],[["Pachulí",["pachuli"]],["Ámbar",["ambar"]],["Sándalo",["sandalo"]]]]},
-                    {"id":"14243","name":"Azure Lime","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/azure-lime-edp-etanp010000/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/211699-400-400/ETANP010000.jpg","g":"Unisex","f":["Cítrica","Aromática"],"m":"Día","t":["limon"],"h":["cardamomo","azahar"],"b":["abedul"],"d":[[["Lima",["limon"]]],[["Cardamomo",["cardamomo"]],["Neroli",["azahar"]]],[["Roble",["abedul"]]]]},
-                    {"id":"519","name":"Beau de Jour","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/beau-de-jour-edp-et8ef010000c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/170314-400-400/Beau-De-Jour-EDP-100ml-1.jpg","g":"Hombre","f":["Aromática"],"m":"Día","t":["lavanda"],"h":["musgo","salvia","geranio"],"b":["abedul","ambar","pachuli"],"d":[[["Lavanda",["lavanda"]]],[["Musgo",["musgo"]],["Albahaca",["salvia"]],["Geranio",["geranio"]],["Menta",["salvia"]],["Romero",["salvia"]]],[["Roble",["abedul"]],["Ámbar",["ambar"]],["Pachulí",["pachuli"]]]]},
-                    {"id":"21380","name":"Black Lacquer","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/black-lacquer-edp-etajp010000/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/248156-400-400/888066130073_1.jpg","g":"Unisex","f":["Amaderada","Ambarada"],"m":"Ambos","t":["cedro"],"h":["loto","incienso"],"b":[],"d":[[["Notas amaderadas",["cedro"]],["Cedro",["cedro"]]],[["Peonía",["loto"]],["Incienso",["incienso"]]],[]]},
-                    {"id":"496","name":"Black Orchid EDP","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/black-orchid-edp-et004010000c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/170261-400-400/Black-Orchid-EDP-100ml-1.jpg","g":"Mujer","f":["Ambarada","Floral"],"m":"Noche","t":["jazmin","bergamota","grosella"],"h":["loto"],"b":["tonka","vainilla","incienso"],"d":[[["Ylang-ylang",["jazmin"]],["Bergamota",["bergamota"]],["Frutos rojos",["grosella"]]],[["Orquídea",["loto"]]],[["Cacao",["tonka"]],["Vainilla",["vainilla"]],["Incienso",["incienso"]]]]},
-                    {"id":"521","name":"Black Orchid Parfum","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/black-orchid-parfum-et90f010000c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/170317-400-400/Black-Orchid-Parfum-100ml-1.jpg","g":"Unisex","f":["Ambarada","Floral"],"m":"Noche","t":["frambuesa"],"h":["jazmin","loto"],"b":["tonka","pachuli"],"d":[[["Frutos rojos",["frambuesa"]]],[["Licor",[]],["Ylang-ylang",["jazmin"]],["Orquídea",["loto"]]],[["Cacao",["tonka"]],["Pachulí",["pachuli"]]]]},
-                    {"id":"6811","name":"Bois Marocain","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/bois-marocain-edp-etcah010000/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/198392-400-400/888066138741.jpg","g":"Hombre","f":["Amaderada","Especiada"],"m":"Ambos","t":["enebro"],"h":["pimientaRosa"],"b":["cedro","vetiver","sandalo"],"d":[[["Enebro",["enebro"]]],[["Pimienta",["pimientaRosa"]]],[["Notas amaderadas",["cedro"]],["Cedro",["cedro"]],["Vetiver",["vetiver"]],["Sándalo",["sandalo"]]]]},
-                    {"id":"21814","name":"Bois Pacifique","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/bois-pacifique-edp-etef1010000/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/251046-400-400/888066151993.jpg","g":"Hombre","f":["Amaderada","Especiada"],"m":"Ambos","t":["cardamomo"],"h":["incienso","cedro","sandalo","iris","abedul"],"b":["ambar","vainilla"],"d":[[["Cardamomo",["cardamomo"]]],[["Incienso",["incienso"]],["Cedro",["cedro"]],["Sándalo",["sandalo"]],["Iris",["iris"]],["Roble",["abedul"]]],[["Ámbar",["ambar"]],["Vainilla",["vainilla"]]]]},
-                    {"id":"522","name":"Costa Azzurra","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/costa-azzurra-edp-et9at010000c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/170319-400-400/Costa-Azzurra-EDP-100ml-1.jpg","g":"Unisex","f":["Aromática","Amaderada"],"m":"Día","t":["marinas","almizcle","cedro","cardamomo","oud"],"h":["lavanda","limon","mandarina"],"b":["vetiver","vainilla","abedul","incienso"],"d":[[["Notas marinas",["marinas"]],["Almizcle",["almizcle"]],["Ciprés",["cedro"]],["Cardamomo",["cardamomo"]],["Oud",["oud"]]],[["Lavanda",["lavanda"]],["Limón",["limon"]],["Mandarina",["mandarina"]]],[["Vetiver",["vetiver"]],["Vainilla",["vainilla"]],["Roble",["abedul"]],["Incienso",["incienso"]]]]},
-                    {"id":"19540","name":"Eau d'Ombré Leather","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/eau-d-ombre-leather-edt-etef7010000/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/234182-400-400/ETEF7010000.jpg.jpg","g":"Unisex","f":["Cuero","Ambarada"],"m":"Noche","t":["cuero"],"h":["vainilla","ambar"],"b":["sandalo","tonka"],"d":[[["Cuero",["cuero"]]],[["Vainilla",["vainilla"]],["Benjuí",["ambar"]],["Ámbar",["ambar"]]],[["Sándalo",["sandalo"]],["Haba tonka",["tonka"]]]]},
-                    {"id":"24049","name":"Eau de Grey Vetiver","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/eau-de-grey-vetiver-edt-et3s4010000/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/269312-400-400/888066181570.jpg","g":"Unisex","f":["Cítrica","Amaderada"],"m":"Día","t":["bergamota","limon","pomelo"],"h":["salvia","iris"],"b":["vetiver","musgo","almizcle","ambar"],"d":[[["Bergamota",["bergamota"]],["Limón",["limon"]],["Pomelo",["pomelo"]]],[["Albahaca",["salvia"]],["Iris",["iris"]],["Salvia",["salvia"]]],[["Vetiver",["vetiver"]],["Musgo",["musgo"]],["Almizcle",["almizcle"]],["Ámbar",["ambar"]]]]},
-                    {"id":"21813","name":"Eau de Soleil Blanc","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/eau-de-soleil-blanc-edt-et06i010000/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/251041-400-400/888066161664.jpg","g":"Unisex","f":["Cítrica","Floral"],"m":"Día","t":["bergamota"],"h":["rosa","jazmin"],"b":["pachuli","vainilla"],"d":[[["Bergamota",["bergamota"]]],[["Rosa",["rosa"]],["Jazmín",["jazmin"]]],[["Pachulí",["pachuli"]],["Vainilla",["vainilla"]]]]},
-                    {"id":"14506","name":"Fougère d'Argent","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/fougere-dargent-edp-et6gx010000/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/212582-400-400/888066081115_1.jpg","g":"Unisex","f":["Aromática","Amaderada"],"m":"Día","t":["lavanda","jengibre","mandarina"],"h":[],"b":["cedro","ambar","tonka"],"d":[[["Lavanda",["lavanda"]],["Jengibre",["jengibre"]],["Mandarina",["mandarina"]]],[],[["Notas amaderadas",["cedro"]],["Benjuí",["ambar"]],["Haba tonka",["tonka"]]]]},
-                    {"id":"516","name":"Fucking Fabulous","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/fucking-fabulous-edp-et615010000c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/170308-400-400/Fucking-Fabulous-EDP-100ml-1.jpg","g":"Unisex","f":["Cuero","Ambarada"],"m":"Noche","t":["salvia","lavanda"],"h":["cuero","vainilla","almendra"],"b":["tonka","ambar"],"d":[[["Salvia",["salvia"]],["Lavanda",["lavanda"]]],[["Cuero",["cuero"]],["Vainilla",["vainilla"]],["Almendra",["almendra"]]],[["Haba tonka",["tonka"]],["Ámbar",["ambar"]]]]},
-                    {"id":"502","name":"Grey Vetiver","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/grey-vetiver-edp-et0j7010000c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/170275-400-400/Grey-Vetiver-EDP-100ml-1.jpg","g":"Hombre","f":["Amaderada","Cítrica"],"m":"Ambos","t":["pomelo","salvia","azahar"],"h":["iris","canela"],"b":["vetiver","musgo","ambar"],"d":[[["Pomelo",["pomelo"]],["Salvia",["salvia"]],["Neroli",["azahar"]]],[["Iris",["iris"]],["Nuez moscada",["canela"]]],[["Vetiver",["vetiver"]],["Musgo",["musgo"]],["Ámbar",["ambar"]]]]},
-                    {"id":"255","name":"Lost Cherry","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/lost-cherry-edp-50ml-/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/169874-400-400/Lost-Cherry-EDP-50ml-1.jpg","g":"Mujer","f":["Gourmand","Frutal"],"m":"Noche","t":["cerezas","almendra"],"h":["jazmin","rosa"],"b":["ambar","canela","pachuli","cedro","sandalo","vetiver","vainilla","tonka"],"d":[[["Frutos rojos",["cerezas"]],["Almendra",["almendra"]],["Licor",[]]],[["Jazmín",["jazmin"]],["Rosa",["rosa"]]],[["Benjuí",["ambar"]],["Clavo",["canela"]],["Pachulí",["pachuli"]],["Canela",["canela"]],["Cedro",["cedro"]],["Sándalo",["sandalo"]],["Vetiver",["vetiver"]],["Vainilla",["vainilla"]],["Haba tonka",["tonka"]]]]},
-                    {"id":"14245","name":"Myrrhe Mystère","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/myrrhe-mystere-edp-ete9p010000/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/211705-400-400/ETE9P010000.jpg","g":"Unisex","f":["Ambarada","Gourmand"],"m":"Noche","t":[],"h":["jazmin"],"b":["mirra","sandalo","vainilla","cuero"],"d":[[],[["Jazmín",["jazmin"]]],[["Mirra",["mirra"]],["Sándalo",["sandalo"]],["Vainilla",["vainilla"]],["Cuero",["cuero"]]]]},
-                    {"id":"506","name":"Noir Extreme","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/noir-extreme-edp-et2tl010000c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/170284-400-400/Noir-Extreme-EDP-100ml-1.jpg","g":"Hombre","f":["Ambarada","Gourmand"],"m":"Noche","t":["cardamomo","azafran","azahar","mandarina","canela"],"h":["rosa","jazmin"],"b":["ambar","vainilla","sandalo"],"d":[[["Cardamomo",["cardamomo"]],["Azafrán",["azafran"]],["Neroli",["azahar"]],["Mandarina",["mandarina"]],["Nuez moscada",["canela"]]],[["Rosa",["rosa"]],["Jazmín",["jazmin"]]],[["Benjuí",["ambar"]],["Vainilla",["vainilla"]],["Sándalo",["sandalo"]],["Ámbar",["ambar"]]]]},
-                    {"id":"515","name":"Ombré Leather EDP","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/ombre-leather-edp-et5y2010000c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/210800-400-400/888066117678_OMBRE-LEATHER-EDP_150ML.jpg","g":"Unisex","f":["Cuero","Amaderada"],"m":"Noche","t":["cardamomo","jazmin"],"h":["cuero","pachuli","vetiver"],"b":["musgo","ambar"],"d":[[["Cardamomo",["cardamomo"]],["Jazmín",["jazmin"]]],[["Cuero",["cuero"]],["Pachulí",["pachuli"]],["Vetiver",["vetiver"]]],[["Musgo",["musgo"]],["Ámbar",["ambar"]]]]},
-                    {"id":"523","name":"Ombré Leather Parfum","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/ombre-leather-parfum-et9c8010000c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/170321-400-400/Ombre-Leather-Parfum-100ml-1.jpg","g":"Unisex","f":["Cuero","Floral"],"m":"Noche","t":["verdes","cedro","violeta"],"h":["jazmin"],"b":["cuero","tabaco"],"d":[[["Notas verdes",["verdes"]],["Cedro",["cedro"]],["Notas amaderadas",["cedro"]],["Violeta",["violeta"]]],[["Jazmín",["jazmin"]]],[["Cuero",["cuero"]],["Tabaco",["tabaco"]]]]},
-                    {"id":"24212","name":"Ombré Leather Reserve","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/ombre-leather-reserve-edp/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/270385-400-400/T3Z6010000.jpg","g":"Unisex","f":["Cuero","Amaderada"],"m":"Noche","t":["enebro","cedro","pimientaNegra"],"h":["cuero","violeta"],"b":["sandalo","musgo"],"d":[[["Enebro",["enebro"]],["Ciprés",["cedro"]],["Pimienta",["pimientaNegra"]]],[["Cuero",["cuero"]],["Violeta",["violeta"]]],[["Sándalo",["sandalo"]],["Musgo",["musgo"]]]]},
-                    {"id":"22327","name":"Rose Exposed","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/rose-exposed-edp-et0kq010000/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/256470-400-400/ET0KQ010000.jpg","g":"Unisex","f":["Floral","Cuero"],"m":"Ambos","t":["pimientaNegra","pimientaRosa"],"h":["rosa","azahar"],"b":["cuero","sandalo","almizcle","incienso"],"d":[[["Pimienta",["pimientaNegra","pimientaRosa"]]],[["Rosa",["rosa"]],["Neroli",["azahar"]]],[["Cuero",["cuero"]],["Sándalo",["sandalo"]],["Almizcle",["almizcle"]],["Incienso",["incienso"]]]]},
-                    {"id":"9495","name":"Rose d'Amalfi","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/rose-damalfi-edp-etakh010000c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/204001-400-400/888066130486_ROSE-D-AMALFI_50ML_S.jpg","g":"Mujer","f":["Floral","Especiada"],"m":"Ambos","t":["pimientaRosa","bergamota","mandarina"],"h":["rosa"],"b":["almendra"],"d":[[["Pimienta",["pimientaRosa"]],["Bergamota",["bergamota"]],["Mandarina",["mandarina"]]],[["Rosa",["rosa"]]],[["Almendra",["almendra"]]]]},
-                    {"id":"14505","name":"Rose de Chine","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/rose-de-chine-edp-etakl010000/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/212579-400-400/888066130523_1.jpg","g":"Mujer","f":["Floral","Ambarada"],"m":"Ambos","t":["loto"],"h":["rosa"],"b":["mirra","ambar","tonka"],"d":[[["Peonía",["loto"]]],[["Rosa",["rosa"]]],[["Mirra",["mirra"]],["Benjuí",["ambar"]],["Haba tonka",["tonka"]]]]},
-                    {"id":"14504","name":"Santal Blush","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/santal-blush-edp-etcrc010000/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/212576-400-400/888066143042_1.jpg","g":"Unisex","f":["Amaderada","Especiada"],"m":"Ambos","t":["canela"],"h":["jazmin","sandalo","ambar","cedro","oud","rosa","almizcle"],"b":[],"d":[[["Canela",["canela"]]],[["Jazmín",["jazmin"]],["Sándalo",["sandalo"]],["Benjuí",["ambar"]],["Cedro",["cedro"]],["Oud",["oud"]],["Rosa",["rosa"]],["Ylang-ylang",["jazmin"]],["Almizcle",["almizcle"]]],[]]},
-                    {"id":"517","name":"Soleil Blanc","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/soleil-blanc-edp-et6g8010000c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/170311-400-400/Soleil-Blanc-EDP-100ml-1.jpg","g":"Unisex","f":["Ambarada","Floral"],"m":"Noche","t":["cardamomo","bergamota","pimientaRosa"],"h":["jazmin"],"b":["almendra","ambar","coco","tonka"],"d":[[["Cardamomo",["cardamomo"]],["Bergamota",["bergamota"]],["Pimienta",["pimientaRosa"]]],[["Nardo",["jazmin"]],["Jazmín",["jazmin"]],["Ylang-ylang",["jazmin"]]],[["Almendra",["almendra"]],["Ámbar",["ambar"]],["Benjuí",["ambar"]],["Coco",["coco"]],["Haba tonka",["tonka"]]]]},
-                    {"id":"7420","name":"Soleil Neige","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/soleil-neige-edp-et8n4010000c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/200614-400-400/888066108607_SOLEIL_NEIGE_100ML_S.jpg","g":"Mujer","f":["Floral","Ambarada"],"m":"Ambos","t":["bergamota"],"h":["jazmin","azahar","rosa"],"b":["ambar","vainilla"],"d":[[["Bergamota",["bergamota"]]],[["Flores blancas",["jazmin"]],["Neroli",["azahar"]],["Rosa",["rosa"]],["Jazmín",["jazmin"]]],[["Benjuí",["ambar"]],["Vainilla",["vainilla"]]]]},
-                    {"id":"14509","name":"Soleil de Feu","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/soleil-de-feu-edp-etcxj010000/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/212588-400-400/888066144421_1.jpg","g":"Mujer","f":["Floral","Ambarada"],"m":"Ambos","t":[],"h":["jazmin"],"b":["ambar","sandalo"],"d":[[],[["Nardo",["jazmin"]]],[["Ámbar",["ambar"]],["Sándalo",["sandalo"]],["Benjuí",["ambar"]]]]},
-                    {"id":"24211","name":"Taormina Orange","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/taormina-orange-edp/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/270390-400-400/T3Z6010000.jpg","g":"Unisex","f":["Cítrica","Amaderada"],"m":"Día","t":["naranja","mandarina","cardamomo","limon"],"h":["azahar"],"b":["almizcle","musgo","pachuli"],"d":[[["Naranja",["naranja"]],["Mandarina",["mandarina"]],["Cardamomo",["cardamomo"]],["Lima",["limon"]]],[["Neroli",["azahar"]]],[["Almizcle",["almizcle"]],["Musgo",["musgo"]],["Pachulí",["pachuli"]]]]},
-                    {"id":"497","name":"Tuscan Leather","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/tuscan-leather-edp-et00h010000c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/170265-400-400/Tuscan-Leather-EDP-50ml-1.jpg","g":"Unisex","f":["Cuero","Especiada"],"m":"Noche","t":["frambuesa","azafran"],"h":["incienso","jazmin"],"b":["cuero","ambar"],"d":[[["Frutos rojos",["frambuesa"]],["Azafrán",["azafran"]]],[["Incienso",["incienso"]],["Jazmín",["jazmin"]]],[["Cuero",["cuero"]],["Gamuza",["cuero"]],["Ámbar",["ambar"]]]]},
-                    {"id":"21381","name":"Vanilla Sex","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/vanilla-sex-edp-etcfc010000/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/248033-400-400/888066139724_1.jpg","g":"Unisex","f":["Gourmand","Ambarada"],"m":"Noche","t":["iris"],"h":["jazmin"],"b":["vainilla","sandalo"],"d":[[["Iris",["iris"]]],[["Jazmín",["jazmin"]]],[["Vainilla",["vainilla"]],["Sándalo",["sandalo"]]]]},
-                    {"id":"507","name":"Velvet Orchid","house":"Tom Ford","url":"https://www.perfumeriasrouge.com/velvet-orchid-edp-et348010000c/p","img":"https://rougeb2car.vtexassets.com/arquivos/ids/170286-400-400/Velvet-Orchid-EDP-100ml-1.jpg","g":"Mujer","f":["Floral","Ambarada"],"m":"Ambos","t":["bergamota","mandarina","vainilla"],"h":["loto","azahar","rosa","jazmin"],"b":["mirra","ambar","sandalo","vainilla","cuero"],"d":[[["Licor",[]],["Bergamota",["bergamota"]],["Mandarina",["mandarina"]],["Miel",["vainilla"]]],[["Orquídea",["loto"]],["Magnolia",["loto"]],["Neroli",["azahar"]],["Rosa",["rosa"]],["Jazmín",["jazmin"]]],[["Mirra",["mirra"]],["Benjuí",["ambar"]],["Sándalo",["sandalo"]],["Vainilla",["vainilla"]],["Gamuza",["cuero"]]]]}
-                ];
+                // l: versiones del mismo perfume (EDT/EDP…): se recomienda una sola
+                var sinMarca = AP.EXCLUIR.map(AP.clave);
+                var P = sinMarca.length ? AP.P.filter(function (p) { return sinMarca.indexOf(AP.clave(p.house)) < 0; }) : AP.P;
                 var LAYER = { top: 't', heart: 'h', base: 'b' };
 
-                // Cada capa admite de 1 a MAX notas (mínimo una por capa para poder mezclar)
+                // Cada capa admite hasta MAX notas o "sin preferencia" (al menos una nota en total para mezclar)
                 var MAX = this.props.maxPerLayer ?? 3;
                 var phase = st.phase, cur = st.step;
                 // solo notas que existen (protege los links compartidos)
                 var picks = { top: st.picks.top.filter(function (k) { return byK[k]; }), heart: st.picks.heart.filter(function (k) { return byK[k]; }), base: st.picks.base.filter(function (k) { return byK[k]; }) };
 
                 // ===== Perfil: 3 preguntas que acotan el catálogo y ordenan las notas =====
-                // Usan las columnas genero, familia / familia_2 y momento del Excel. Vacío = "me da igual".
+                // Usan las columnas genero, familia / familia_2 y momento del Excel. Vacío = "no tengo preferencia".
                 var PROF_G = [
                     { k: 'f', label: 'Para ella', sub: 'Femeninas y unisex', g: ['Mujer', 'Unisex'] },
                     { k: 'm', label: 'Para él', sub: 'Masculinas y unisex', g: ['Hombre', 'Unisex'] },
                     { k: 'u', label: 'Unisex', sub: 'Solo las que no tienen género', g: ['Unisex'] },
-                    { k: '', label: 'Me da igual', sub: 'Mostrame todo' }
+                    { k: '', label: 'No tengo preferencia', sub: 'Mostrame todo' }
                 ];
                 var PROF_S = [
                     { k: 'fresco', label: 'Fresco y limpio', f: ['Cítrica', 'Acuática', 'Verde', 'Aromática'], ex: ['limon', 'te', 'bergamota'] },
@@ -3504,22 +3271,36 @@ var TPL = `
                     { k: 'n', label: 'De noche', sub: 'Más intensa, para salir y que se note', m: ['Noche', 'Ambos'] },
                     { k: '', label: 'Siempre', sub: 'Que me acompañe en cualquier momento' }
                 ];
+                var optOf = function (list, k) { return list.filter(function (o) { return o.k === k; })[0]; };
+                var PROF_P = [
+                    { k: '100', label: 'Hasta $100.000', max: 100000 },
+                    { k: '200', label: 'Hasta $200.000', max: 200000 },
+                    { k: '', label: 'No tengo preferencia', sub: 'Mostrame todo' }
+                ];
                 var MAXS = 2, MIN_PF = 8, FEAT = 8;
                 var prof = st.prof;
-                var optOf = function (list, k) { return list.filter(function (o) { return o.k === k; })[0]; };
+                // con la lista de precios cargada: solo lo que hoy tiene stock, y dentro del presupuesto
+                var LP = self.lista;
+                var precioDe = function (p) { var x = LP && LP[p.id]; return x && !x.out ? x.price : 0; };
+                var STOCK = LP ? P.filter(function (p) { return !(LP[p.id] && LP[p.id].out); }) : P;
+                var enPres = function (k) { var o = k && optOf(PROF_P, k); return !o ? STOCK : STOCK.filter(function (p) { var v = precioDe(p); return v > 0 && v <= o.max; }); };
+                PROF_P.forEach(function (o) { if (o.max) o.sub = LP ? enPres(o.k).length + ' perfumes hoy' : ''; });
                 var filt = function (g, sl, w) {
                     var G = g && optOf(PROF_G, g).g, W = w && optOf(PROF_W, w).m, F = [];
                     sl.forEach(function (k) { F = F.concat(optOf(PROF_S, k).f); });
-                    return P.filter(function (p) {
+                    return BASE.filter(function (p) {
                         return (!G || G.indexOf(p.g) >= 0) && (!F.length || p.f.some(function (f) { return F.indexOf(f) >= 0; })) && (!W || W.indexOf(p.m) >= 0);
                     });
                 };
-                // Si la combinación deja muy pocos perfumes se afloja: primero el momento, después el género, al final todo
+                // Si la combinación deja muy pocos perfumes se afloja: primero el momento, después el género, después los estilos;
+                // el presupuesto se respeta hasta el final
+                var BASE = enPres(prof.p);
+                if (BASE.length < MIN_PF) BASE = STOCK;
                 var PF = filt(prof.g, prof.s, prof.w);
                 if (PF.length < MIN_PF) PF = filt(prof.g, prof.s, '');
                 if (PF.length < MIN_PF) PF = filt('', prof.s, '');
-                if (PF.length < MIN_PF) PF = P;
-                var hasProf = !!(prof.g || prof.s.length || prof.w);
+                if (PF.length < MIN_PF) PF = BASE;
+                var hasProf = !!(prof.g || prof.s.length || prof.w || prof.p);
                 // en cuántos perfumes aparece cada nota: en todo el catálogo y en el del perfil
                 var countIn = function (list) {
                     var c = {};
@@ -3545,8 +3326,9 @@ var TPL = `
                 if (prof.g) profParts.push(optOf(PROF_G, prof.g).label);
                 prof.s.forEach(function (k) { profParts.push(optOf(PROF_S, k).label); });
                 if (prof.w) profParts.push(optOf(PROF_W, prof.w).label);
+                if (prof.p) profParts.push(optOf(PROF_P, prof.p).label);
                 var setProf = function (patch) { self.setState({ prof: Object.assign({}, self.state.prof, patch) }); };
-                var PQ = 3, pq = st.pq || 0;
+                var PQ = 4, pq = st.pq || 0;
                 // avanzar: a la próxima pregunta o, después de la última, a las notas
                 var goQ = function (i) {
                     clearTimeout(self.pqT);
@@ -3561,7 +3343,7 @@ var TPL = `
                             label: o.label, sub: o.sub, pressed: on ? 'true' : 'false', cls: 'ap-choice' + (on ? ' on' : ''),
                             pick: function () {
                                 var x = {}; x[key] = o.k; setProf(x);
-                                AP.track('perfil_respuesta', { pregunta: key === 'g' ? 'para_quien' : 'cuando', respuesta: o.label });
+                                AP.track('perfil_respuesta', { pregunta: { g: 'para_quien', w: 'cuando', p: 'presupuesto' }[key], respuesta: o.label });
                                 clearTimeout(self.pqT);
                                 var at = self.state.pq || 0;
                                 self.pqT = setTimeout(function () { goQ(at + 1); }, 380);
@@ -3569,14 +3351,14 @@ var TPL = `
                         };
                     });
                 };
-                var pqSteps = [0, 1, 2].map(function (i) {
+                var pqSteps = [0, 1, 2, 3].map(function (i) {
                     return {
                         cls: 'ap-qseg' + (i === pq ? ' on' : i < pq ? ' done' : ''),
                         label: 'Pregunta ' + (i + 1), disabled: i > pq ? 'true' : 'false',
                         go: function () { if (i <= (self.state.pq || 0)) goQ(i); }
                     };
                 });
-                var pg = opt(PROF_G, 'g'), pw = opt(PROF_W, 'w');
+                var pg = opt(PROF_G, 'g'), pw = opt(PROF_W, 'w'), pp = opt(PROF_P, 'p');
                 var ps = PROF_S.map(function (o) {
                     var on = prof.s.indexOf(o.k) >= 0;
                     return {
@@ -3591,17 +3373,19 @@ var TPL = `
                 });
                 var allPicks = [];
                 STEPS.forEach(function (s) { picks[s.k].forEach(function (k) { allPicks.push(k); }); });
-                var missing = STEPS.filter(function (s) { return !picks[s.k].length; });
-                var full = missing.length === 0;
+                var skip = st.skip || {};
+                var listo = function (np, sk, s) { return np[s.k].length > 0 || !!sk[s.k]; };
+                var missing = STEPS.filter(function (s) { return !listo(picks, skip, s); });
+                var full = missing.length === 0 && allPicks.length > 0;
                 // una mezcla incompleta (p. ej. link roto) no puede mostrar resultado
                 if (!full && (phase === 'result' || phase === 'mixing')) phase = 'pick';
                 var total = allPicks.length;
                 var curList = picks[STEPS[cur].k];
 
-                var nextEmpty = function (np, from) {
+                var nextEmpty = function (np, from, sk) {
                     for (var j = 1; j <= 2; j++) {
                         var nx = (from + j) % 3;
-                        if (!np[STEPS[nx].k].length) return nx;
+                        if (!listo(np, sk || skip, STEPS[nx])) return nx;
                     }
                     return -1;
                 };
@@ -3614,13 +3398,14 @@ var TPL = `
                     clearTimeout(self.adv);
                     if (on) { np[s.k] = list.filter(function (x) { return x !== k; }); self.setState({ picks: np }); return; }
                     np[s.k] = list.concat([k]);
-                    self.setState({ picks: np, lastNote: k });
+                    var nsk = Object.assign({}, skip); nsk[s.k] = false;
+                    self.setState({ picks: np, skip: nsk, lastNote: k });
                     // respuesta táctil corta en celulares
                     try { if (navigator.vibrate && window.matchMedia('(pointer: coarse)').matches) navigator.vibrate(8); } catch (e) { }
                     AP.track('nota_elegida', { nota: byK[k].label, capa: s.label });
                     // Con la capa completa avanza sola a la próxima vacía
                     if (np[s.k].length === MAX) {
-                        var nx = nextEmpty(np, stepIdx);
+                        var nx = nextEmpty(np, stepIdx, nsk);
                         if (nx >= 0) self.adv = setTimeout(function () { self.setState({ step: nx }); }, 650);
                     }
                 };
@@ -3652,10 +3437,10 @@ var TPL = `
                 }) : [{ label: hasProf ? 'Para tu perfil' : 'Las más elegidas', items: feat.map(tile) }];
 
                 var steps = STEPS.map(function (s, i) {
-                    var list = picks[s.k], p = list.length && byK[list[0]];
+                    var list = picks[s.k], p = list.length && byK[list[0]], sinPref = !list.length && !!skip[s.k];
                     return {
-                        n: s.n, label: s.label, done: !!p, empty: !p, img: p ? p.img : '',
-                        sub: p ? names(list) : (i === cur ? 'Elegí de 1 a ' + MAX : ''),
+                        n: sinPref ? '—' : s.n, label: s.label, done: !!p, empty: !p, img: p ? p.img : '',
+                        sub: p ? names(list) : sinPref ? 'Sin preferencia' : (i === cur ? 'Elegí de 1 a ' + MAX : ''),
                         // progreso de la capa activa: ●●○
                         dots: i === cur ? new Array(list.length + 1).join('●') + new Array(MAX - list.length + 1).join('○') : '',
                         count: list.length ? String(list.length) : '',
@@ -3667,7 +3452,9 @@ var TPL = `
                     };
                 });
                 // "Siguiente" lleva a la próxima capa que falta (puede ser una anterior)
-                var nxIdx = curList.length ? nextEmpty(picks, cur) : -1;
+                var nxIdx = curList.length || skip[STEPS[cur].k] ? nextEmpty(picks, cur) : -1;
+                var pendientes = STEPS.filter(function (s, i) { return i !== cur && !listo(picks, skip, s); }).length;
+                var canSkip = phase === 'pick' && !curList.length && !skip[STEPS[cur].k] && (total > 0 || pendientes > 0);
                 var nxStep = nxIdx >= 0 ? STEPS[nxIdx] : null;
                 var canNext = !full && !!nxStep;
 
@@ -3700,12 +3487,13 @@ var TPL = `
                 };
                 var matchText = function (m) { return m ? 'Coincide en ' + m + ' de ' + total + (total === 1 ? ' nota' : ' notas') : 'Comparte tus familias olfativas'; };
 
-                var res = {}, alts = [], peek = null, best = null;
+                var res = {}, alts = [], best = null;
                 // desempate estable: la misma mezcla siempre da el mismo resultado (clave para los links compartidos)
                 var mixKey = STEPS.map(function (s) { return picks[s.k].join('.'); }).join('-');
                 var tie = function (id) { var h = 2166136261, t = mixKey + '|' + id; for (var i = 0; i < t.length; i++) { h ^= t.charCodeAt(i); h = Math.imul(h, 16777619); } return (h >>> 0) / 4294967296; };
                 // Puntaje por nota elegida: misma capa 3, otra capa 2, misma familia 1.
                 // Desempata la proporción de la pirámide del perfume que cubre la mezcla, y después el desempate estable.
+                var seenL = {};
                 var ranked = !total ? [] : PF.map(function (p) {
                         var all = p.t.concat(p.h, p.b), score = 0, m = 0;
                         STEPS.forEach(function (s) {
@@ -3715,13 +3503,15 @@ var TPL = `
                                 else if (all.some(function (x) { return byK[x].fam === byK[k].fam; })) score += 1;
                             });
                         });
-                        return { p: p, score: score + m / (all.length || 1), m: m, r: tie(p.id) };
-                    }).sort(function (a, b) { return b.score - a.score || a.r - b.r; });
-                // vista previa mientras se eligen notas
-                if (phase === 'pick' && total >= 2 && ranked.length) {
-                    var pk = ranked[0];
-                    peek = { key: 'apPeek-' + pk.p.id, name: pk.p.name, house: pk.p.house, img: pk.p.img, match: pk.m + ' de ' + total };
-                }
+                        var pts = score + AP.extraMarca(p.house), fino = m / (all.length || 1) - (p.rf ? 0.01 : 0);
+                        var pos = AP.ORDEN && AP.ORDEN[p.id] != null ? AP.ORDEN[p.id] : 1e9;
+                        return { p: p, pts: pts, fino: fino, score: pts + fino, pos: pos, m: m, r: tie(p.id) };
+                    }).sort(function (a, b) {
+                        if (AP.ORDEN) return b.pts - a.pts || a.pos - b.pos || b.fino - a.fino || a.r - b.r;
+                        return b.score - a.score || a.r - b.r;
+                    })
+                    // versiones del mismo perfume (EDT, EDP…): solo la que mejor coincide
+                    .filter(function (x) { var l = x.p.l; if (!l) return true; if (seenL[l]) return false; seenL[l] = 1; return true; });
                 var FAMADJ = { 'Floral': 'floral', 'Amaderada': 'amaderada', 'Ambarada': 'ambarada', 'Cítrica': 'cítrica', 'Aromática': 'aromática', 'Cuero': 'cuerosa', 'Frutal': 'frutal', 'Gourmand': 'gourmand', 'Chipre': 'chipre', 'Especiada': 'especiada', 'Verde': 'verde', 'Acuática': 'acuática', 'Almizclada': 'almizclada' };
                 var MOM = { 'Día': 'ideal para el día', 'Noche': 'ideal para la noche', 'Ambos': 'para usar de día o de noche' };
                 // "por qué": notas en común + familia + momento (datos del Excel)
@@ -3740,19 +3530,23 @@ var TPL = `
                 // precio en vivo (si la API de VTEX está disponible)
                 var priceOf = function (x) {
                     var pr = AP.prices[x.p.id] || {}, o = {};
+                    // sin API en vivo (Sandbox de VTEX): SKU guardado en el catálogo (herramientas/actualizar-skus.py)
+                    if (!pr.sku && !pr.out && x.p.sku) pr = { sku: x.p.sku, seller: x.p.sel };
                     o.hasPrice = !!pr.price;
                     o.priceText = pr.price ? (pr.many ? 'Desde ' : '') + AP.money(pr.price) : '';
                     o.hasList = !!(pr.price && pr.list > pr.price);
                     o.listText = o.hasList ? AP.money(pr.list) : '';
                     o.size = pr.price && !pr.many ? pr.size || '' : '';
-                    o.hasCart = !!pr.sku; o.noCart = !pr.sku; o.out = !!pr.out;
+                    // AP.CARRITO = false: el botón principal lleva a la ficha (PDP) del producto en vez de al checkout.
+                    // Desde el Sandbox no se puede agregar al minicart sin salir de la página; volver a true cuando sea un bloque de VTEX IO.
+                    o.hasCart = AP.CARRITO && !!pr.sku; o.noCart = !o.hasCart; o.out = !!pr.out;
                     o.cartUrl = pr.sku ? (AP.origin() || AP.SITE) + '/checkout/cart/add?sku=' + pr.sku + '&qty=1&seller=' + (pr.seller || 1) + '&redirect=true&sc=1' : '';
                     return o;
                 };
                 if (phase === 'mixing' || phase === 'result') {
                     // top 3: tocar una alternativa la pasa a principal (con sus notas coincidentes) y la principal baja a alternativa
-                    // hasta 6 recomendaciones: principal + 2 alternativas, y 3 más con "Ver más recomendaciones"
-                    var pool = ranked.slice(0, 6), top3 = pool;
+                    // principal + 6 alternativas, todas a la vista
+                    var pool = ranked.slice(0, 7), top3 = pool;
                     best = pool.filter(function (x) { return x.p.id === st.focus; })[0] || pool[0];
                     var isTop = best === pool[0];
                     // al mostrar un resultado nuevo: guardar como última mezcla, pedir precios y medir
@@ -3859,17 +3653,20 @@ var TPL = `
                     phaseCls: 'ap ph-' + phase,
                     intro: phase === 'intro', notIntro: phase !== 'intro',
                     layers: layers, lay: lay, loadText: loadText, loadStyle: 'display: block; height: 100%; width: ' + loadPct + '%; background: #E8857A; transition: width .4s ease',
+                    hasStart: AP.MODO !== 'capas' || !!document.getElementById('ap-lab'),
+                    startText: AP.MODO === 'capas' ? 'Armá tu mezcla' : 'Empezar mi mezcla',
+                    showLoad: AP.MODO !== 'capas',
                     start: function () {
                         clearInterval(self.iv);
+                        var lab = AP.MODO === 'capas' && document.getElementById('ap-lab');
+                        if (lab) { lab.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
                         self.setState({ phase: 'profile', auto: false, pq: 0 });
                     },
-                    profiling: phase === 'profile', pg: pg, ps: ps, pw: pw,
-                    q0: pq === 0, q1: pq === 1, q2: pq === 2, qNum: String(pq + 1), pqSteps: pqSteps, hasBack: pq > 0,
+                    profiling: phase === 'profile', pg: pg, ps: ps, pw: pw, pp: pp,
+                    q0: pq === 0, q1: pq === 1, q2: pq === 2, q3: pq === 3, qNum: String(pq + 1), pqSteps: pqSteps, hasBack: pq > 0,
                     qKey: 'apQ-' + pq, back: function () { goQ((self.state.pq || 0) - 1); },
-                    contText: prof.s.length ? 'Continuar →' : 'Me da igual, seguir →',
+                    contText: prof.s.length ? 'Continuar →' : 'No tengo preferencia →',
                     cont: function () { goQ(2); },
-                    profN: String(PF.length), profNText: PF.length === 1 ? 'perfume para vos' : 'perfumes para vos',
-                    skipProf: function () { clearTimeout(self.pqT); AP.track('perfil_saltear'); self.setState({ prof: { g: '', s: [], w: '' }, phase: 'pick', step: 0, allNotes: false, pq: 0 }); },
                     editProf: function () { clearTimeout(self.adv); self.setState({ phase: 'profile', pq: 0 }); },
                     profSum: hasProf ? profParts.join(' · ') : 'Sin filtros',
                     profEdit: hasProf ? 'Editar' : 'Armar mi perfil',
@@ -3877,13 +3674,22 @@ var TPL = `
                     moreText: st.allNotes ? 'Ver solo las destacadas' : 'Ver todas las notas de ' + STEPS[cur].label.toLowerCase() + ' (' + stepNotes.length + ')',
                     toggleAll: function () { self.setState({ allNotes: !self.state.allNotes }); },
                     showIntro: function () {
+                        var capas = document.getElementById('ap-capas');
+                        if (capas) { capas.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
                         clearTimeout(self.adv);
                         self.setState({ phase: 'intro', intro: 0 });
                         self.play();
                     },
                     picking: phase === 'pick', mixing: phase === 'mixing', showResult: phase === 'result',
                     steps: steps, groups: groups, stepKey: 'apStep-' + STEPS[cur].k, stepHint: STEPS[cur].hint,
-                    canNext: canNext, waitPick: !full && !canNext, max: String(MAX), curLabel: STEPS[cur].label.toLowerCase(),
+                    canNext: canNext, waitPick: !full && !canNext, canSkip: canSkip,
+                    skipLayer: function () {
+                        clearTimeout(self.adv);
+                        var sk = Object.assign({}, skip); sk[STEPS[cur].k] = true;
+                        AP.track('capa_sin_preferencia', { capa: STEPS[cur].label });
+                        var nx = nextEmpty(picks, cur, sk);
+                        self.setState(nx >= 0 ? { skip: sk, step: nx } : { skip: sk });
+                    }, max: String(MAX), curLabel: STEPS[cur].label.toLowerCase(),
                     barNext: canNext, barDisabled: !full && !canNext, nextText: nxStep ? 'Siguiente: ' + nxStep.label : '',
                     next: function () { clearTimeout(self.adv); if (nxIdx >= 0) self.setState({ step: nxIdx }); },
                     drops: allPicks.map(function (k) { return { id: 'apDrop-' + k, img: byK[k].img }; }),
@@ -3903,7 +3709,7 @@ var TPL = `
                         };
                     }),
                     full: full, notFull: !full,
-                    barText: full ? total + ' notas · lista para mezclar' : 'Falta ' + missing.map(function (s) { return s.label; }).join(' y '),
+                    barText: full ? total + (total === 1 ? ' nota' : ' notas') + ' · lista para mezclar' : missing.length ? 'Falta ' + AP.list(missing.map(function (s) { return s.label; })) : 'Elegí al menos una nota',
                     mixText: total > 4 ? 'tus ' + total + ' notas' : allPicks.map(function (k) { return byK[k].label.toLowerCase(); }).join(', '),
                     // ~6s: al centro (0.9) · notas (2.2) · ruleta que frena (2.1) · revelación (0.9)
                     mix: function () {
@@ -3916,17 +3722,17 @@ var TPL = `
                             var a = lab.getBoundingClientRect(), b = side.getBoundingClientRect();
                             dx = Math.round(a.left + a.width / 2 - (b.left + b.width / 2));
                         }
-                        self.setState({ focus: null, moreRecs: false, phase: 'mixing', mixStage: 0, mixTick: 0, shuffle: 0, shuffleN: 0, dx: dx, mixRun: (self.state.mixRun || 0) + 1, seed: P.map(Math.random) });
+                        self.setState({ focus: null, phase: 'mixing', mixStage: 0, mixTick: 0, shuffle: 0, shuffleN: 0, dx: dx, mixRun: (self.state.mixRun || 0) + 1, seed: P.map(Math.random) });
                         var T = function (ms, fn) { self.mt.push(setTimeout(fn, ms)); };
                         if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
                             T(1200, function () { self.setState({ phase: 'result' }); });
                             return;
                         }
-                        T(900, function () {
+                        T(700, function () {
                             self.setState({ mixStage: 1 });
-                            self.mi = setInterval(function () { self.setState({ mixTick: self.state.mixTick + 1 }); }, Math.max(200, Math.floor(2200 / (total + 0.5))));
+                            self.mi = setInterval(function () { self.setState({ mixTick: self.state.mixTick + 1 }); }, Math.max(160, Math.floor(1600 / (total + 0.5))));
                         });
-                        var t = 3100, delays = [80, 85, 90, 100, 110, 125, 145, 170, 205, 250, 310, 390];
+                        var t = 2300, delays = [70, 70, 75, 80, 90, 100, 115, 135, 160, 195, 240, 300];
                         T(t, function () { clearInterval(self.mi); self.setState({ mixStage: 2, shuffle: 1 + Math.floor(Math.random() * 6) }); });
                         // la ruleta se va frenando y el último giro cae en el ganador (índice 0)
                         delays.forEach(function (d, i) {
@@ -3936,26 +3742,25 @@ var TPL = `
                                 self.setState({ shuffleN: self.state.shuffleN + 1, shuffle: last ? 0 : 1 + Math.floor(Math.random() * 6) });
                             });
                         });
-                        T(t + 450, function () { self.setState({ mixStage: 3 }); });
-                        T(t + 1350, function () { self.setState({ phase: 'result' }); });
+                        T(t + 350, function () { self.setState({ mixStage: 3 }); });
+                        T(t + 1000, function () { self.setState({ phase: 'result' }); });
                     },
                     skip: function () { self.clearMix(); self.setState({ phase: 'result' }); },
                     edit: function () { self.setState({ phase: 'pick', shared: false }); },
                     // vaciar: borra las notas elegidas y sigue en la misma pantalla
                     clear: function () {
                         clearTimeout(self.adv);
-                        self.setState({ picks: { top: [], heart: [], base: [] }, step: 0 });
+                        self.setState({ picks: { top: [], heart: [], base: [] }, skip: { top: false, heart: false, base: false }, step: 0 });
                     },
                     reset: function () {
                         clearTimeout(self.t); clearTimeout(self.adv); self.clearMix();
                         clearTimeout(self.pqT);
                         // nueva mezcla: arranca de nuevo por el perfil (puede ser para otra persona)
                         AP.track('nueva_mezcla');
-                        self.setState({ shared: false, lastMix: AP.loadLast(),  picks: { top: [], heart: [], base: [] }, step: 0, phase: 'profile', pq: 0, prof: { g: '', s: [], w: '' }, focus: null, allNotes: false });
+                        self.setState({ shared: false, lastMix: AP.loadLast(),  picks: { top: [], heart: [], base: [] }, skip: { top: false, heart: false, base: false }, step: 0, phase: 'profile', pq: 0, prof: { g: '', s: [], w: '', p: '' }, focus: null, allNotes: false });
                     },
-                    res: res, alts: alts.slice(0, 2), hasAlts: alts.length > 0,
+                    res: res, alts: alts, hasAlts: alts.length > 0,
                     // vista previa y ficha de nota
-                    peek: peek || {}, hasPeek: !!peek,
                     noteInfo: picks[STEPS[cur].k].indexOf(st.lastNote) >= 0 ? noteInfoOf(st.lastNote) : null,
                     noNoteInfo: picks[STEPS[cur].k].indexOf(st.lastNote) < 0,
                     shared: !!st.shared && phase === 'result',
@@ -3966,14 +3771,14 @@ var TPL = `
                         var lm = self.state.lastMix;
                         if (!lm || !lm.picks) return;
                         AP.track('retomar_mezcla', { perfume: lm.house + ' ' + lm.name });
-                        self.setState({ picks: lm.picks, prof: lm.prof || { g: '', s: [], w: '' }, phase: 'result', focus: null, moreRecs: false, shared: false });
+                        self.setState({ picks: lm.picks, skip: { top: !lm.picks.top.length, heart: !lm.picks.heart.length, base: !lm.picks.base.length }, prof: lm.prof || { g: '', s: [], w: '', p: '' }, phase: 'result', focus: null, moreRecs: false, shared: false });
                     },
                     // compartir
                     shareText: st.shareMsg || 'Compartir mi mezcla',
                     cardText: st.cardMsg || 'Guardar tarjeta',
                     share: function () {
                         if (!best) return;
-                        var url = AP.withParams(AP.pageUrl(), { mezcla: mixKey, perfil: hasProf ? (prof.g || '') + '-' + prof.s.join('.') + '-' + (prof.w || '') : '' });
+                        var url = AP.withParams(AP.pageUrl(), { mezcla: mixKey, perfil: hasProf ? (prof.g || '') + '-' + prof.s.join('.') + '-' + (prof.w || '') + '-' + (prof.p || '') : '' });
                         var text = 'Armé mi perfume en el Laboratorio de notas de Rouge con ' + AP.list(allPicks.map(function (k) { return byK[k].label.toLowerCase(); })) + ' y se parece a ' + best.p.name + ' de ' + best.p.house + '. Armá el tuyo:';
                         var copy = function () {
                             AP.copy(text + ' ' + url).then(function (ok) {
@@ -4005,17 +3810,29 @@ var TPL = `
                             clearTimeout(self.cm); self.cm = setTimeout(function () { self.setState({ cardMsg: '' }); }, 2600);
                         });
                     },
-                    moreAlts: alts.slice(2, 5), showMore: !!st.moreRecs && alts.length > 2, canMore: !st.moreRecs && alts.length > 2,
-                    moreRecs: function () { AP.track('ver_mas_recomendaciones'); self.setState({ moreRecs: true }); },
                 };
             }
         }
 
         var tpl = document.createElement('template'); tpl.innerHTML = TPL;
         var app = document.getElementById('app');
-        // imgBase / frascoBase: carpeta de las imágenes. Al subirlas a VTEX (Archivos) cambiar ambas por
-        // "https://www.perfumeriasrouge.com/arquivos/" (VTEX no usa subcarpetas, quedan todas juntas).
-        mountDC(Component, { "accent": "#730101", "imgBase": "imagenes/notas/", "frascoBase": "imagenes/frasco/" }, tpl, app);
+        // Imágenes: en la compu (file:/localhost) se usan las de la carpeta; publicado (Sandbox de VTEX)
+        // se cargan desde GitHub Pages de este mismo repositorio (no mover la carpeta imagenes/).
+        var LOCAL = /^file:|\/\/(localhost|127\.0\.0\.1)/.test(location.href);
+        var BASE = LOCAL ? '' : 'https://ebeusd.github.io/videos-difu/e-boutique/laboratorio-notas/';
+        // precios: los de la carpeta si se abre con un servidor local; si no, los publicados (file:// no deja leer archivos locales)
+        AP.PRECIOS_URL = /^https?:\/\/(localhost|127\.0\.0\.1)/.test(location.href) ? 'precios.json'
+            : 'https://ebeusd.github.io/videos-difu/e-boutique/laboratorio-notas/precios.json';
+        // catálogo: el de la carpeta si se abre con un servidor local; si no, el publicado
+        var CATALOGO = /^https?:\/\/(localhost|127\.0\.0\.1)/.test(location.href) ? 'catalogo.json'
+            : 'https://ebeusd.github.io/videos-difu/e-boutique/laboratorio-notas/catalogo.json';
+        fetch(CATALOGO).then(function (r) { return r.json(); }).then(function (cat) {
+            AP.P = cat;
+            mountDC(Component, { "accent": "#730101", "imgBase": BASE + "imagenes/notas/", "frascoBase": BASE + "imagenes/frasco/" }, tpl, app);
+        }).catch(function (e) {
+            console.error('laboratorio: no se pudo cargar el catálogo', e);
+            app.textContent = 'No pudimos cargar el laboratorio. Probá recargar la página.';
+        });
 
         // Links fuera del iframe de VTEX
         app.addEventListener('click', function (e) {

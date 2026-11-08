@@ -12,6 +12,7 @@ on:
     paths:
       - .github/workflows/precios-laboratorio.yml
       - e-boutique/laboratorio-notas/herramientas/actualizar-precios.py
+      - e-boutique/laboratorio-notas/catalogo.json         # perfumes nuevos en el laboratorio
 
 permissions:
   contents: write
