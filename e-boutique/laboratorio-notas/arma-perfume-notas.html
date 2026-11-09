@@ -1111,6 +1111,75 @@
             color: #F3ECE3
         }
 
+        @media (min-width: 900px) {
+            .ap {
+                --ap-alto: 760px;
+                min-height: 760px
+            }
+
+            .ap-prof-sum {
+                font-size: 17px;
+                gap: 6px 14px
+            }
+
+            .ap-prof-sum .ap-label {
+                font-size: 13px
+            }
+
+            .ph-mixing .ap-side {
+                transform: translateX(var(--dx, 0px)) scale(1.02)
+            }
+
+            .ap-flask {
+                margin-top: calc(var(--fw) * .14)
+            }
+        }
+
+        .ap-capas {
+            padding-bottom: calc(clamp(18px, 3.4vh, 40px) + 64px)
+        }
+
+        .ap-cinta {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            border-top: 1px solid rgba(232, 133, 122, 0.28);
+            background: linear-gradient(90deg, #0A0808, #1A0B0B 50%, #0A0808);
+            pointer-events: none
+        }
+
+        .ap-cinta-pista {
+            display: flex;
+            flex: none;
+            white-space: nowrap;
+            animation: cinta 48s linear infinite
+        }
+
+        .ap-cinta-pista span {
+            padding-right: 28px;
+            font-size: 12px;
+            letter-spacing: .34em;
+            text-transform: uppercase;
+            color: #B9AFA6
+        }
+
+        .ap-cinta-pista b {
+            color: #E8857A;
+            font-weight: 400;
+            margin-left: 28px
+        }
+
+        @keyframes cinta {
+            to {
+                transform: translateX(-50%)
+            }
+        }
+
         .ap-more {
             flex: 1 1 100%;
             cursor: pointer;
@@ -1329,7 +1398,8 @@
 
         .ap-flask {
             position: relative;
-            width: min(100%, calc((100dvh - 300px) / 1.5), 380px);
+            --fw: min(100%, calc((max(100dvh, var(--ap-alto, 560px)) - 250px) / 1.65), 380px);
+            width: var(--fw);
             aspect-ratio: 2 / 3;
             transform-origin: 50% 90%
         }
@@ -2268,6 +2338,7 @@
 
         @media (prefers-reduced-motion: reduce) {
 
+            .ap-cinta-pista,
             .waveA,
             .waveB,
             .fall,
@@ -2805,6 +2876,12 @@ var TPL = `
             <sc-if value="{{barDisabled}}" hint-placeholder-val="{{ true }}">
                 <button class="btn" type="button" disabled style="background: {{accent}}; color: #F3ECE3">Mezclar</button>
             </sc-if>
+        </div>
+    </sc-if>
+
+    <sc-if value="{{esCapas}}" hint-placeholder-val="{{ false }}">
+        <div class="ap-cinta" aria-hidden="true">
+            <div class="ap-cinta-pista"><span>Salida<b>✦</b></span><span>Corazón<b>✦</b></span><span>Fondo<b>✦</b></span><span>Tu mezcla<b>✦</b></span><span>Salida<b>✦</b></span><span>Corazón<b>✦</b></span><span>Fondo<b>✦</b></span><span>Tu mezcla<b>✦</b></span><span>Salida<b>✦</b></span><span>Corazón<b>✦</b></span><span>Fondo<b>✦</b></span><span>Tu mezcla<b>✦</b></span><span>Salida<b>✦</b></span><span>Corazón<b>✦</b></span><span>Fondo<b>✦</b></span><span>Tu mezcla<b>✦</b></span><span>Salida<b>✦</b></span><span>Corazón<b>✦</b></span><span>Fondo<b>✦</b></span><span>Tu mezcla<b>✦</b></span><span>Salida<b>✦</b></span><span>Corazón<b>✦</b></span><span>Fondo<b>✦</b></span><span>Tu mezcla<b>✦</b></span><span>Salida<b>✦</b></span><span>Corazón<b>✦</b></span><span>Fondo<b>✦</b></span><span>Tu mezcla<b>✦</b></span><span>Salida<b>✦</b></span><span>Corazón<b>✦</b></span><span>Fondo<b>✦</b></span><span>Tu mezcla<b>✦</b></span></div>
         </div>
     </sc-if>
 </section>
@@ -3650,7 +3727,8 @@ var TPL = `
 
                 return {
                     accent: accent,
-                    phaseCls: 'ap ph-' + phase,
+                    phaseCls: 'ap ph-' + phase + (AP.MODO === 'capas' ? ' ap-capas' : ''),
+                    esCapas: AP.MODO === 'capas',
                     intro: phase === 'intro', notIntro: phase !== 'intro',
                     layers: layers, lay: lay, loadText: loadText, loadStyle: 'display: block; height: 100%; width: ' + loadPct + '%; background: #E8857A; transition: width .4s ease',
                     hasStart: AP.MODO !== 'capas' || !!document.getElementById('ap-lab'),
