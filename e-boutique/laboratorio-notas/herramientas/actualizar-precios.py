@@ -1,6 +1,6 @@
 """Genera precios.json con precio, precio de lista, stock y SKU de cada perfume del laboratorio.
 Lo corre GitHub solo cada 2 horas (.github/workflows/precios-laboratorio.yml) y el laboratorio lo lee desde
-GitHub Pages, porque dentro del Sandbox de VTEX no puede consultar la API de la tienda.
+GitHub Pages para filtrar por presupuesto y stock sin consultar la API de la tienda perfume por perfume.
 Uso manual:  python herramientas/actualizar-precios.py        (desde la carpeta laboratorio-notas)"""
 import datetime, json, os, re, sys, time, urllib.request
 

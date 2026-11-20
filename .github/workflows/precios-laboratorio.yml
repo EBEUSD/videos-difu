@@ -1,5 +1,5 @@
 # Actualiza los precios del Laboratorio de notas cada 2 horas.
-# El laboratorio (dentro del Sandbox de VTEX) los lee desde GitHub Pages:
+# El laboratorio de la tienda los lee desde GitHub Pages:
 # https://ebeusd.github.io/videos-difu/e-boutique/laboratorio-notas/precios.json
 name: Precios laboratorio de notas
 

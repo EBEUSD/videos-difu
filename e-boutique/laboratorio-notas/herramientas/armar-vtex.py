@@ -1,31 +1,34 @@
-r"""Genera la versión del laboratorio para el tema de VTEX IO (bloque `laboratorio-notas` de Rouge-VTEX-theme)
-a partir de arma-perfume-notas.html, igual que armar-sandbox.py genera la del Sandbox.
+r"""Lleva el catálogo del laboratorio al tema de VTEX IO (bloque `laboratorio-notas` de Rouge-VTEX-theme).
 
-Escribe en el tema (página /laboratorio-notas, bloque `laboratorio-notas`):
-  react/components/laboratorio-notas/motor.js    el laboratorio (runtime + lógica) como función montarLaboratorio()
+El código del laboratorio en el tema (motor.js y estilos.ts) se edita directamente en el tema: tiene el quiz
+"Ayudame a descubrir", el buscador de referencia, el perfil olfativo y otras cosas que arma-perfume-notas.html no tiene.
+Por eso, por defecto, este programa NO los toca y escribe solamente:
   react/components/laboratorio-notas/catalogo.js el catálogo (copia de catalogo.json)
-  react/components/laboratorio-notas/estilos.ts  el CSS, encerrado en .rouge-lab para no pisar estilos de la tienda
+  react/components/laboratorio-notas/marcas.ts   las marcas del catálogo (desplegable del Site Editor)
+  assets/laboratorio-notas/                      las imágenes de notas y frasco que usa el motor.js del tema
+  store/blocks/laboratorio-notas.jsonc y la ruta  solo si todavía no existen en el tema
 
 Uso (desde la carpeta laboratorio-notas):
   python herramientas/armar-vtex.py                       (busca el tema en ../../../Rouge-VTEX-theme)
   python herramientas/armar-vtex.py C:\ruta\al\tema
-Se edita siempre arma-perfume-notas.html y después se vuelve a correr esto."""
-import os, re, sys
+  python herramientas/armar-vtex.py --motor               además rearma motor.js y estilos.ts desde
+                                                           arma-perfume-notas.html: PISA lo que se editó en el tema"""
+import json, os, re, shutil, sys
 
+sys.stdout.reconfigure(encoding='utf-8')
 aqui = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(aqui, '..', 'arma-perfume-notas.html')
-TEMA = sys.argv[1] if len(sys.argv) > 1 else os.path.join(aqui, '..', '..', '..', '..', 'Rouge-VTEX-theme')
+args = [a for a in sys.argv[1:] if not a.startswith('--')]
+MOTOR = '--motor' in sys.argv
+TEMA = args[0] if args else os.path.join(aqui, '..', '..', '..', '..', 'Rouge-VTEX-theme')
 DEST = os.path.join(TEMA, 'react', 'components', 'laboratorio-notas')
 if not os.path.isfile(os.path.join(TEMA, 'manifest.json')):
     raise SystemExit('No encuentro el tema en ' + os.path.abspath(TEMA))
-
+if MOTOR:
+    print('⚠ --motor: se rearman motor.js y estilos.ts desde arma-perfume-notas.html y se pierde lo editado en el tema.')
+    if input('¿Seguir? (s/n) ').strip().lower() not in ('s', 'si', 'sí'):
+        raise SystemExit('No se tocó nada.')
 html = open(SRC, encoding='utf-8').read()
-sin_comentarios = re.sub(r'<!--.*?-->', '', html, flags=re.S)
-scripts = re.findall(r'<script>(.*?)</script>', sin_comentarios, re.S)
-if len(scripts) != 2:
-    raise SystemExit('Esperaba 2 bloques <script>, encontré %d' % len(scripts))
-css = re.search(r'<style>(.*?)</style>', html, re.S).group(1)
-
 
 def cambiar(texto, viejo, nuevo, veces=1):
     n = texto.count(viejo)
@@ -52,60 +55,6 @@ def sin_comentarios(js):
     return r.stdout.decode('utf-8')
 
 
-# ---------- JS ----------
-runtime, logica = scripts
-
-# morphdom viene como UMD (module.exports / define): dentro de un módulo de webpack se usa como variable local
-runtime = cambiar(runtime,
-                  '(function (global, factory) { typeof exports === "object" && typeof module !== "undefined" ? module.exports = factory() : typeof define === "function" && define.amd ? define(factory) : (global = global || self, global.morphdom = factory()) })(this, function () {',
-                  'var morphdom = (function () {')
-runtime = cambiar(runtime, 'var morphdom = morphdomFactory(morphAttrs); return morphdom });',
-                  'var morphdom = morphdomFactory(morphAttrs); return morphdom })();')
-
-# Agregar al carrito de verdad (vtex.order-items) en lugar de ir al checkout; el texto del botón muestra el estado
-logica = cambiar(logica, '<a class="btn" href="{{res.cartUrl}}" data-track="agregar_carrito" data-name="{{res.house}} {{res.name}}" style="background: {{accent}}; color: #F3ECE3">Agregar al carrito</a>',
-                 '<button class="btn" type="button" onClick="{{res.addCart}}" aria-live="polite" style="background: {{accent}}; color: #F3ECE3">{{res.cartText}}</button>')
-logica = cambiar(logica, "                    o.cartUrl = pr.sku ?", """                    o.cartText = st.cartMsg && st.cartFor === pr.sku ? st.cartMsg : 'Agregar al carrito';
-                    o.addCart = function () {
-                        if (!AP.agregar || !pr.sku || self.state.cartMsg === 'Agregando…') return;
-                        AP.track('agregar_carrito', { perfume: x.p.house + ' ' + x.p.name });
-                        self.setState({ cartMsg: 'Agregando…', cartFor: pr.sku });
-                        Promise.resolve(AP.agregar({ sku: String(pr.sku), seller: String(pr.seller || 1), price: pr.price, list: pr.list, size: pr.size, p: x.p }))
-                            .then(function (ok) { self.setState({ cartMsg: ok === false ? 'No se pudo agregar' : '¡Agregado al carrito!' }); },
-                                function () { self.setState({ cartMsg: 'No se pudo agregar' }); })
-                            .then(function () { clearTimeout(self.cmT); self.cmT = setTimeout(function () { self.setState({ cartMsg: '' }); }, 2600); });
-                    };
-                    o.cartUrl = pr.sku ?""")
-
-# Montaje: en la tienda no hay iframe; las imágenes y el carrito llegan por parámetro
-logica = cambiar(logica, "        var app = document.getElementById('app');", '        var app = root;')
-logica = re.sub(r"        // Imágenes: en la compu.*?app\.textContent = [^\n]*\n        \}\);",
-                """        // Dentro de la tienda: API de VTEX del mismo dominio (precio y stock en vivo) y carrito real
-        AP.origin = function () { return location.origin; };
-        AP.PRECIOS_URL = '';
-        AP.LISTA_URL = 'https://ebeusd.github.io/videos-difu/e-boutique/laboratorio-notas/precios.json';
-        AP.CARRITO = true;
-        AP.agregar = opciones.agregar;
-        AP.img = opciones.img;
-        AP.P = opciones.catalogo;
-        AP.MARCAS = opciones.marcas || [];
-        AP.FUERZA = opciones.fuerza || 'media';
-        AP.EXCLUIR = opciones.excluir || [];
-        AP.ORDEN = opciones.orden || null;
-        AP.MODO = opciones.modo || 'lab';
-        var inst = mountDC(Component, { "accent": opciones.accent || "#730101", "imgBase": '', "frascoBase": '' }, tpl, app);""",
-                logica, count=1, flags=re.S)
-if 'opciones.agregar' not in logica:
-    raise SystemExit('No pude adaptar el montaje del laboratorio')
-# Imágenes: las resuelve el componente con los assets del tema
-logica = cambiar(logica, 'n.img = IMG + n.f;', "n.img = AP.img('notas', n.f);")
-logica = cambiar(logica, "var BOTTLE = { glass: FRASCO + 'frasco-vidrio.webp', cap: FRASCO + 'frasco-tapa.webp' };",
-                 "var BOTTLE = { glass: AP.img('frasco', 'frasco-vidrio.webp'), cap: AP.img('frasco', 'frasco-tapa.webp') };")
-logica = cambiar(logica, '        // Links fuera del iframe de VTEX', '        // Links (ficha del producto): se registra el evento y se navega')
-logica = cambiar(logica, '            try { window.top.location.href = a.href; } catch (err) { window.location.href = a.href; }',
-                 '            window.location.href = a.href;')
-logica = logica.rstrip() + '\n        return inst;\n'
-
 # El catálogo va en su propio archivo: el componente lo importa aparte (import dinámico) y lo pasa al montar
 import json
 catalogo = json.load(open(os.path.join(aqui, '..', 'catalogo.json'), encoding='utf-8'))
@@ -117,82 +66,150 @@ marcas = sorted({p['house'] for p in catalogo}, key=lambda m: m.lower())
 cita = lambda m: '"%s"' % m if "'" in m else "'%s'" % m
 escribir(os.path.join(DEST, 'marcas.ts'), 'export const MARCAS = [\n' + ''.join('  %s,\n' % cita(m) for m in marcas) + ']\n')
 
-motor = (
-         'export function montarLaboratorio(root, opciones) {\n'
-         + runtime + '\n' + logica +
-         '}\n')
-os.makedirs(DEST, exist_ok=True)
-motor = sin_comentarios(motor)
-escribir(os.path.join(DEST, 'motor.js'), motor)
+
+motor = estilos = None
+anims = []
+if MOTOR:
+    sin_comentarios_html = re.sub(r'<!--.*?-->', '', html, flags=re.S)
+    scripts = re.findall(r'<script>(.*?)</script>', sin_comentarios_html, re.S)
+    if len(scripts) != 2:
+        raise SystemExit('Esperaba 2 bloques <script>, encontré %d' % len(scripts))
+    css = re.search(r'<style>(.*?)</style>', html, re.S).group(1)
+
+    # ---------- JS ----------
+    runtime, logica = scripts
+
+    # morphdom viene como UMD (module.exports / define): dentro de un módulo de webpack se usa como variable local
+    runtime = cambiar(runtime,
+                      '(function (global, factory) { typeof exports === "object" && typeof module !== "undefined" ? module.exports = factory() : typeof define === "function" && define.amd ? define(factory) : (global = global || self, global.morphdom = factory()) })(this, function () {',
+                      'var morphdom = (function () {')
+    runtime = cambiar(runtime, 'var morphdom = morphdomFactory(morphAttrs); return morphdom });',
+                      'var morphdom = morphdomFactory(morphAttrs); return morphdom })();')
+
+    # Agregar al carrito de verdad (vtex.order-items) en lugar de ir al checkout; el texto del botón muestra el estado
+    logica = cambiar(logica, '<a class="btn" href="{{res.cartUrl}}" data-track="agregar_carrito" data-name="{{res.house}} {{res.name}}" style="background: {{accent}}; color: #F3ECE3">Agregar al carrito</a>',
+                     '<button class="btn" type="button" onClick="{{res.addCart}}" aria-live="polite" style="background: {{accent}}; color: #F3ECE3">{{res.cartText}}</button>')
+    logica = cambiar(logica, "                    o.cartUrl = pr.sku ?", """                    o.cartText = st.cartMsg && st.cartFor === pr.sku ? st.cartMsg : 'Agregar al carrito';
+                        o.addCart = function () {
+                            if (!AP.agregar || !pr.sku || self.state.cartMsg === 'Agregando…') return;
+                            AP.track('agregar_carrito', { perfume: x.p.house + ' ' + x.p.name });
+                            self.setState({ cartMsg: 'Agregando…', cartFor: pr.sku });
+                            Promise.resolve(AP.agregar({ sku: String(pr.sku), seller: String(pr.seller || 1), price: pr.price, list: pr.list, size: pr.size, p: x.p }))
+                                .then(function (ok) { self.setState({ cartMsg: ok === false ? 'No se pudo agregar' : '¡Agregado al carrito!' }); },
+                                    function () { self.setState({ cartMsg: 'No se pudo agregar' }); })
+                                .then(function () { clearTimeout(self.cmT); self.cmT = setTimeout(function () { self.setState({ cartMsg: '' }); }, 2600); });
+                        };
+                        o.cartUrl = pr.sku ?""")
+
+    # Montaje: en la tienda no hay iframe; las imágenes y el carrito llegan por parámetro
+    logica = cambiar(logica, "        var app = document.getElementById('app');", '        var app = root;')
+    logica = re.sub(r"        // Imágenes: en la compu.*?app\.textContent = [^\n]*\n        \}\);",
+                    """        // Dentro de la tienda: API de VTEX del mismo dominio (precio y stock en vivo) y carrito real
+            AP.origin = function () { return location.origin; };
+            AP.PRECIOS_URL = '';
+            AP.LISTA_URL = 'https://ebeusd.github.io/videos-difu/e-boutique/laboratorio-notas/precios.json';
+            AP.CARRITO = true;
+            AP.agregar = opciones.agregar;
+            AP.img = opciones.img;
+            AP.P = opciones.catalogo;
+            AP.MARCAS = opciones.marcas || [];
+            AP.FUERZA = opciones.fuerza || 'media';
+            AP.EXCLUIR = opciones.excluir || [];
+            AP.ORDEN = opciones.orden || null;
+            AP.MODO = opciones.modo || 'lab';
+            var inst = mountDC(Component, { "accent": opciones.accent || "#730101", "imgBase": '', "frascoBase": '' }, tpl, app);""",
+                    logica, count=1, flags=re.S)
+    if 'opciones.agregar' not in logica:
+        raise SystemExit('No pude adaptar el montaje del laboratorio')
+    # Imágenes: las resuelve el componente con los assets del tema
+    logica = cambiar(logica, 'n.img = IMG + n.f;', "n.img = AP.img('notas', n.f);")
+    logica = cambiar(logica, "var BOTTLE = { glass: FRASCO + 'frasco-vidrio.webp', cap: FRASCO + 'frasco-tapa.webp' };",
+                     "var BOTTLE = { glass: AP.img('frasco', 'frasco-vidrio.webp'), cap: AP.img('frasco', 'frasco-tapa.webp') };")
+    logica = cambiar(logica, '        // Links fuera del iframe de VTEX', '        // Links (ficha del producto): se registra el evento y se navega')
+    logica = cambiar(logica, '            try { window.top.location.href = a.href; } catch (err) { window.location.href = a.href; }',
+                     '            window.location.href = a.href;')
+    logica = logica.rstrip() + '\n        return inst;\n'
+
+    motor = (
+             'export function montarLaboratorio(root, opciones) {\n'
+             + runtime + '\n' + logica +
+             '}\n')
+    os.makedirs(DEST, exist_ok=True)
+    motor = sin_comentarios(motor)
+    escribir(os.path.join(DEST, 'motor.js'), motor)
 
 
-# ---------- CSS: todo bajo .rouge-lab y animaciones con prefijo ap- ----------
-css = re.sub(r'/\*.*?\*/', '', css, flags=re.S)
-anims = re.findall(r'@keyframes\s+([\w-]+)', css)
+    # ---------- CSS: todo bajo .rouge-lab y animaciones con prefijo ap- ----------
+    css = re.sub(r'/\*.*?\*/', '', css, flags=re.S)
+    anims = re.findall(r'@keyframes\s+([\w-]+)', css)
 
 
-def anim(decl):
-    # renombra solo dentro de animation / animation-name
-    def r(m):
-        v = m.group(2)
-        for a in anims:
-            v = re.sub(r'(?<![\w-])%s(?![\w-])' % re.escape(a), 'ap-' + a, v)
-        return m.group(1) + v
-    return re.sub(r'(animation(?:-name)?\s*:)([^;}]*)', r, decl)
+    def anim(decl):
+        # renombra solo dentro de animation / animation-name
+        def r(m):
+            v = m.group(2)
+            for a in anims:
+                v = re.sub(r'(?<![\w-])%s(?![\w-])' % re.escape(a), 'ap-' + a, v)
+            return m.group(1) + v
+        return re.sub(r'(animation(?:-name)?\s*:)([^;}]*)', r, decl)
 
 
-def selector(s):
-    s = s.strip()
-    if s in ('body', 'html'):
-        return '.rouge-lab'
-    return '.rouge-lab ' + s
+    def selector(s):
+        s = s.strip()
+        if s in ('body', 'html'):
+            return '.rouge-lab'
+        return '.rouge-lab ' + s
 
 
-def scope(bloque):
-    out, i = [], 0
-    while i < len(bloque):
-        j = bloque.find('{', i)
-        if j < 0:
-            break
-        cabeza = bloque[i:j].strip()
-        # buscar la llave que cierra (con anidamiento)
-        prof, k = 1, j + 1
-        while prof:
-            prof += {'{': 1, '}': -1}.get(bloque[k], 0)
-            k += 1
-        cuerpo = bloque[j + 1:k - 1]
-        if cabeza.startswith('@keyframes'):
-            nombre = cabeza.split()[1]
-            out.append('@keyframes ap-%s{%s}' % (nombre, cuerpo.strip()))
-        elif cabeza.startswith('@media') or cabeza.startswith('@supports'):
-            out.append('%s{%s}' % (cabeza, scope(cuerpo)))
-        else:
-            cuerpo = anim(cuerpo.strip())
-            if cabeza in ('body', 'html'):
-                cuerpo = re.sub(r'margin\s*:\s*0\s*;?', '', cuerpo)
-            out.append('%s{%s}' % (','.join(selector(s) for s in cabeza.split(',')), cuerpo))
-        i = k
-    return '\n'.join(out)
+    def scope(bloque):
+        out, i = [], 0
+        while i < len(bloque):
+            j = bloque.find('{', i)
+            if j < 0:
+                break
+            cabeza = bloque[i:j].strip()
+            # buscar la llave que cierra (con anidamiento)
+            prof, k = 1, j + 1
+            while prof:
+                prof += {'{': 1, '}': -1}.get(bloque[k], 0)
+                k += 1
+            cuerpo = bloque[j + 1:k - 1]
+            if cabeza.startswith('@keyframes'):
+                nombre = cabeza.split()[1]
+                out.append('@keyframes ap-%s{%s}' % (nombre, cuerpo.strip()))
+            elif cabeza.startswith('@media') or cabeza.startswith('@supports'):
+                out.append('%s{%s}' % (cabeza, scope(cuerpo)))
+            else:
+                cuerpo = anim(cuerpo.strip())
+                if cabeza in ('body', 'html'):
+                    cuerpo = re.sub(r'margin\s*:\s*0\s*;?', '', cuerpo)
+                out.append('%s{%s}' % (','.join(selector(s) for s in cabeza.split(',')), cuerpo))
+            i = k
+        return '\n'.join(out)
 
 
-css_ok = scope(css)
-# En la tienda el laboratorio no ocupa la pantalla fija (eso era para el iframe del Sandbox):
-# toma la altura de su contenido y la página scrollea normal. En celular la barra de abajo queda pegada al borde.
-css_ok += '''
-.rouge-lab .ap{height:auto;min-height:0;overflow:visible}
-.rouge-lab .ap-intro-pyr,.rouge-lab .ap-intro-txt{height:auto;max-height:none;overflow:visible}
-.rouge-lab .ap-body,.rouge-lab .ap-res,.rouge-lab .ap-mixing{flex:none}
-@media (max-width: 899px){
-.rouge-lab .ap-main,.rouge-lab .ap-side{flex:none}
-.rouge-lab .ap-bar{position:sticky;bottom:0;z-index:5}}'''
-# la fuente se carga desde el componente (los @import dentro de un <style> en el body no siempre se respetan)
-import json
-estilos = ('export const ESTILOS = ' + json.dumps(css_ok, ensure_ascii=False) + '\n')
-escribir(os.path.join(DEST, 'estilos.ts'), estilos)
+    css_ok = scope(css)
+    # En la tienda el laboratorio no ocupa la pantalla fija (eso era para el iframe del Sandbox):
+    # toma la altura de su contenido y la página scrollea normal. En celular la barra de abajo queda pegada al borde.
+    css_ok += '''
+    .rouge-lab .ap{height:auto;min-height:0;overflow:visible}
+    .rouge-lab .ap-intro-pyr,.rouge-lab .ap-intro-txt{height:auto;max-height:none;overflow:visible}
+    .rouge-lab .ap-body,.rouge-lab .ap-res,.rouge-lab .ap-mixing{flex:none}
+    @media (max-width: 899px){
+    .rouge-lab .ap-main,.rouge-lab .ap-side{flex:none}
+    .rouge-lab .ap-bar{position:sticky;bottom:0;z-index:5}}'''
+    # la fuente se carga desde el componente (los @import dentro de un <style> en el body no siempre se respetan)
+    import json
+    estilos = ('export const ESTILOS = ' + json.dumps(css_ok, ensure_ascii=False) + '\n')
+    escribir(os.path.join(DEST, 'estilos.ts'), estilos)
+
 
 # ---------- Imágenes en assets/ del tema + bloque con el mapa de imágenes ----------
 # El builder "store" convierte cada "assets/..." de las props en la URL publicada (también dentro de objetos).
-import shutil
+MOTOR_TEMA = os.path.join(DEST, 'motor.js')
+if not MOTOR and not os.path.isfile(MOTOR_TEMA):
+    raise SystemExit('El tema no tiene motor.js todavía: corré una vez con --motor para crearlo.')
+referencia = html if MOTOR else open(MOTOR_TEMA, encoding='utf-8').read()
 IMGS = os.path.join(aqui, '..', 'imagenes')
 mapa = {}
 for tipo in ('notas', 'frasco'):
@@ -201,7 +218,7 @@ for tipo in ('notas', 'frasco'):
     mapa[tipo] = {}
     for f in sorted(os.listdir(os.path.join(IMGS, tipo))):
         # solo las que usa el laboratorio (en la carpeta puede haber otras, como banners)
-        if f.lower().endswith('.webp') and "'%s'" % f in html:
+        if f.lower().endswith('.webp') and "'%s'" % f in referencia:
             o, d = os.path.join(IMGS, tipo, f), os.path.join(destino, f)
             # solo si cambió: con "vtex link" corriendo, recopiar todo reenvía las 53 imágenes y VTEX lo rechaza (413)
             if not os.path.isfile(d) or open(o, 'rb').read() != open(d, 'rb').read():
@@ -286,7 +303,16 @@ bloque = {
     },
 }
 jsonc = (json.dumps(bloque, ensure_ascii=False, indent=2) + '\n')
-escribir(os.path.join(TEMA, 'store', 'blocks', 'laboratorio-notas.jsonc'), jsonc)
+BLOQUE = os.path.join(TEMA, 'store', 'blocks', 'laboratorio-notas.jsonc')
+if MOTOR or not os.path.isfile(BLOQUE):
+    escribir(BLOQUE, jsonc)
+else:
+    actual = open(BLOQUE, encoding='utf-8').read()
+    faltan = [r for t in mapa.values() for r in t.values() if r not in actual]
+    if faltan:
+        print('⚠ laboratorio-notas.jsonc del tema no tiene estas imágenes en "archivos" (agregalas a mano):')
+        for r in faltan:
+            print('   ', r)
 # versión anterior: bloque dentro de new-home
 viejo = os.path.join(TEMA, 'store', 'blocks', 'newHome', 'blocks-new-home', 'LaboratorioNotas.jsonc')
 if os.path.isfile(viejo):
@@ -304,6 +330,9 @@ if '"store.custom#laboratorio-notas"' not in rutas:
 
 print('Generado en', os.path.abspath(DEST))
 print('  imágenes  ', sum(len(v) for v in mapa.values()), 'en assets/laboratorio-notas')
-print('  motor.js  ', round(len(motor.encode('utf-8')) / 1024), 'KB')
 print('  catalogo.js', len(catalogo), 'perfumes ·', round(os.path.getsize(os.path.join(DEST, 'catalogo.js')) / 1024), 'KB')
-print('  estilos.ts', round(len(estilos.encode('utf-8')) / 1024), 'KB ·', len(anims), 'animaciones renombradas')
+if MOTOR:
+    print('  motor.js  ', round(len(motor.encode('utf-8')) / 1024), 'KB')
+    print('  estilos.ts', round(len(estilos.encode('utf-8')) / 1024), 'KB ·', len(anims), 'animaciones renombradas')
+else:
+    print('  motor.js y estilos.ts sin tocar (se editan en el tema)')

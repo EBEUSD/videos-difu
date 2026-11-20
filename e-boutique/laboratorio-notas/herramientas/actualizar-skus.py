@@ -1,5 +1,5 @@
 """Guarda en catalogo.json el SKU y vendedor de cada perfume (el más barato con stock hoy),
-para que el botón funcione aunque el Sandbox de VTEX no deje consultar la API en vivo.
+para tenerlos aunque la API de la tienda no responda en el momento.
 Uso:  python herramientas/actualizar-skus.py        (desde la carpeta laboratorio-notas)
 catalogo-desde-vtex.py ya lo hace al armar el catálogo; esto sirve para refrescarlo sin rearmarlo."""
 import json, os, sys, time, urllib.request

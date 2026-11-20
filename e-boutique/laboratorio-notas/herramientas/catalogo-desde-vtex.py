@@ -10,7 +10,7 @@ Las versiones del mismo perfume (EDT / EDP / tamaños) comparten el campo "l": e
 Uso (desde la carpeta laboratorio-notas):
   python herramientas/catalogo-desde-vtex.py
   python herramientas/catalogo-desde-vtex.py --cache archivo.json   (usa un catálogo ya bajado, para probar)
-Después: armar-sandbox.py / armar-vtex.py como siempre."""
+Lo corre GitHub todos los días (.github/workflows/catalogo-laboratorio.yml). A mano: actualizar-todo.py."""
 import collections, json, os, re, sys, time, urllib.request
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))

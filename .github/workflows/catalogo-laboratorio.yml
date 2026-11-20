@@ -1,0 +1,72 @@
+# Rearma el catálogo del Laboratorio de notas todos los días con los perfumes de VTEX (nuevos, sin stock, SKUs).
+# El laboratorio de la tienda lo lee desde GitHub Pages, así que no hace falta volver a publicar el tema:
+# https://ebeusd.github.io/videos-difu/e-boutique/laboratorio-notas/catalogo.json
+name: Catálogo laboratorio de notas
+
+on:
+  schedule:
+    - cron: '23 8 * * *'   # todos los días 08:23 UTC (05:23 en Argentina)
+  workflow_dispatch:        # botón "Run workflow" para actualizar a mano
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/catalogo-laboratorio.yml
+      - e-boutique/laboratorio-notas/herramientas/catalogo-desde-vtex.py
+      - e-boutique/laboratorio-notas/herramientas/notas_vtex.py
+      - e-boutique/laboratorio-notas/catalogo-nicho.json
+
+permissions:
+  contents: write
+
+concurrency:
+  group: precios-laboratorio   # la misma que la de precios: nunca empujan los dos a la vez
+  cancel-in-progress: false
+
+jobs:
+  catalogo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: e-boutique/laboratorio-notas   # no baja los videos
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Rearmar catálogo, SKUs y precios desde VTEX
+        working-directory: e-boutique/laboratorio-notas
+        run: |
+          cp catalogo.json /tmp/anterior.json
+          python herramientas/catalogo-desde-vtex.py
+          python herramientas/actualizar-skus.py
+          python herramientas/actualizar-precios.py
+
+      - name: Revisar que el catálogo nuevo sea razonable
+        working-directory: e-boutique/laboratorio-notas
+        run: |
+          # si VTEX respondió mal y el catálogo quedó mucho más chico, no se publica
+          python - <<'EOF'
+          import json, sys
+          a = json.load(open('/tmp/anterior.json'))
+          b = json.load(open('catalogo.json'))
+          print('perfumes antes:', len(a), '· ahora:', len(b))
+          ids_a, ids_b = {p['id'] for p in a}, {p['id'] for p in b}
+          print('nuevos:', len(ids_b - ids_a), '· salieron:', len(ids_a - ids_b))
+          if len(b) < 300 or len(b) < len(a) * 0.85:
+              sys.exit('El catálogo nuevo es demasiado chico: no se guarda.')
+          EOF
+
+      - name: Guardar si cambió
+        working-directory: e-boutique/laboratorio-notas
+        run: |
+          git add catalogo.json precios.json
+          if git diff --cached --quiet; then
+            echo "Sin cambios"; exit 0
+          fi
+          git config user.name "catalogo-bot"
+          git config user.email "catalogo-bot@users.noreply.github.com"
+          git commit -m "Catálogo laboratorio: actualización automática"
+          git pull --rebase -X theirs
+          git push
