@@ -14,7 +14,7 @@ sys.stdout.reconfigure(encoding='utf-8')
 aqui = os.path.dirname(os.path.abspath(__file__))
 LAB = os.path.dirname(aqui)
 REPO = os.path.abspath(os.path.join(LAB, '..', '..'))
-SUBIR = ['catalogo.json', 'compartir.jpg', 'catalogo-nicho.json', 'precios.json', 'herramientas', 'imagenes', 'arma-perfume-notas.html']
+SUBIR = ['catalogo.json', 'compartir.jpg', 'catalogo-nicho.json', 'precios.json', 'herramientas', 'imagenes']
 
 
 def correr(nombre, *args):
