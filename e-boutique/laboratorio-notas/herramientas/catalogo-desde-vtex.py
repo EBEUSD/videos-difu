@@ -1,5 +1,5 @@
 """Arma catalogo.json (el catálogo del laboratorio) con:
-  1. los perfumes de nicho curados a mano (catalogo-nicho.json, sale de catalogo-desde-excel.py), tal cual;
+  1. los perfumes de nicho curados a mano (catalogo-nicho.json, sale de catalogo-desde-excel.py), marcados con "n": 1;
   2. todos los perfumes de la categoría Perfumes de VTEX que estén "listos": descripción con notas de salida,
      corazón y fondo, y en cada capa al menos una nota que el laboratorio reconoce (ver diagnostico-catalogo.py).
 
@@ -161,7 +161,7 @@ for p in leer_catalogo():
     motivos['agregado'] += 1
 
 # versiones del mismo perfume: misma marca y mismo nombre sin concentración ni tamaño
-todos = nicho + P
+todos = [dict(p, n=1) for p in nicho] + P   # n=1: de nicho / autor (pregunta "¿algo conocido o algo distinto?")
 lineas = collections.Counter(clave_linea(p['house'], p['name']) for p in todos)
 for p in todos:
     p.pop('l', None)
